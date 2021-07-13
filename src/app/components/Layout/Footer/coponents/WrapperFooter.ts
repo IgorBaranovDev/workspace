@@ -4,7 +4,7 @@ const WrapperFooter = styled.footer`
 	display: flex;	
 	justify-content: center;
 	align-items: center;
-    position: fixed;
+    position: absolute;
     width: 100%;
     bottom: 0;
     height: 20px; 

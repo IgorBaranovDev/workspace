@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 
 const WrapperHeader = styled.header`
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 0 10px;
 	position: fixed;
-	width: 100%;
-	height: 40px;
+	width: 100%;	
 	top: 0;
 	left: 0;
 	background-color: #2a9cff;
