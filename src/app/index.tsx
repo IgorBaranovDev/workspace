@@ -1,19 +1,16 @@
 import React from "react";
 
-// component
-import Layout from "./components/Layout";
+// components
+import Footer from "./components/Footer";
+import Header from "./components/Header";
 
-// material-ui
-import { CssBaseline } from "@material-ui/core";
-
-
-const App: React.FunctionComponent = () => {
+function App() {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Layout />
-    </React.Fragment>
+    <div className="App">  
+      <Header />
+      <Footer />
+    </div>
   );
-};
+}
 
 export default App;
