@@ -1,12 +1,13 @@
 import React from "react";
 
 import { WrapperHeader } from "./components";
+import MenuUser from "./MenuUser";
 
 const Header: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       <WrapperHeader>
-        <h1>Header</h1>
+        <MenuUser />
       </WrapperHeader>
     </React.Fragment>
   );
