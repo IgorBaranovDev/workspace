@@ -7,7 +7,7 @@ const Text = styled(Link)`
   padding: 10px;
   font-size: 16px;
   line-height: 16px;
-  color: #222222;
+  color: #fff;
 
   &:hover {
     cursor: pointer;

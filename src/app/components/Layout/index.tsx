@@ -9,6 +9,7 @@ const Layout: React.FunctionComponent = () => {
     return (
         <React.Fragment>
             <Header />
+            
             <Footer />
         </React.Fragment>
     )
