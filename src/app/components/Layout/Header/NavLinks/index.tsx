@@ -1,13 +1,13 @@
 import React from "react";
 
-// types
-import INavLinkData from '../types/INavLinkData';
+// component
+import LinkItem from './LinkItem';
 
 // styles
 import { NavLinksWrapper } from './components';
 
-// component
-import LinkItem from './LinkItem';
+// types
+import INavLinkData from '../types/INavLinkData';
 
 interface INavLinksProps {
     navLinksData: Array<INavLinkData>

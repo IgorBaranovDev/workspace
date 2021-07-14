@@ -1,4 +1,6 @@
 import React from "react";
+
+// material-ui
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -14,8 +16,7 @@ const MenuUser: React.FunctionComponent = () => {
     setAnchorEl(null);
   };
   return (
-    <React.Fragment>
-      <div>
+    <React.Fragment>      
         <Button aria-controls="menu" aria-haspopup="true" onClick={handleClick}>
           Menu
         </Button>
@@ -28,8 +29,7 @@ const MenuUser: React.FunctionComponent = () => {
         >
           <MenuItem onClick={handleClose}>Log in</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
-      </div>
+        </Menu>   
     </React.Fragment>
   );
 };

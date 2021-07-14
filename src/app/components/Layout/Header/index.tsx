@@ -1,8 +1,12 @@
 import React from "react";
 
-import { WrapperHeader } from "./components";
+// compoments
+import Logo from "./Logo";
 import MenuUser from "./MenuUser";
 import NavLinks from "./NavLinks";
+
+// styles
+import { WrapperHeader } from "./components";
 
 // types
 import INavLinkData from "./types/INavLinkData";
@@ -27,6 +31,7 @@ const Header: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       <WrapperHeader>
+        <Logo />
         <NavLinks navLinksData={NavLinksData}/>
         <MenuUser />
       </WrapperHeader>

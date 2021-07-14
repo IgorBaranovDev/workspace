@@ -1,10 +1,11 @@
 import React from "react";
 
+// component
+import Layout from "./components/Layout";
+
 // material-ui
 import { CssBaseline } from "@material-ui/core";
 
-// component
-import Layout from "./components/Layout";
 
 const App: React.FunctionComponent = () => {
   return (
