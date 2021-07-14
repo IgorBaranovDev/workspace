@@ -3,36 +3,35 @@ import React from "react";
 // compoments
 import Logo from "./Logo";
 import MenuUser from "./MenuUser";
-import NavLinks from "./NavLinks";
 
 // styles
 import { WrapperHeader } from "./components";
 
 // types
-import INavLinkData from "./types/INavLinkData";
+// import INavLinkData from "./types/INavLinkData";
 
 // data
-const NavLinksData: Array<INavLinkData> = [
-  {
-    label: 'link-1',
-    path: '#',
-  },
-  {
-    label: 'link-2',
-    path: '#',
-  },
-  {
-    label: 'link-3',
-    path: '#',
-  },
-]
+// const NavLinksData: Array<INavLinkData> = [
+//   {
+//     label: 'link-1',
+//     path: '#',
+//   },
+//   {
+//     label: 'link-2',
+//     path: '#',
+//   },
+//   {
+//     label: 'link-3',
+//     path: '#',
+//   },
+// ]
 
 const Header: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       <WrapperHeader>
         <Logo />
-        <NavLinks navLinksData={NavLinksData}/>
+        {/* <NavLinks navLinksData={NavLinksData}/> */}
         <MenuUser />
       </WrapperHeader>
     </React.Fragment>

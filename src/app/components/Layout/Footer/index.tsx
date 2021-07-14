@@ -1,4 +1,6 @@
 import React from "react";
+
+// styles
 import { WrapperFooter, CopyrightText } from "./coponents";
 
 const Footer: React.FunctionComponent = () => {

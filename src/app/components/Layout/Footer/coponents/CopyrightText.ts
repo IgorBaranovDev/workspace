@@ -5,7 +5,7 @@ margin: 0;
 	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
 	font-size: 10px;
 	font-weight: 400;
-	color: #222;	
+	color: #fff;	
 `;
 
 export default CopyrightText;

@@ -1,12 +1,13 @@
 import React from "react";
-import LogoWrapper from "./components/LogoWrapper";
-import Text from "./components/Text";
+
+// styles
+import { LogoWrapper, Text } from "./components";
 
 const Logo: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       <LogoWrapper>
-        <Text>Logo</Text>
+        <Text>Workspace</Text>
       </LogoWrapper>
     </React.Fragment>
   );
