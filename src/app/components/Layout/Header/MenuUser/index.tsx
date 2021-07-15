@@ -3,9 +3,7 @@ import React from "react";
 // styles
 import { IconButton, Icon, TextLogin } from "./components";
 
-const MenuUser: React.FunctionComponent = () => {
-  return (
-    <React.Fragment>
+const MenuUser: React.FunctionComponent = () => (    
       <IconButton
         aria-label="account of current user"
         aria-controls="menu-appbar"
@@ -15,9 +13,8 @@ const MenuUser: React.FunctionComponent = () => {
       >
         <Icon />
         <TextLogin>log in</TextLogin>
-      </IconButton>   
-    </React.Fragment>
+      </IconButton> 
+    
   );
-};
 
 export default MenuUser;

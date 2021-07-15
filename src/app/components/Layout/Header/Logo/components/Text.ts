@@ -8,9 +8,9 @@ const Text = styled(Link)`
   font-size: 16px;
   line-height: 16px;
   color: #fff;
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
     background-color: rgba(0, 0, 0, 0.04);
     text-decoration: none;
   }
