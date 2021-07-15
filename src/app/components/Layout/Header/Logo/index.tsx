@@ -3,14 +3,10 @@ import React from "react";
 // styles
 import { LogoWrapper, Text } from "./components";
 
-const Logo: React.FunctionComponent = () => {
-  return (
-    <React.Fragment>
+const Logo: React.FunctionComponent = () => (
       <LogoWrapper>
         <Text>Workspace</Text>
-      </LogoWrapper>
-    </React.Fragment>
+      </LogoWrapper>    
   );
-};
 
 export default Logo;
