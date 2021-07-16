@@ -26,16 +26,12 @@ import { WrapperHeader } from "./components";
 //   },
 // ]
 
-const Header: React.FunctionComponent = () => {
-  return (
-    <React.Fragment>
-      <WrapperHeader>
-        <Logo />
-        {/* <NavLinks navLinksData={NavLinksData}/> */}
-        <MenuUser />
-      </WrapperHeader>
-    </React.Fragment>
-  );
-};
+const Header: React.FunctionComponent = () => (
+  <WrapperHeader>
+    <Logo />
+    {/* <NavLinks navLinksData={NavLinksData}/> */}
+    <MenuUser />
+  </WrapperHeader>
+);
 
 export default Header;
