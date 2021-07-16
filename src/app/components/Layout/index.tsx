@@ -1,15 +1,13 @@
 import React from "react";
-import Login from "../LogIn";
 
 // components
 import Footer from "./Footer";
 import Header from "./Header";
 
-const Layout: React.FC = () => (
+const Layout: React.FC = ({children}) => (
   <React.Fragment>
-    <Header />
-      <Login />
-      {/* <div>{children}</div> */}
+    <Header />      
+      <div>{children}</div>
     <Footer />
   </React.Fragment>
 );

@@ -1,20 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
 // style
-import { LoginWrapper, LoginImg, LoginForm } from "./components";
+import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
 
 // material-ui
 import { Grid } from "@material-ui/core";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
-import InputEmail from "./InputEmail";
-import InputPassword from "./InputPassword";
 import ButtonSubmint from "./ButtonSubmint";
+import { signIn } from "../../services/auth";
 
 const Login: React.FC = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {   
+    if (event.target.name === 'username') {
+      setEmail(event.target.value);
+    } else if (event.target.name === 'password') {
+      setPassword(event.target.value);
+    }    
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault();    
+    signIn({ email, password });
+    setEmail('');
+    setPassword('');
   };
 
   return (
@@ -32,8 +45,30 @@ const Login: React.FC = () => {
           </LoginImg>
         </Grid>
         <LoginForm noValidate onSubmit={handleSubmit}>
-          <InputEmail />
-          <InputPassword />
+          <AuthInput
+            type="email"
+            name="username"
+            label="Email"
+            placeholder="Enter email"            
+            margin="normal"
+            value={email}            
+            onChange={handlerChange}
+            fullWidth
+            variant="outlined"
+            required
+          />
+          <AuthInput
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Enter password"            
+            margin="normal"
+            value={password}           
+            onChange={handlerChange}
+            fullWidth
+            variant="outlined"
+            required
+          />
           <ButtonSubmint />
         </LoginForm>
       </LoginWrapper>
