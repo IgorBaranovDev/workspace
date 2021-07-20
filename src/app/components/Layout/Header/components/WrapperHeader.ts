@@ -12,6 +12,6 @@ const WrapperHeader = styled.header`
 	left: 0;
 	background-color: #2a9cff;
 	z-index: 10;
-`;
+	`;
 
 export default WrapperHeader;
