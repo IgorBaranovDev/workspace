@@ -4,30 +4,36 @@ import React, { useState } from "react";
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
 
 // material-ui
-import { Grid } from "@material-ui/core";
+import { Checkbox, FormControlLabel, Grid } from "@material-ui/core";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
 import ButtonSubmint from "./ButtonSubmint";
-import { signIn } from "../../services/auth";
+import { signIn, signUp } from "../../services/auth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isRegistration, setIsRegistration] = useState(false);
 
-  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {   
-    if (event.target.name === 'username') {
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.name === "username") {
       setEmail(event.target.value);
-    } else if (event.target.name === 'password') {
+    } else if (event.target.name === "password") {
       setPassword(event.target.value);
-    }    
+    }
+  };
+
+  const handlerChekbox = (event: React.ChangeEvent<HTMLInputElement>) => {   
+    setIsRegistration((prev) => !prev);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();    
-    signIn({ email, password });
-    setEmail('');
-    setPassword('');
+    e.preventDefault();
+    const authFunc = isRegistration ? signUp : signIn;
+    authFunc({ email, password });
+    setEmail("");
+    setPassword("");
   };
 
   return (
@@ -49,9 +55,9 @@ const Login: React.FC = () => {
             type="email"
             name="username"
             label="Email"
-            placeholder="Enter email"            
+            placeholder="Enter email"
             margin="normal"
-            value={email}            
+            value={email}
             onChange={handlerChange}
             fullWidth
             variant="outlined"
@@ -61,13 +67,24 @@ const Login: React.FC = () => {
             type="password"
             name="password"
             label="Password"
-            placeholder="Enter password"            
+            placeholder="Enter password"
             margin="normal"
-            value={password}           
+            value={password}
             onChange={handlerChange}
             fullWidth
             variant="outlined"
             required
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+              color="primary"
+                checked={isRegistration}
+                onChange={handlerChekbox}
+                name="newUser"                
+              />
+            }
+            label="New user"
           />
           <ButtonSubmint />
         </LoginForm>

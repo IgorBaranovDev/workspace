@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import "firebase/auth";
 
-const app = firebase.initializeApp({
+const configFirebase = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
@@ -18,14 +18,14 @@ export const signIn = ({
   email: string;
   password: string;
 }) => {
-  app
+  configFirebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then((res) => console.log(res)) 
-    .catch((error) => console.log(error));
-
-  console.log("signIn - ", email, password);
-};
+    .then((res) => {console.log(res, res.user?.emailVerified);
+      console.log(configFirebase.auth().currentUser);
+    })    
+    .catch((error) => console.log(error)); 
+   };
 
 export const signUp = ({
   email,
@@ -34,9 +34,17 @@ export const signUp = ({
   email: string;
   password: string;
 }) => {
+  configFirebase
+  .auth()
+  .createUserWithEmailAndPassword(email, password)
+  .then((res) => {console.log(res, res.user?.emailVerified);
+    console.log(configFirebase.auth().currentUser);
+  })    
+  .catch((error) => console.log(error));
   console.log("signUp - ", email, password);
 };
 
 export const LogOut = () => {
+  configFirebase.auth().signOut();
   console.log("logOut");
 };
