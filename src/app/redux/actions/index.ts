@@ -1,14 +1,12 @@
-// создать экшены для начала авторизации, успешная, провал авторизации. type string payload: {} || ''
-// функции авторизация старт, данные подьзователя
+import { Action } from './types';
+import { Creads } from '../../services/types';
 
-const LOGIN_REQUEST = { type: "USERS_LOGIN_REQUEST", payload: {} };
-const LOGIN_SUCCESS = { type: "USERS_LOGIN_SUCCESS", payload: {} };
-const LOGIN_FAILURE = { type: "USERS_LOGIN_FAILURE", payload: {} };
-const LOGOUT = { type: "USERS_LOGOUT", payload: {} };
+export const LOGIN_REQUEST = "USERS_LOGIN_REQUEST";
+export const SINGUP_REQUEST = "USERS_SINGUP_REQUEST";
+export const AUTH_SUCCESS = "USERS_AUTH_SUCCESS";
+export const AUTH_FAILURE = "USER_AUTH_FAILURE";
+export const LOGOUT = "USER_LOGOUT";
 
-export  {
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  LOGOUT,
-};
+export const logIn = ( creds: Creads ): Action => ({ type: LOGIN_REQUEST, payload: creds });
+export const signUp = ( creds: Creads ): Action => ({ type: SINGUP_REQUEST, payload: creds });
+export const logOut = (): Action => ({ type: LOGOUT });
