@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { connect } from 'react-redux';
 
 // style
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
@@ -9,9 +10,24 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
 import ButtonSubmint from "./ButtonSubmint";
-import { signIn, signUp } from "../../services/auth";
 
-const Login: React.FC = () => {
+// actions
+import { logIn, signUp, logOut } from "../../redux/actions";
+
+// types
+import { ILogin } from './types';
+
+const mapStateToProps = ( state: any ) => ({
+   user: 'user'// selector userSelector(state);
+});
+
+const mapDispatchToProps = {
+  logIn,
+  signUp,
+  logOut 
+};
+
+export const Login: React.FC<ILogin> = ({user, logIn, signUp}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
@@ -30,14 +46,14 @@ const Login: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const authFunc = isRegistration ? signUp : signIn;
+    const authFunc = isRegistration ? logIn : signUp;
     authFunc({ email, password });
     setEmail("");
     setPassword("");
   };
 
-  return (
-    <React.Fragment>
+  return user ? <span>`You are already signed in as ${user}`</span> : (
+    <React.Fragment>      
       <LoginWrapper elevation={10}>
         <Grid
           container
@@ -93,4 +109,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
