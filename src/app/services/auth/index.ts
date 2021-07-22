@@ -1,6 +1,9 @@
 import firebase from "firebase";
 import "firebase/auth";
 
+// types
+import { Creads } from "../types";
+
 const configFirebase = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -11,40 +14,33 @@ const configFirebase = firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export const signIn = ({
+export const signIn = async ({
   email,
   password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  configFirebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then((res) => {console.log(res, res.user?.emailVerified);
-      console.log(configFirebase.auth().currentUser);
-    })    
-    .catch((error) => console.log(error)); 
-   };
-
-export const signUp = ({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) => {
-  configFirebase
-  .auth()
-  .createUserWithEmailAndPassword(email, password)
-  .then((res) => {console.log(res, res.user?.emailVerified);
-    console.log(configFirebase.auth().currentUser);
-  })    
-  .catch((error) => console.log(error));
-  console.log("signUp - ", email, password);
+}: Creads) => {
+  try {
+    return await configFirebase
+      .auth()
+      .signInWithEmailAndPassword(email, password);
+  } catch (error) {
+    return null;
+  }
 };
 
-export const LogOut = () => {
+export const signUp = async ({
+  email,
+  password,
+}: Creads) => {
+  try {
+    return await configFirebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+  } catch (error) {
+    return null;
+  }
+};
+
+export const logOut = () => {
   configFirebase.auth().signOut();
   console.log("logOut");
 };
