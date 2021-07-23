@@ -1,17 +1,38 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 
 // style
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
 
 // material-ui
-import { Checkbox, FormControlLabel, Grid } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
 import ButtonSubmint from "./ButtonSubmint";
-import { signIn, signUp } from "../../services/auth";
 
-const Login: React.FC = () => {
+// actions
+import { logIn, signUp, logOut } from "../../redux/actions";
+
+// types
+import { ILogin } from "./types";
+
+// selector
+import { getAuthUser } from "../../redux/selectors";
+
+const mapStateToProps = (state: any) => {
+  return {
+    user: getAuthUser(state),
+  };
+};
+
+const mapDispatchToProps = {
+  logIn,
+  signUp,
+  logOut,
+};
+
+export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
@@ -24,32 +45,26 @@ const Login: React.FC = () => {
     }
   };
 
-  const handlerChekbox = (event: React.ChangeEvent<HTMLInputElement>) => {   
+  const handlerChekbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsRegistration((prev) => !prev);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const authFunc = isRegistration ? signUp : signIn;
+    const authFunc = isRegistration ? signUp : logIn;
     authFunc({ email, password });
     setEmail("");
     setPassword("");
   };
 
+  // use effct user => redirect
+
   return (
     <React.Fragment>
       <LoginWrapper elevation={10}>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-        >
-          <LoginImg>
-            <LockOpenIcon fontSize="large" />
-          </LoginImg>
-        </Grid>
+        <LoginImg>
+          <LockOpenIcon fontSize="large" />
+        </LoginImg>
         <LoginForm noValidate onSubmit={handleSubmit}>
           <AuthInput
             type="email"
@@ -78,13 +93,13 @@ const Login: React.FC = () => {
           <FormControlLabel
             control={
               <Checkbox
-              color="primary"
+                color="primary"
                 checked={isRegistration}
                 onChange={handlerChekbox}
-                name="newUser"                
+                name="newUser"
               />
             }
-            label="New user"
+            label="Create an account"
           />
           <ButtonSubmint />
         </LoginForm>
@@ -93,4 +108,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -4,26 +4,16 @@ import { Switch, Route } from "react-router-dom";
 // component
 import Layout from "./components/Layout";
 import Login from "./components/LogIn";
-
-// material-ui
-import { CssBaseline } from "@material-ui/core";
+import Home from "./components/Home";
 
 const App: React.FunctionComponent = () => {
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <Layout>
-        <Switch>
-          <Route exact path="/">
-            {/* <Home /> */}
-            <div>HOME</div>
-          </Route>
-          <Route path="/auth">
-            <Login />
-          </Route>
-        </Switch>
-      </Layout>
-    </React.Fragment>
+    <Layout>
+      <Switch>
+        <Route component={Home} exact path="/" />
+        <Route component={Login} path="/auth" />
+      </Switch>
+    </Layout>
   );
 };
 
