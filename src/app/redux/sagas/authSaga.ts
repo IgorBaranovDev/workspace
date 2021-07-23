@@ -1,40 +1,66 @@
 import { takeLatest, call, put } from "redux-saga/effects";
-import axios from 'axios';
-import { Action } from '../actions/types';
+
+// types
+import { Action } from "../actions/types";
+import { Creads } from "../../services/types";
+
+// actions
 import {
-    FETCH_ACCOUNT_DATA_START,
-    FETCH_ACCOUNT_DATA_SUCCESS,
-    FETCH_ACCOUNT_DATA_FAILURE,
-    FETCH_DOMAINS_DATA,
-    ADD_DOMAINS_DATA
-} from '../actions';
+  LOGIN_REQUEST,
+  SINGUP_REQUEST,
+  AUTH_SUCCESS,
+  AUTH_FAILURE,
+  LOGOUT,
+} from "../actions";
 
+// auth services
+import { signIn, signUp, logOut } from "../../services/auth";
 
+const authService: {
+  signIn: typeof signIn;
+  signUp: typeof signUp;
+  logOut: typeof logOut;
+} = {
+  signIn,
+  signUp,
+  logOut,
+};
 
-export function* fetchAccountHandler ({
-    payload: {
-        account
-    } = {}
-}: Action) {
-    const accountData = yield call(fetchAccount, account as string);
-    if (accountData) {
-        yield put({
-            type: FETCH_ACCOUNT_DATA_SUCCESS,
-            payload: {
-                account,
-                accountData
-            }
-        });
-    } else {
-        yield put({
-            type: FETCH_ACCOUNT_DATA_FAILURE,
-        });
-    }
-    
-}
+type AuthMethod = keyof typeof authService;
 
+const typeToMethodMap: { [key: string]: AuthMethod } = {
+  [LOGIN_REQUEST]: "signIn",
+  [SINGUP_REQUEST]: "signUp",
+  [LOGOUT]: "logOut",
+};
 
-export default function* accountSaga() {
-    yield takeLatest(FETCH_ACCOUNT_DATA_START, fetchAccountHandler);
-    yield takeLatest(FETCH_DOMAINS_DATA, fetchDomainsDataHandler);
-}
+// worker sagas
+export const authUser = async (creds: Creads, authType: AuthMethod) => {
+  try {
+    const userData = await authService[authType]?.(creds);
+    return userData;
+  } catch (err) {
+    console.log("auth error:", err);
+    return null;
+  }
+};
+
+export function* authHandler({ type, payload }: Action): Generator<any> {
+  const authType: AuthMethod = typeToMethodMap[type];
+  const userData = yield call(authUser, payload as Creads, authType);
+  if (userData) {
+    yield put({
+      type: AUTH_SUCCESS,
+      // payload: {}
+    });
+  } else {
+    yield put({
+      type: AUTH_FAILURE,
+    });
+  }
+};
+
+// watcher saga
+export default function* authSaga() {
+  yield takeLatest([LOGIN_REQUEST, SINGUP_REQUEST, LOGOUT], authHandler);
+};
