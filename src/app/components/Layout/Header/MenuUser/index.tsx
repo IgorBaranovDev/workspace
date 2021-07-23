@@ -1,14 +1,39 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useStore } from "react-redux";
+
+// actions
+import {
+  // logIn,
+  //  signUp,
+  logOut,
+} from "../../../../redux/actions";
+
+// import {
+//   LOGIN_REQUEST,
+//   SINGUP_REQUEST,
+//   AUTH_SUCCESS,
+//   AUTH_FAILURE,
+//   LOGOUT,
+// } from "../../../../redux/actions";
 
 // styles
 import { IconButton, Icon, TextLogin } from "./components";
 
 const MenuUser: React.FunctionComponent = () => {
   const history = useHistory();
-  
+  const dispatch = useDispatch();
+  const store = useStore();
+  const user = store.getState();
+
   const handlerClick = () => {
-    history.push("/auth");
+    if (user) {
+      dispatch(logOut());
+      // dispatch({ type: LOGOUT });
+    } else {
+      history.push("/auth");
+    }
   };
 
   return (
@@ -20,7 +45,7 @@ const MenuUser: React.FunctionComponent = () => {
       color="inherit"
     >
       <Icon />
-      <TextLogin>log in</TextLogin>
+      <TextLogin>{user ? `${user} (logOut)` : "login"}</TextLogin>
     </IconButton>
   );
 };
