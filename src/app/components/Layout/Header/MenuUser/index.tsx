@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // actions
 import {
@@ -10,22 +9,14 @@ import {
   logOut,
 } from "../../../../redux/actions";
 
-// import {
-//   LOGIN_REQUEST,
-//   SINGUP_REQUEST,
-//   AUTH_SUCCESS,
-//   AUTH_FAILURE,
-//   LOGOUT,
-// } from "../../../../redux/actions";
-
 // styles
 import { IconButton, Icon, TextLogin } from "./components";
+import { getAuthUser } from "../../../../redux/selectors";
 
 const MenuUser: React.FunctionComponent = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const store = useStore();
-  const user = store.getState();
+  const user = useSelector(getAuthUser);
 
   const handlerClick = () => {
     if (user) {
@@ -45,7 +36,7 @@ const MenuUser: React.FunctionComponent = () => {
       color="inherit"
     >
       <Icon />
-      <TextLogin>{user ? `${user} (logOut)` : "login"}</TextLogin>
+      <TextLogin>{user ? `${JSON.stringify(user)} (logOut)` : "login"}</TextLogin>
     </IconButton>
   );
 };
