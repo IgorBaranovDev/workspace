@@ -2,7 +2,7 @@ import firebase from "firebase";
 import "firebase/auth";
 
 // types
-import { Creads } from "../types";
+import { Creds } from "../types";
 
 const configFirebase = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
@@ -14,7 +14,7 @@ const configFirebase = firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export const signIn = async ({ email, password }: Creads) => {
+export const signIn = async ({ email, password }: Creds) => {
   console.log({ email, password });
   try {
     return await configFirebase
@@ -26,7 +26,7 @@ export const signIn = async ({ email, password }: Creads) => {
   }
 };
 
-export const signUp = async ({ email, password }: Creads) => {
+export const signUp = async ({ email, password }: Creds) => {
   try {
     return await configFirebase
       .auth()

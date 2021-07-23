@@ -2,7 +2,7 @@ import { takeLatest, call, put } from "redux-saga/effects";
 
 // types
 import { Action } from "../actions/types";
-import { Creads } from "../../services/types";
+import { Creds } from "../../services/types";
 
 // actions
 import {
@@ -35,7 +35,7 @@ const typeToMethodMap: { [key: string]: AuthMethod } = {
 };
 
 // worker sagas
-export const authUser = async (creds: Creads, authType: AuthMethod) => {
+export const authUser = async (creds: Creds, authType: AuthMethod) => {
   try {
     const userData = await authService[authType]?.(creds);   
     return userData;
@@ -51,7 +51,7 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
     const result = yield call(authService[authType]);
     console.log(result);
   } else {
-    const userData = yield call(authUser, payload as Creads, authType);
+    const userData = yield call(authUser, payload as Creds, authType);
     if (userData) {
       yield put({
         type: AUTH_SUCCESS,

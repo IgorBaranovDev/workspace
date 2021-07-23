@@ -1,6 +1,3 @@
-// редусер получает state, action
-// => обновить стэйт после авторизации. дефолт експорт
-
 // actions
 import {
   // LOGIN_REQUEST,
@@ -16,7 +13,7 @@ import { Action } from "../actions/types";
 // type for initial state and export
 
 const initialState = {
-  user: null, // auth.user: jjj@dd
+  user: null,
 };
 
 export default function authReducer(state = initialState, { type, payload }: Action) {

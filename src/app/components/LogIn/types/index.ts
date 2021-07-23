@@ -1,7 +1,7 @@
-import { Creads } from '../../../services/types';
+import { Creds } from '../../../services/types';
 
 export interface ILogin {
     user: string;
-    logIn: (creds: Creads) => {};
-    signUp: (creds: Creads) => {};
+    logIn: (creds: Creds) => {};
+    signUp: (creds: Creds) => {};
   };

@@ -2,7 +2,6 @@ import { all, spawn, call } from "redux-saga/effects";
 
 // sagas
 import  authSaga  from './authSaga';
-// import yourSaga2 from './yourSaga2';
 
 const sagas: any[] = [
     authSaga
