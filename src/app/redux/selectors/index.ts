@@ -1,10 +1,12 @@
 // один селектор получать currentUser получает сторе и возвращает пользователя из стора.
 // state.auth.user
 
-import { createSelector } from "reselect";
+// import { createSelector } from "reselect";
+// import type 
 
 // selector
-const getAuthUser = (state: { auth: { user: string } }) => state.auth.user;
+export const getAuthUser = (state: { auth: { user: string } }) => state.auth.user;
+
 
 // reselect function
-export const getAuthUserState = createSelector([getAuthUser], (user) => user);
+// export const getAuthUserState = createSelector( [getAuthUser, ](user) => user);

@@ -37,7 +37,7 @@ const typeToMethodMap: { [key: string]: AuthMethod } = {
 // worker sagas
 export const authUser = async (creds: Creads, authType: AuthMethod) => {
   try {
-    const userData = await authService[authType]?.(creds);
+    const userData = await authService[authType]?.(creds);   
     return userData;
   } catch (err) {
     console.log("auth error:", err);
@@ -47,20 +47,25 @@ export const authUser = async (creds: Creads, authType: AuthMethod) => {
 
 export function* authHandler({ type, payload }: Action): Generator<any> {
   const authType: AuthMethod = typeToMethodMap[type];
-  const userData = yield call(authUser, payload as Creads, authType);
-  if (userData) {
-    yield put({
-      type: AUTH_SUCCESS,
-      // payload: {}
-    });
+  if (authType === "logOut") {
+    const result = yield call(authService[authType]);
+    console.log(result);
   } else {
-    yield put({
-      type: AUTH_FAILURE,
-    });
+    const userData = yield call(authUser, payload as Creads, authType);
+    if (userData) {
+      yield put({
+        type: AUTH_SUCCESS,
+        // payload: {}
+      });
+    } else {
+      yield put({
+        type: AUTH_FAILURE,
+      });
+    }
   }
-};
+}
 
 // watcher saga
 export default function* authSaga() {
   yield takeLatest([LOGIN_REQUEST, SINGUP_REQUEST, LOGOUT], authHandler);
-};
+}

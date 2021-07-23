@@ -14,23 +14,19 @@ const configFirebase = firebase.initializeApp({
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 });
 
-export const signIn = async ({
-  email,
-  password,
-}: Creads) => {
+export const signIn = async ({ email, password }: Creads) => {
+  console.log({ email, password });
   try {
     return await configFirebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-  } catch (error) {
+  } catch (error) {    
+    console.log(error);
     return null;
   }
 };
 
-export const signUp = async ({
-  email,
-  password,
-}: Creads) => {
+export const signUp = async ({ email, password }: Creads) => {
   try {
     return await configFirebase
       .auth()

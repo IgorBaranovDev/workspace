@@ -13,6 +13,8 @@ import {
 // types
 import { Action } from "../actions/types";
 
+// type for initial state and export
+
 const initialState = {
   user: null, // auth.user: jjj@dd
 };
