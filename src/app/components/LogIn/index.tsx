@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 // style
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
@@ -15,19 +15,24 @@ import ButtonSubmint from "./ButtonSubmint";
 import { logIn, signUp, logOut } from "../../redux/actions";
 
 // types
-import { ILogin } from './types';
+import { ILogin } from "./types";
 
-const mapStateToProps = ( state: any ) => ({
-   user: 'user'// selector userSelector(state);
-});
+// selector
+import { getAuthUserState } from "../../redux/selectors";
+
+const mapStateToProps = (state: any) => {
+  return {
+    user: getAuthUserState(state),
+  };
+};
 
 const mapDispatchToProps = {
   logIn,
   signUp,
-  logOut 
+  logOut,
 };
 
-export const Login: React.FC<ILogin> = ({user, logIn, signUp}) => {
+export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
@@ -40,7 +45,7 @@ export const Login: React.FC<ILogin> = ({user, logIn, signUp}) => {
     }
   };
 
-  const handlerChekbox = (event: React.ChangeEvent<HTMLInputElement>) => {   
+  const handlerChekbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsRegistration((prev) => !prev);
   };
 
@@ -52,8 +57,10 @@ export const Login: React.FC<ILogin> = ({user, logIn, signUp}) => {
     setPassword("");
   };
 
-  return user ? <span>`You are already signed in as ${user}`</span> : (
-    <React.Fragment>      
+  return user ? (
+    <span>`You are already signed in as ${user}`</span>
+  ) : (
+    <React.Fragment>
       <LoginWrapper elevation={10}>
         <Grid
           container
@@ -94,10 +101,10 @@ export const Login: React.FC<ILogin> = ({user, logIn, signUp}) => {
           <FormControlLabel
             control={
               <Checkbox
-              color="primary"
+                color="primary"
                 checked={isRegistration}
                 onChange={handlerChekbox}
-                name="newUser"                
+                name="newUser"
               />
             }
             label="New user"
