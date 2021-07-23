@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
 
 // material-ui
-import { Checkbox, FormControlLabel, Grid } from "@material-ui/core";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
@@ -18,11 +18,11 @@ import { logIn, signUp, logOut } from "../../redux/actions";
 import { ILogin } from "./types";
 
 // selector
-import { getAuthUserState } from "../../redux/selectors";
+import { getAuthUser } from "../../redux/selectors";
 
 const mapStateToProps = (state: any) => {
   return {
-    user: getAuthUserState(state),
+    user: getAuthUser(state),
   };
 };
 
@@ -51,28 +51,20 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const authFunc = isRegistration ? logIn : signUp;
+    const authFunc = isRegistration ? signUp : logIn;
     authFunc({ email, password });
     setEmail("");
     setPassword("");
   };
 
-  return user ? (
-    <span>`You are already signed in as ${user}`</span>
-  ) : (
+  // use effct user => redirect
+
+  return (
     <React.Fragment>
       <LoginWrapper elevation={10}>
-        <Grid
-          container
-          spacing={0}
-          direction="column"
-          alignItems="center"
-          justify="center"
-        >
-          <LoginImg>
-            <LockOpenIcon fontSize="large" />
-          </LoginImg>
-        </Grid>
+        <LoginImg>
+          <LockOpenIcon fontSize="large" />
+        </LoginImg>
         <LoginForm noValidate onSubmit={handleSubmit}>
           <AuthInput
             type="email"
@@ -107,7 +99,7 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
                 name="newUser"
               />
             }
-            label="New user"
+            label="Create an account"
           />
           <ButtonSubmint />
         </LoginForm>
