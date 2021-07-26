@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 // style
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
@@ -36,6 +37,7 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
+  const history = useHistory();
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "username") {
@@ -57,7 +59,7 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
     setPassword("");
   };
 
-  // use effct user => redirect
+  useEffect(() =>  user ? history.push("/") : history.push("/auth"), [user, history]);
 
   return (
     <React.Fragment>
