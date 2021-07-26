@@ -7,10 +7,10 @@ import {
   // logIn,
   //  signUp,
   logOut,
-} from "../../../../redux/actions";
+} from "../../../../redux/actions/index";
 
 // styles
-import { IconButton, Icon, TextLogin } from "./components";
+import { IconButton, Icon, TextLogin, UserName } from "./components";
 import { getAuthUser } from "../../../../redux/selectors";
 
 const MenuUser: React.FunctionComponent = () => {
@@ -21,7 +21,6 @@ const MenuUser: React.FunctionComponent = () => {
   const handlerClick = () => {
     if (user) {
       dispatch(logOut());
-      // dispatch({ type: LOGOUT });
     } else {
       history.push("/auth");
     }
@@ -36,7 +35,15 @@ const MenuUser: React.FunctionComponent = () => {
       color="inherit"
     >
       <Icon />
-      <TextLogin>{user ? `${JSON.stringify(user)} (logOut)` : "login"}</TextLogin>
+      <TextLogin>
+        {user ? (
+          <UserName>
+            {JSON.stringify(user).slice(1, -1)} &nbsp;<span>logout</span>
+          </UserName>
+        ) : (
+          "login"
+        )}
+      </TextLogin>
     </IconButton>
   );
 };
