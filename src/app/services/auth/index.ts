@@ -40,3 +40,9 @@ export const logOut = () => {
   configFirebase.auth().signOut();
   console.log("logOut");
 };
+
+export const init = ( { email, password }: Creds) => {
+  console.log("init");
+  const user =  email ; 
+  return user;
+}
