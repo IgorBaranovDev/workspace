@@ -1,18 +1,14 @@
 import styled from "styled-components";
 
-// material-ui
-import { Link } from "@material-ui/core";
-
-const Text = styled(Link)`
+const Text = styled.h1`
   padding: 10px;
   font-size: 16px;
   line-height: 16px;
   color: #fff;
   cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-    text-decoration: none;
+  
+  &:hover {    
+    background-color: rgba(0, 0, 0, 0.04);    
   }
 `;
 
