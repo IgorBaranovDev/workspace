@@ -6,6 +6,7 @@ export const SINGUP_REQUEST = "USERS_SINGUP_REQUEST";
 export const AUTH_SUCCESS = "USERS_AUTH_SUCCESS";
 export const AUTH_FAILURE = "USER_AUTH_FAILURE";
 export const LOGOUT = "USER_LOGOUT";
+export const CHECK = "CHECK_USER_AUTH";
 
 export const logIn = (creds: Creds): Action => ({
   type: LOGIN_REQUEST,
@@ -23,3 +24,9 @@ export const authSuccess = (user: string): Action => ({
   type: AUTH_SUCCESS,
   payload: user,
 });
+
+export const checkUser = (user: string): Action => ({
+  type: CHECK,
+  payload: user,
+});
+

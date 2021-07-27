@@ -1,22 +1,22 @@
-import { REHYDRATE } from "redux-persist/lib/constants";
-
 // actions
-import { AUTH_SUCCESS, LOGOUT } from "../actions";
+import { AUTH_SUCCESS, LOGOUT, CHECK } from "../actions";
 
 // types
-// import { Action } from "../actions/types";
+import { Action } from "../actions/types";
 
 const initialState = {
   user: null,
 };
 
+console.log(initialState);
+
 export default function authReducer(
   state = initialState,
-  { type, payload }: any
+  { type, payload }: Action
 ) {
   switch (type) {
-    case REHYDRATE:      
-      return { ...state, user:  payload.auth.user };      
+    case CHECK:
+      return { ...state, user: payload };
     case AUTH_SUCCESS:
       return { ...state, user: payload };
     case LOGOUT:

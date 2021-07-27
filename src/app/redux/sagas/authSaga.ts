@@ -11,7 +11,6 @@ import {
   AUTH_FAILURE,
   LOGOUT,
   authSuccess,
-  INIT,
 } from "../actions";
 
 // auth services
@@ -24,8 +23,7 @@ type AuthMethod = keyof AuthService;
 const typeToMethodMap: { [key: string]: AuthMethod } = {
   [LOGIN_REQUEST]: "signIn",
   [SINGUP_REQUEST]: "signUp",
-  [LOGOUT]: "logOut",  
-  [INIT]: "init",
+  [LOGOUT]: "logOut",
 };
 
 // worker sagas
@@ -56,12 +54,7 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
   }
 }
 
-export function* initHandler({ type, payload }: Action): Generator<any> {
-
-}
-
 // watcher saga
 export default function* authSaga() {
   yield takeLatest([LOGIN_REQUEST, SINGUP_REQUEST, LOGOUT], authHandler);
-  yield takeLatest([INIT], initHandler);
 }
