@@ -38,10 +38,10 @@ const MenuUser: React.FunctionComponent = () => {
       <TextLogin>
         {user ? (
           <UserName>
-            {JSON.stringify(user).slice(1, -1)} &nbsp;<span>logout</span>
+            {JSON.stringify(user).slice(1, -1)} &nbsp;<span>log out</span>
           </UserName>
         ) : (
-          "login"
+          "log in"
         )}
       </TextLogin>
     </IconButton>
