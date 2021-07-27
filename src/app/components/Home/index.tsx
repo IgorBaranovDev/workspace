@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { getAuthUser } from "../../redux/selectors";
@@ -10,13 +10,13 @@ import { TitleHome } from "./components";
 const Home: React.FC = () => {
   const user = useSelector(getAuthUser);
   return (
-    <Route exact path="/">
+    <React.Fragment>
       {!user ? (
         <Redirect to="/auth" />
       ) : (
         <TitleHome>This home page ...✨</TitleHome>
       )}
-    </Route>
+    </React.Fragment>
   );
 };
 
