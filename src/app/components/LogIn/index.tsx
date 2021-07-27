@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 // style
 import { LoginWrapper, LoginImg, LoginForm, AuthInput } from "./components";
@@ -35,7 +36,7 @@ const mapDispatchToProps = {
 export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegistration, setIsRegistration] = useState(false);
+  const [isRegistration, setIsRegistration] = useState(false);  
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "username") {
@@ -57,53 +58,55 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
     setPassword("");
   };
 
-  // use effct user => redirect
-
   return (
     <React.Fragment>
-      <LoginWrapper elevation={10}>
-        <LoginImg>
-          <LockOpenIcon fontSize="large" />
-        </LoginImg>
-        <LoginForm noValidate onSubmit={handleSubmit}>
-          <AuthInput
-            type="email"
-            name="username"
-            label="Email"
-            placeholder="Enter email"
-            margin="normal"
-            value={email}
-            onChange={handlerChange}
-            fullWidth
-            variant="outlined"
-            required
-          />
-          <AuthInput
-            type="password"
-            name="password"
-            label="Password"
-            placeholder="Enter password"
-            margin="normal"
-            value={password}
-            onChange={handlerChange}
-            fullWidth
-            variant="outlined"
-            required
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                color="primary"
-                checked={isRegistration}
-                onChange={handlerChekbox}
-                name="newUser"
-              />
-            }
-            label="Create an account"
-          />
-          <ButtonSubmint />
-        </LoginForm>
-      </LoginWrapper>
+      {user ? (
+        <Redirect to="/" />
+      ) : (
+        <LoginWrapper elevation={10}>
+          <LoginImg>
+            <LockOpenIcon fontSize="large" />
+          </LoginImg>
+          <LoginForm noValidate onSubmit={handleSubmit}>
+            <AuthInput
+              type="email"
+              name="username"
+              label="Email"
+              placeholder="Enter email"
+              margin="normal"
+              value={email}
+              onChange={handlerChange}
+              fullWidth
+              variant="outlined"
+              required
+            />
+            <AuthInput
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Enter password"
+              margin="normal"
+              value={password}
+              onChange={handlerChange}
+              fullWidth
+              variant="outlined"
+              required
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  color="primary"
+                  checked={isRegistration}
+                  onChange={handlerChekbox}
+                  name="newUser"
+                />
+              }
+              label="Create an account"
+            />
+            <ButtonSubmint />
+          </LoginForm>
+        </LoginWrapper>
+      )}
     </React.Fragment>
   );
 };

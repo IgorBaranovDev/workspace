@@ -6,11 +6,11 @@ import { LogoWrapper, Text } from "./components";
 
 const Logo: React.FunctionComponent = () => {
   return (
-    <Link to='/'>
-      <LogoWrapper>
+    <LogoWrapper>
+      <Link to="/" >
         <Text>Workspace</Text>
-      </LogoWrapper>
-    </Link>
+      </Link>
+    </LogoWrapper>
   );
 };
 

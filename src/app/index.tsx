@@ -7,6 +7,7 @@ import Login from "./components/LogIn";
 import Home from "./components/Home";
 
 const App: React.FunctionComponent = () => {
+  // const user = useSelector(getAuthUser);
   return (
     <Layout>
       <Switch>

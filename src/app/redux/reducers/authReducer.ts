@@ -1,23 +1,22 @@
 // actions
-import {
-  // LOGIN_REQUEST,
-  // SINGUP_REQUEST,
-  AUTH_SUCCESS,
-  // AUTH_FAILURE,
-  LOGOUT,
-} from "../actions";
+import { AUTH_SUCCESS, LOGOUT, CHECK } from "../actions";
 
 // types
 import { Action } from "../actions/types";
-
-// type for initial state and export
 
 const initialState = {
   user: null,
 };
 
-export default function authReducer(state = initialState, { type, payload }: Action) {
+console.log(initialState);
+
+export default function authReducer(
+  state = initialState,
+  { type, payload }: Action
+) {
   switch (type) {
+    case CHECK:
+      return { ...state, user: payload };
     case AUTH_SUCCESS:
       return { ...state, user: payload };
     case LOGOUT:
@@ -25,4 +24,4 @@ export default function authReducer(state = initialState, { type, payload }: Act
     default:
       return state;
   }
-};
+}

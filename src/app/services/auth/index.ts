@@ -16,6 +16,7 @@ const configFirebase = firebase.initializeApp({
 
 export const signIn = async ({ email, password }: Creds) => {
   console.log({ email, password });
+
   try {
     return await configFirebase
       .auth()
@@ -38,5 +39,13 @@ export const signUp = async ({ email, password }: Creds) => {
 
 export const logOut = () => {
   configFirebase.auth().signOut();
+  
   console.log("logOut");
 };
+
+export const checkUser = () => {  
+  // console.log("chekUser", configFirebase.auth().currentUser);
+  // const user =  email ; 
+  console.log(configFirebase.auth().currentUser);
+  return configFirebase.auth().currentUser?.email;
+}

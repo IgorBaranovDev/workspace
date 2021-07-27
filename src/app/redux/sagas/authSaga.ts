@@ -8,25 +8,17 @@ import { Creds } from "../../services/types";
 import {
   LOGIN_REQUEST,
   SINGUP_REQUEST,
-  AUTH_SUCCESS,
   AUTH_FAILURE,
   LOGOUT,
+  authSuccess,
 } from "../actions";
 
 // auth services
-import { signIn, signUp, logOut } from "../../services/auth";
+import * as authService from "../../services/auth";
 
-const authService: {
-  signIn: typeof signIn;
-  signUp: typeof signUp;
-  logOut: typeof logOut;
-} = {
-  signIn,
-  signUp,
-  logOut,
-};
+type AuthService = typeof authService;
 
-type AuthMethod = keyof typeof authService;
+type AuthMethod = keyof AuthService;
 
 const typeToMethodMap: { [key: string]: AuthMethod } = {
   [LOGIN_REQUEST]: "signIn",
@@ -37,7 +29,7 @@ const typeToMethodMap: { [key: string]: AuthMethod } = {
 // worker sagas
 export const authUser = async (creds: Creds, authType: AuthMethod) => {
   try {
-    const userData = await authService[authType]?.(creds);   
+    const userData = await authService[authType]?.(creds);
     return userData;
   } catch (err) {
     console.log("auth error:", err);
@@ -51,12 +43,9 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
     const result = yield call(authService[authType]);
     console.log(result);
   } else {
-    const userData = yield call(authUser, payload as Creds, authType);
+    const userData: any = yield call(authUser, payload as Creds, authType);
     if (userData) {
-      yield put({
-        type: AUTH_SUCCESS,
-        // payload: {}
-      });
+      yield put(authSuccess(userData.user.email));
     } else {
       yield put({
         type: AUTH_FAILURE,
