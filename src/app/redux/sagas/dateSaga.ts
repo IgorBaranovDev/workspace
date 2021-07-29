@@ -1,4 +1,4 @@
-import { put, takeLatest, call } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 
 // types
 import { Action } from "../actions/types";
@@ -6,7 +6,8 @@ import { Action } from "../actions/types";
 // actions
 import {
   FETCH_OFFICES_DATA,
-  FETCH_OFFICES_DATA_COMPLETE,
+  fetchOfficesDataComplelte,
+  // fetchFloorsDataComplelte,
 } from "../actions/selectOffice";
 
 // service
@@ -15,15 +16,20 @@ import { getAddressesData } from "../../services/BD";
 // worker sagas
 export function* dateHandler({ type, payload }: Action): Generator<any> {
   try {
-    const dataOffices = yield call(getAddressesData);
+    const dataOffices: any = yield call(getAddressesData);
     if (dataOffices) {
-      yield put({
-        type: FETCH_OFFICES_DATA_COMPLETE,
-        payload: dataOffices,
-      });
+      yield put(fetchOfficesDataComplelte(dataOffices));
     } else {
-      console.log("fech data fail");
+      console.log("fech data offices fail");
     }
+
+    // const dataFloors: any = yield call(getFloorsData);
+    // if (dataFloors) {
+    //   fetchFloorsDataComplelte(dataFloors);
+    // } else {
+    //   console.log("fech data floors fail");
+    // }
+
     return dataOffices;
   } catch (err) {
     console.log("Fetch date offices error:", err);
