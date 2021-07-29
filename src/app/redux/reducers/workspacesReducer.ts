@@ -1,11 +1,22 @@
 // actions
-import { WRITE_DATA } from "../actions/selectOffice";
+import {
+  FETCH_OFFICES_DATA_COMPLETE,
+  FETCH_FLOORS_DATA_COMPLETE,
+} from "../actions/selectOffice";
 
 // types
 import { Action } from "../actions/types";
+import { Floors } from "../../services/BD/type/Floors";
+import { OfficesData } from "../../services/BD/type/OfficesData";
 
-const initialState = {
-  offices: null,
+type OfficesState = {
+  officesData: OfficesData;
+  floors: Floors;
+};
+
+const initialState: OfficesState = {
+  officesData: {},
+  floors: {},
 };
 
 export default function workspacesReducer(
@@ -13,8 +24,10 @@ export default function workspacesReducer(
   { type, payload }: Action
 ) {
   switch (type) {
-    case WRITE_DATA:
-      return { ...state, offices: payload };
+    case FETCH_OFFICES_DATA_COMPLETE:
+      return { ...state, officesData: payload };
+    case FETCH_FLOORS_DATA_COMPLETE:
+      return { ...state, floors: { ...state.floors, ...payload as object } };
     default:
       return state;
   }
