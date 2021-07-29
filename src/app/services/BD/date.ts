@@ -1,6 +1,7 @@
-import { OfficesDate, Floors } from "./type";
+import { OfficesData } from "./type/OfficesData";
+import { Floors } from "./type/Floors";
 
-const officesDate: OfficesDate = {
+const officesData: OfficesData = {
   contry1: {
     city_1: {
       address_1: "office_id-1",
@@ -29,7 +30,7 @@ const floors: Floors = {
       places: [
         {
           label: "workplace-test-1",
-          type: "type-test",         
+          type: "type-test",
           placeStatus: {
             blocked: false,
             occupants: "",
@@ -47,10 +48,10 @@ const floors: Floors = {
       places: [
         {
           label: "workplace-test-1",
-          type: "type-test",         
+          type: "type-test",
           placeStatus: {
             blocked: false,
-            occupant: "",
+            occupants: "",
             start: 33,
             end: 44,
           },
@@ -60,4 +61,4 @@ const floors: Floors = {
   ],
 };
 
-export { officesDate, floors };
+export { officesData, floors };
