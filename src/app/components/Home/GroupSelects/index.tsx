@@ -1,74 +1,89 @@
-import React, { useState } from "react";
-import { connect } from 'react-redux';
-import { useSelector } from "react-redux";
-import { getCountryDate } from "../../../redux/selectors";
-// import { officesDate } from "../../../services/BD/date";
-import {getCountry} from '../../../redux/selectors';
+import React, { useEffect, useState } from "react";
 
 // components
-import { InputItem, LabelForInput, Select, WrapperForSelect } from "./components";
-import { fechData, writeData } from "../../../redux/actions/selectOffice";
+import {
+  InputItem,
+  LabelForInput,
+  Select,
+  WrapperForSelect,
+} from "./components";
 
 // types
-// import { OfficesDate } from "../../../services/BD/type/OfficesDate";
-const mapStateToProps = (officesDate: any) => {
-  return {
-    officesDate: getCountry(officesDate),
-  }  
-};
+import { OfficesData } from "../../../services/BD/type/OfficesData";
+import { TitleHome } from "../components";
 
-const mapDispatchProps = {
-  fechData,
-  writeData
+interface IGroupSelector {
+  officesProps: OfficesData;
 }
 
+interface IarrCity {
+  [key: number]: string;
+}
 
-const GroupSelects: React.FC = () => {
+const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
   const [country, setCounrty] = useState("");
-  // const [city, setCity] = useState("");
-  const countryDate = useSelector(getCountryDate);
-  console.log(countryDate);
+  const [arrCity, setArrCity] = useState<Array<IarrCity>>([]);
+  const [city, setCity] = useState("");
+
+  console.log("country state - ", country);
+  console.log("arrCitys state -", arrCity);
+
+  useEffect(() => {
+    if (country) {
+      setArrCity(Object.keys(officesProps[country]));
+    }
+  }, [officesProps, country]);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     if (element.name === "selectCountry") {
       setCounrty(element.value as string);
     } else {
-      // setCity(element.value as string);
+      if (element.name === "selectCity") {
+        setCity(element.value as string);
+      }
     }
   };
 
   return (
-    <WrapperForSelect>
-      <InputItem>
-        <LabelForInput htmlFor="selectCountry">Select Country</LabelForInput>
-        <Select
-          id="selectCountry"
-          name="selectCountry"
-          value={country}
-          onChange={handleChange}
-        >
-          {/* {countryDate?.map((item) => (
-            <option value={item.country} key={item.country}>
-              {item.country}
+    <>
+      <TitleHome>choose a workplace</TitleHome>
+      <WrapperForSelect>
+        <InputItem>
+          <LabelForInput htmlFor="selectCountry">Select Country</LabelForInput>
+          <Select
+            id="selectCountry"
+            name="selectCountry"
+            value={country}
+            onChange={handleChange}
+          >
+            <option hidden value="">
+              Select country
             </option>
-          ))} */}
-        </Select>
-      </InputItem>
-      <InputItem>
-        <LabelForInput htmlFor="selectCity">Select City</LabelForInput>
-        {/* <Select id="selectCity" name="selectCity">
-          value={city}
-          onChange={handleChange}
-          {offices?.map((item) => (
-            <option value={item.city} key={item.city}>
-              {item.city}
-            </option>
-          ))}
-        </Select> */}
-      </InputItem>
-    </WrapperForSelect>
+            {Object.keys(officesProps)?.map((keyName, item) => (
+              <option value={keyName} key={item}>
+                {keyName}
+              </option>
+            ))}
+          </Select>
+        </InputItem>
+        <InputItem>
+          <LabelForInput htmlFor="selectCity">Select City</LabelForInput>
+          <Select
+            id="selectCity"
+            name="selectCity"
+            value={city}
+            onChange={handleChange}
+            disabled={!country}
+          >
+            {arrCity?.map((item, key) => (              
+              <option key={key}>{item}</option>
+            ))}
+          </Select>
+        </InputItem>
+      </WrapperForSelect>
+    </>
   );
 };
 
-export default connect(mapStateToProps, mapDispatchProps)(GroupSelects);
+export default GroupSelects;
