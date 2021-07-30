@@ -2,22 +2,31 @@ import { OfficesData } from "./type/OfficesData";
 import { Floors } from "./type/Floors";
 
 const officesData: OfficesData = {
-  contry1: {
-    city_1: {
+  USA: {
+    NY: {
       address_1: "office_id-1",
     },
-    city_2: {
+    Boulder: {
       address_1: "office_id-2",
       address_2: "office_id-3",
     },
   },
-  contry2: {
-    city_1: {
+  Belarus: {
+    Minsk: {
       address_1: "office_id-4",
     },
-    city_2: {
+    Brest: {
       address_1: "office_id-5",
       address_2: "office_id-6",
+    },
+    Vitebsk: {
+      address_1: "office_id-5",
+      address_2: "office_id-6",
+    },
+  },
+  Russia: {
+    Chelyabinsk: {
+      address_1: "office_id-4",
     },
   },
 };

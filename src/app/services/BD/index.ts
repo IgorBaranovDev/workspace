@@ -1,4 +1,4 @@
-import { officesData, floors } from "./date";
+import { officesData, floors } from "./data";
 
 export const getAddressesData = () => officesData; 
 
