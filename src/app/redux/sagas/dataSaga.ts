@@ -38,6 +38,6 @@ export function* dateHandler({ type, payload }: Action): Generator<any> {
 }
 
 // watcher saga
-export default function* dateSaga() {
+export default function* dataSaga() {
   yield takeLatest([FETCH_OFFICES_DATA], dateHandler);
 }
