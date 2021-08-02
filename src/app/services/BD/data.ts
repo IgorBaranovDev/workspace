@@ -5,6 +5,10 @@ const officesData: OfficesData = {
   USA: {
     NY: {
       address_1: "office_id-1",
+      address_2: "office_id-1",
+      address_3: "office_id-1",
+      address_4: "office_id-1",
+      address_5: "office_id-1",
     },
     Boulder: {
       address_1: "office_id-2",
@@ -14,6 +18,9 @@ const officesData: OfficesData = {
   Belarus: {
     Minsk: {
       address_1: "office_id-4",
+      address_2: "office_id-1",
+      address_3: "office_id-1",
+      address_4: "office_id-1",
     },
     Brest: {
       address_1: "office_id-5",
@@ -22,6 +29,7 @@ const officesData: OfficesData = {
     Vitebsk: {
       address_1: "office_id-5",
       address_2: "office_id-6",
+      address_3: "office_id-1",
     },
   },
   Russia: {

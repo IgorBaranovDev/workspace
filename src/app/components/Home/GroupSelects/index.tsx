@@ -8,6 +8,10 @@ import {
   WrapperForSelect,
 } from "./components";
 
+// components
+// import AddressTable from "../AddressTable";
+import ListOfAddresses from "../ListOfAddresses";
+
 // types
 import { OfficesData } from "../../../services/BD/type/OfficesData";
 import { TitleHome } from "../components";
@@ -24,20 +28,24 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
   const [country, setCounrty] = useState("");
   const [arrCity, setArrCity] = useState<Array<IarrCity>>([]);
   const [city, setCity] = useState("");
-
-  console.log("country state - ", country);
-  console.log("arrCitys state -", arrCity);
+  const [arrAddresses, setArrAddresses] = useState<Array<IarrCity>>([]); 
 
   useEffect(() => {
     if (country) {
       setArrCity(Object.keys(officesProps[country]));
     }
-  }, [officesProps, country]);
+    if (city) {
+      setArrAddresses(Object.keys(officesProps[country][city]));
+    } else {
+      setArrAddresses([]);
+    }
+  }, [city, country, officesProps]);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     if (element.name === "selectCountry") {
       setCounrty(element.value as string);
+      setCity("");
     } else {
       if (element.name === "selectCity") {
         setCity(element.value as string);
@@ -76,12 +84,16 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
             onChange={handleChange}
             disabled={!country}
           >
-            {arrCity?.map((item, key) => (              
+            <option hidden value="">
+              Select sity
+            </option>
+            {arrCity?.map((item, key) => (
               <option key={key}>{item}</option>
             ))}
           </Select>
         </InputItem>
-      </WrapperForSelect>
+      </WrapperForSelect>      
+      <ListOfAddresses addresesData={arrAddresses} />      
     </>
   );
 };
