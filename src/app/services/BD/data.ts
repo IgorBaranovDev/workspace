@@ -50,9 +50,15 @@ const floors: Floors = {
           type: "type-test",
           placeStatus: {
             blocked: false,
-            occupants: "",
+            occupant: "",
             start: 33,
             end: 44,
+            coordinates: {
+              x: 10,
+              y: 20,
+              width: 100,
+              height: 200,
+            }
           },
         },
       ],
@@ -68,9 +74,15 @@ const floors: Floors = {
           type: "type-test",
           placeStatus: {
             blocked: false,
-            occupants: "",
+            occupant: "",
             start: 33,
             end: 44,
+            coordinates: {
+              x: 120,
+              y: 20,
+              width: 100,
+              height: 200,
+            }
           },
         },
       ],

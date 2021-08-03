@@ -1,5 +1,6 @@
 import React from "react";
 
+// material-ui
 import List from "@material-ui/core/List";
 import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -18,24 +19,24 @@ const ListItemLink = (props: ListItemProps<"a", { button?: true }>) => {
   );
 };
 
+// type
 interface IarrCity {
   [key: number]: string;
 }
-
 interface IListOfAddresses {
-  addresesData: Array<IarrCity>;
+  addresesData: Array<Array<IarrCity>>;
 }
 
 const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
   return (
     <>
       <List component="nav" aria-label="secondary mailbox folders">
-        {addresesData?.map((keyName, item, index) => (
-          <ListItemLink href={`/office/${keyName as string}`} key={item}>
+        {addresesData?.map(([address, office_id], index) => (
+          <ListItemLink href={`/office/${address}`} key={index}>
             <ListItemIcon>
               <LocationOnIcon />
             </ListItemIcon>
-            <ListItemText primary={keyName as string} />
+            <ListItemText primary={address} />
           </ListItemLink>
         ))}
       </List>

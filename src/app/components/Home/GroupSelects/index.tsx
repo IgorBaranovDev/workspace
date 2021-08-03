@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // components
 import {
@@ -9,7 +9,6 @@ import {
 } from "./components";
 
 // components
-// import AddressTable from "../AddressTable";
 import ListOfAddresses from "../ListOfAddresses";
 
 // types
@@ -28,27 +27,19 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
   const [country, setCounrty] = useState("");
   const [arrCity, setArrCity] = useState<Array<IarrCity>>([]);
   const [city, setCity] = useState("");
-  const [arrAddresses, setArrAddresses] = useState<Array<IarrCity>>([]); 
-
-  useEffect(() => {
-    if (country) {
-      setArrCity(Object.keys(officesProps[country]));
-    }
-    if (city) {
-      setArrAddresses(Object.keys(officesProps[country][city]));
-    } else {
-      setArrAddresses([]);
-    }
-  }, [city, country, officesProps]);
+  const [arrAddresses, setArrAddresses] = useState<Array<Array<IarrCity>>>([]);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     if (element.name === "selectCountry") {
       setCounrty(element.value as string);
+      setArrCity(Object.keys(officesProps[element.value]));
       setCity("");
+      setArrAddresses([]);
     } else {
       if (element.name === "selectCity") {
         setCity(element.value as string);
+        setArrAddresses(Object.entries(officesProps[country][element.value]));
       }
     }
   };
@@ -92,8 +83,8 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
             ))}
           </Select>
         </InputItem>
-      </WrapperForSelect>      
-      <ListOfAddresses addresesData={arrAddresses} />      
+      </WrapperForSelect>
+      <ListOfAddresses addresesData={arrAddresses} />
     </>
   );
 };

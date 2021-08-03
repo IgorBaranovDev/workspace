@@ -7,9 +7,15 @@ export type Floors = {
       type: string;
       placeStatus: {
         blocked: boolean;
-        occupants: string;
+        occupant: string;
         start: number;
         end: number;
+        coordinates: {
+          x?: number,
+          y?: number,
+          width?: number,
+          height?: number,
+        }
       };
     }>;
   }>;

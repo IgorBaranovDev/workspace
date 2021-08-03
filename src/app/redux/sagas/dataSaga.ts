@@ -14,7 +14,7 @@ import {
 import { getAddressesData } from "../../services/BD";
 
 // worker sagas
-export function* dateHandler({ type, payload }: Action): Generator<any> {
+export function* dataHandler({ type, payload }: Action): Generator<any> {
   try {
     const dataOffices: any = yield call(getAddressesData);
     if (dataOffices) {
@@ -39,5 +39,5 @@ export function* dateHandler({ type, payload }: Action): Generator<any> {
 
 // watcher saga
 export default function* dataSaga() {
-  yield takeLatest([FETCH_OFFICES_DATA], dateHandler);
+  yield takeLatest([FETCH_OFFICES_DATA], dataHandler);
 }
