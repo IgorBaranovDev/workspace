@@ -11,6 +11,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 
 // components
 import ButtonSubmint from "./ButtonSubmint";
+import Loader from "../Loader";
 
 // actions
 import { logIn, signUp, logOut } from "../../redux/actions";
@@ -36,7 +37,8 @@ const mapDispatchToProps = {
 export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegistration, setIsRegistration] = useState(false);  
+  const [isRegistration, setIsRegistration] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "username") {
@@ -52,16 +54,23 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     const authFunc = isRegistration ? signUp : logIn;
+    console.log(logIn);
     authFunc({ email, password });
     setEmail("");
     setPassword("");
+    if (user) {
+      setLoading(false);
+    }
   };
 
   return (
     <React.Fragment>
       {user ? (
         <Redirect to="/" />
+      ) : loading ? (
+        <Loader />
       ) : (
         <LoginWrapper elevation={10}>
           <LoginImg>

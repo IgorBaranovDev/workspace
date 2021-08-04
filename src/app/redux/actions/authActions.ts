@@ -29,4 +29,3 @@ export const checkUser = (user: string): Action => ({
   type: CHECK,
   payload: user,
 });
-

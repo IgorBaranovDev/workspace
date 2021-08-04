@@ -2,9 +2,11 @@ import { all, spawn, call } from "redux-saga/effects";
 
 // sagas
 import  authSaga  from './authSaga';
+import dataSaga from "./dataSaga";
 
 const sagas: any[] = [
-    authSaga
+    authSaga,
+    dataSaga
 ];
 
 function* rootSaga() {

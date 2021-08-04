@@ -8,8 +8,6 @@ const initialState = {
   user: null,
 };
 
-console.log(initialState);
-
 export default function authReducer(
   state = initialState,
   { type, payload }: Action
