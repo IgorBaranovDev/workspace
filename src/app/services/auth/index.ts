@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
 import "firebase/auth";
 
 // types
@@ -15,13 +15,9 @@ const configFirebase = firebase.initializeApp({
 });
 
 export const signIn = async ({ email, password }: Creds) => {
-  console.log({ email, password });
-
   try {
-    return await configFirebase
-      .auth()
-      .signInWithEmailAndPassword(email, password);
-  } catch (error) {    
+    return await configFirebase.auth().signInWithEmailAndPassword(email, password);
+  } catch (error) {
     console.log(error);
     return null;
   }
@@ -33,19 +29,15 @@ export const signUp = async ({ email, password }: Creds) => {
       .auth()
       .createUserWithEmailAndPassword(email, password);
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
 
 export const logOut = () => {
   configFirebase.auth().signOut();
-  
-  console.log("logOut");
 };
 
-export const checkUser = () => {  
-  // console.log("chekUser", configFirebase.auth().currentUser);
-  // const user =  email ; 
-  console.log(configFirebase.auth().currentUser);
-  return configFirebase.auth().currentUser?.email;
-}
+export const getCurrentUser = () => {
+  return configFirebase.auth().currentUser;
+};

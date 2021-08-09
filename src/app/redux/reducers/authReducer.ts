@@ -1,5 +1,5 @@
 // actions
-import { AUTH_SUCCESS, LOGOUT, CHECK } from "../actions";
+import { AUTH_SUCCESS, LOGOUT } from "../actions";
 
 // types
 import { Action } from "../actions/types";
@@ -12,9 +12,8 @@ export default function authReducer(
   state = initialState,
   { type, payload }: Action
 ) {
+  // console.log('RUN REDUCER');
   switch (type) {
-    case CHECK:
-      return { ...state, user: payload };
     case AUTH_SUCCESS:
       return { ...state, user: payload };
     case LOGOUT:

@@ -9,12 +9,15 @@ import {
   LOGIN_REQUEST,
   SINGUP_REQUEST,
   AUTH_FAILURE,
+  GET_CURRENT_USER,
   LOGOUT,
   authSuccess,
+  // getCurrentUser,
 } from "../actions";
 
 // auth services
 import * as authService from "../../services/auth";
+import { getCurrentUser } from "../../services/auth";
 
 type AuthService = typeof authService;
 
@@ -40,8 +43,7 @@ export const authUser = async (creds: Creds, authType: AuthMethod) => {
 export function* authHandler({ type, payload }: Action): Generator<any> {
   const authType: AuthMethod = typeToMethodMap[type];
   if (authType === "logOut") {
-    const result = yield call(authService[authType]);
-    console.log(result);
+    yield call(authService[authType]);
   } else {
     const userData: any = yield call(authUser, payload as Creds, authType);
     if (userData) {
@@ -54,7 +56,23 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
   }
 }
 
+export function* checkingUser({ type, payload }: Action): Generator<any> {
+  // try {
+    const userDataFromLocalStorage: any = yield call(getCurrentUser);
+    console.log(" saga-worker - ", userDataFromLocalStorage.email);
+    if (userDataFromLocalStorage) {
+      yield put(authSuccess(userDataFromLocalStorage.email));
+    } else {
+      console.log("no user");
+    }
+  // } catch (error) {
+  //   console.log("currentUser:", error);
+  //   return null;
+  // }
+}
+
 // watcher saga
 export default function* authSaga() {
+  yield takeLatest([GET_CURRENT_USER], checkingUser);
   yield takeLatest([LOGIN_REQUEST, SINGUP_REQUEST, LOGOUT], authHandler);
 }
