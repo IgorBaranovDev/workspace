@@ -56,10 +56,9 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
   }
 }
 
-export function* checkingUser({ type, payload }: Action): Generator<any> {
+export function* checkingUser(): Generator<any> {
   // try {
-    const userDataFromLocalStorage: any = yield call(getCurrentUser);
-    console.log(" saga-worker - ", userDataFromLocalStorage.email);
+    const userDataFromLocalStorage: any = yield call(getCurrentUser);    
     if (userDataFromLocalStorage) {
       yield put(authSuccess(userDataFromLocalStorage.email));
     } else {

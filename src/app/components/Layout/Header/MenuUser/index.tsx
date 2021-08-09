@@ -21,11 +21,10 @@ const MenuUser: React.FunctionComponent = () => {
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        console.log(firebase.auth().currentUser?.email);
-        dispatch(getCurrentUser());        
+      if (user) {       
+        dispatch(getCurrentUser());    
       } else {
-        // No user is signed in.
+     // No user is signed in.
       }
     });
   }, [dispatch]);
@@ -33,8 +32,8 @@ const MenuUser: React.FunctionComponent = () => {
   const handlerClick = () => {
     if (user) {
       dispatch(logOut());
-    } else {
       history.push("/auth");
+    } else {
     }
   };
 

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { connect } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, connect, useDispatch } from "react-redux";
 
 // components
 import GroupSelects from "./GroupSelects";
