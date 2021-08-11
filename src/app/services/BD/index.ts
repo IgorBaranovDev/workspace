@@ -1,5 +1,5 @@
 import { officesData, floors } from "./data";
 
-export const getAddressesData = () => officesData; 
+export const getAddressesData = () => officesData;
 
-export const getFloorsData = (id: string) =>  floors[id];
+export const getFloorsData = (id: string) => floors[id];

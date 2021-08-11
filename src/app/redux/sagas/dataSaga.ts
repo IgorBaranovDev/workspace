@@ -1,20 +1,19 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 
-// types
-import { Action } from "../actions/types";
-
 // actions
 import {
   FETCH_OFFICES_DATA,
+  FETCH_FLOORS_DATA,
   fetchOfficesDataComplelte,
-  // fetchFloorsDataComplelte,
+  fetchFloorsDataComplelte,
 } from "../actions/selectOffice";
 
 // service
-import { getAddressesData } from "../../services/BD";
+import { getAddressesData, getFloorsData } from "../../services/BD";
+import { Action } from "../actions/types";
 
 // worker sagas
-export function* dataHandler({ type, payload }: Action): Generator<any> {
+export function* dataHandlerOffices(): Generator<any> {
   try {
     const dataOffices: any = yield call(getAddressesData);
     if (dataOffices) {
@@ -22,14 +21,6 @@ export function* dataHandler({ type, payload }: Action): Generator<any> {
     } else {
       console.log("fech data offices fail");
     }
-
-    // const dataFloors: any = yield call(getFloorsData);
-    // if (dataFloors) {
-    //   fetchFloorsDataComplelte(dataFloors);
-    // } else {
-    //   console.log("fech data floors fail");
-    // }
-
     return dataOffices;
   } catch (err) {
     console.log("Fetch date offices error:", err);
@@ -37,7 +28,23 @@ export function* dataHandler({ type, payload }: Action): Generator<any> {
   }
 }
 
+export function* dataHandlerFloors({ payload }: Action): Generator<any> {
+  try {
+    const dataFloors: any = yield call(getFloorsData, payload as string);
+    if (dataFloors) {
+      yield put(fetchFloorsDataComplelte(dataFloors));
+    } else {
+      console.log("fech data floors fail");
+    }
+    return dataFloors;
+  } catch (err) {
+    console.log("Fetch date floors error:", err);
+    return null;
+  }
+}
+
 // watcher saga
 export default function* dataSaga() {
-  yield takeLatest([FETCH_OFFICES_DATA], dataHandler);
+  yield takeLatest([FETCH_OFFICES_DATA], dataHandlerOffices);
+  yield takeLatest([FETCH_FLOORS_DATA], dataHandlerFloors);
 }

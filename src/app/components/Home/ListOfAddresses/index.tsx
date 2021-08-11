@@ -30,9 +30,13 @@ interface IListOfAddresses {
 const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
   return (
     <>
-      <List component="nav" aria-label="secondary mailbox folders">
+      <List component="nav">
         {addresesData?.map(([address, office_id], index) => (
-          <ListItemLink href={`/office/${address}`} key={index}>
+          <ListItemLink
+            href={`/office/${office_id}`}
+            key={index}
+            id={address as string}
+          >
             <ListItemIcon>
               <LocationOnIcon />
             </ListItemIcon>
