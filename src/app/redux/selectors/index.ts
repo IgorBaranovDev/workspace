@@ -11,3 +11,7 @@ export const getOfficesData = (state: { officesData: OfficesData }) =>
 
 export const getFloorsData = (state: { workspaces: { floors: Floors } }) =>
   state.workspaces.floors;
+
+export const getSelectedFloor = (state: {
+  workspaces: { selectedFloor: number };
+}) => state.workspaces.selectedFloor;
