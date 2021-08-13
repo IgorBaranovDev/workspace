@@ -1,24 +1,32 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getSelectedFloor } from "../../../../redux/actions/selectOffice";
 
 // style
 import { InputItem, Select } from "../../GroupSelects/components";
+import TextFloors from "./TextFloors";
+import TotalNumber from "./TotalNumber";
 
 interface IFloors {
   dataFloors: Array<{ [key: string]: number }>;
 }
 
 const Floors: React.FC<IFloors> = ({ dataFloors }) => {
-  console.log(dataFloors);
   const [floor, setFloor] = useState("");
+  const dispatch = useDispatch();
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     setFloor(element.value as string);
+    const selctedFloor = +element.value;
+    dispatch(getSelectedFloor(selctedFloor as number));
   };
 
   return (
     <>
-      <p>Floors: {dataFloors.length}</p>
+      <TextFloors>
+        total floors: <TotalNumber>{dataFloors.length}</TotalNumber>
+      </TextFloors>
       <InputItem>
         <Select
           id="selectFloor"
