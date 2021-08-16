@@ -34,8 +34,11 @@ const Home: React.FC = () => {
   const officesData: OfficesData = useSelector(getAddressesData);
 
   useEffect(() => {
-    dispatch(fetchOfficesData());
-  }, [dispatch]);
+    if (user) {
+      dispatch(fetchOfficesData());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <React.Fragment>
