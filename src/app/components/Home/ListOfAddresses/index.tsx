@@ -1,23 +1,12 @@
 import React from "react";
 
-// material-ui
-import List from "@material-ui/core/List";
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import { ListItemIcon } from "@material-ui/core";
+// styles
+import ListItems from "./components/ListItems";
+import NavListOfAddress from "./components/NavListOfAddress";
+import LinkOfAdress from "./components/LinkOfAdress";
 
-const ListItemLink = (props: ListItemProps<"a", { button?: true }>) => {
-  return (
-    <>
-      <li>
-        <ListItem button component="a" {...props} />
-      </li>
-      <Divider variant="middle" />
-    </>
-  );
-};
+// material-ui
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 // type
 interface IarrCity {
@@ -30,20 +19,20 @@ interface IListOfAddresses {
 const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
   return (
     <>
-      <List component="nav">
+      <NavListOfAddress>
         {addresesData?.map(([address, office_id], index) => (
-          <ListItemLink
-            href={`/office/${office_id}`}
-            key={index}
-            id={address as string}
-          >
-            <ListItemIcon>
-              <LocationOnIcon />
-            </ListItemIcon>
-            <ListItemText primary={address} />
-          </ListItemLink>
+          <ListItems>
+            <LocationOnIcon color="secondary"/>
+            <LinkOfAdress
+              to={`/office/${office_id}`}
+              key={index}
+              id={address as string}
+            >
+              {address}
+            </LinkOfAdress>
+          </ListItems>
         ))}
-      </List>
+      </NavListOfAddress>
     </>
   );
 };
