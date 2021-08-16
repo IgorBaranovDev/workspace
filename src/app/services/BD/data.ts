@@ -46,7 +46,7 @@ const floors: Floors = {
       number: 1,
       places: [
         {
-          label: "workplace-test-1",
+          label: "№ 1",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -54,15 +54,15 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 20,
-              y: 50,
-              width: 200,
-              height: 100,
+              x: 383,
+              y: 136,
+              width: 45,
+              height: 93,
             },
           },
         },
         {
-          label: "workplace-test-2",
+          label: "№ 2",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -70,15 +70,15 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 300,
-              y: 50,
-              width: 200,
-              height: 100,
+              x: 441,
+              y: 137,
+              width: 45,
+              height: 93,
             },
           },
         },
         {
-          label: "workplace-test-3",
+          label: "№ 3",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -86,15 +86,15 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 20,
-              y: 250,
-              width: 200,
-              height: 100,
+              x: 607,
+              y: 137,
+              width: 45,
+              height: 93,
             },
           },
         },
         {
-          label: "workplace-test-4",
+          label: "№ 4",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -102,10 +102,229 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 300,
-              y: 250,
-              width: 200,
-              height: 100,
+              x: 665,
+              y: 137,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 5",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 829,
+              y: 137,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 6",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 887,
+              y: 137,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 7",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 383,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },{
+          label: "№ 8",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 441,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },{
+          label: "№ 9",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 607,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },{
+          label: "№ 10",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 665,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },{
+          label: "№ 11",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 829,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },{
+          label: "№ 12",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 887,
+              y: 303,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 13",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 383,
+              y: 469,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 14",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 441,
+              y: 469,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 15",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 605,
+              y: 469,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 16",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 665,
+              y: 469,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 17",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 829,
+              y: 469,
+              width: 45,
+              height: 93,
+            },
+          },
+        },
+        {
+          label: "№ 18",
+          type: "type-test",
+          placeStatus: {
+            blocked: false,
+            occupant: "",
+            start: 33,
+            end: 44,
+            coordinates: {
+              x: 887,
+              y: 469,
+              width: 45,
+              height: 93,
             },
           },
         },
@@ -116,7 +335,7 @@ const floors: Floors = {
       number: 2,
       places: [
         {
-          label: "workplace-test-1",
+          label: "meeting room",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -124,10 +343,10 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 10,
-              y: 120,
-              width: 100,
-              height: 200,
+              x: 72,
+              y: 106,
+              width: 99,
+              height: 222,
             }
           },
         },
@@ -140,7 +359,7 @@ const floors: Floors = {
       number: 1,
       places: [
         {
-          label: "workplace-test-1",
+          label: "meeting room",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -148,10 +367,10 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 10,
-              y: 20,
-              width: 100,
-              height: 200,
+              x: 72,
+              y: 106,
+              width: 99,
+              height: 222,
             }
           },
         },
@@ -164,7 +383,7 @@ const floors: Floors = {
       number: 1,
       places: [
         {
-          label: "workplace-test-1",
+          label: "meeting room",
           type: "type-test",
           placeStatus: {
             blocked: false,
@@ -172,10 +391,10 @@ const floors: Floors = {
             start: 33,
             end: 44,
             coordinates: {
-              x: 120,
-              y: 20,
-              width: 100,
-              height: 200,
+              x: 72,
+              y: 106,
+              width: 99,
+              height: 222,
             }
           },
         },

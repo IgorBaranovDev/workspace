@@ -17,48 +17,35 @@ const useStyles = makeStyles({
     pointerEvents: "auto",
   },
   placeField: {
-    fill: "#299cff",
+    opacity: "0",
     cursor: "pointer",
     "&:hover": {
-      fillOpacity: "0.5",
+      fill: "#299cff",
+      opacity: "1",
     },
   },
   placeLabel: {
-    fontSize: "16px",
-    lineHeight: "16px",
+    fontSize: "14px",
+    lineHeight: "14px",
     fill: "#fff",
   },
 });
 
-// type Places = {
-//     label: string;
-//     type: string;
-//     placeStatus: {
-//       blocked: boolean;
-//       occupant: string;
-//       start: number;
-//       end: number;
-//       coordinates: {
-//         x?: number,
-//         y?: number,
-//         width?: number,
-//         height?: number,
-//       }
-//     };
-// };
 
 const Canvas: React.FC = () => {
   const classes = useStyles();
 
   const floors = useSelector(getFloorsData);
-  const slesctedFloor = useSelector(getSelectedFloor);
+  const selesctedFloor = useSelector(getSelectedFloor);
   const [places, setPlaces] = useState<any>(null);
+  console.log(floors);
+  console.log(selesctedFloor);
 
   useEffect(() => {
-    if (slesctedFloor) {
-      setPlaces(Object.values(floors[slesctedFloor - 1])[2]);
+    if (selesctedFloor) {
+      setPlaces(Object.values(floors[selesctedFloor - 1])[2]);
     }
-  }, [floors, places, slesctedFloor]);
+  }, [floors, places, selesctedFloor]);
 
   const handleClic = (event: any) => {
     event.preventDefault();
@@ -73,7 +60,8 @@ const Canvas: React.FC = () => {
         <WrapperCanvas>
           <svg id="canvas" className={classes.canvas} onClick={handleClic}>
             {places?.map((item: any, index: any) => (
-              <svg key={index} id={`place-${index}`}>
+              // <svg key={index} id={`place-${index}`}>
+              <>
                 <rect
                   id={index}
                   className={classes.placeField}
@@ -85,12 +73,18 @@ const Canvas: React.FC = () => {
                 />
                 <text
                   className={classes.placeLabel}
-                  x={item.placeStatus.coordinates.x + 15}
-                  y={item.placeStatus.coordinates.y + 20}
+                  x={item.placeStatus.coordinates.x + 6}
+                  y={
+                    item.placeStatus.coordinates.y +
+                    item.placeStatus.coordinates.height / 2
+                  }
+                  // width={item.placeStatus.coordinates.width}
+                  // height={item.placeStatus.coordinates.height}
                 >
                   {item.label}
                 </text>
-              </svg>
+              </>
+              // </svg>
             ))}
           </svg>
         </WrapperCanvas>

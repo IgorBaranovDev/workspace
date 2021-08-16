@@ -1,12 +1,10 @@
 import React from "react";
 
 // styles
-import ListItems from "./components/ListItems";
-import NavListOfAddress from "./components/NavListOfAddress";
-import LinkOfAdress from "./components/LinkOfAdress";
+import { ListItems, NavListOfAddress, LinkOfAdress } from "./components";
 
 // material-ui
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 // type
 interface IarrCity {
@@ -22,7 +20,7 @@ const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
       <NavListOfAddress>
         {addresesData?.map(([address, office_id], index) => (
           <ListItems>
-            <LocationOnIcon color="secondary"/>
+            <LocationOnIcon color="secondary" />
             <LinkOfAdress
               to={`/office/${office_id}`}
               key={index}

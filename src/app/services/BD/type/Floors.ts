@@ -11,11 +11,11 @@ export type Floors = {
         start: number;
         end: number;
         coordinates: {
-          x?: number,
-          y?: number,
-          width?: number,
-          height?: number,
-        }
+          x?: number;
+          y?: number;
+          width?: number;
+          height?: number;
+        };
       };
     }>;
   }>;
