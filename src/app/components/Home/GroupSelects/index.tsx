@@ -60,7 +60,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
               Select country
             </option>
             {Object.keys(officesProps)?.map((keyName, item) => (
-              <option value={keyName} key={item}>
+              <option value={keyName} key={`officeProps-${item}`}>
                 {keyName}
               </option>
             ))}
@@ -79,7 +79,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
               Select sity
             </option>
             {arrCity?.map((item, key) => (
-              <option key={key}>{item}</option>
+              <option key={`city-${key}`}>{item}</option>
             ))}
           </Select>
         </InputItem>

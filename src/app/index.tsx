@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/LogIn";
 import Home from "./components/Home";
-import Office from "./components/Office";
+import Office from "./components/Home/Office";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -13,9 +13,7 @@ const App: React.FunctionComponent = () => {
       <Switch>
         <Route component={Home} exact path="/" />
         <Route component={Login} path="/auth" />
-        <Route component={Office} path="/office/:officeId" />
-   
-        {/* href="/floors/address_id-1"текст ссылки - имя поля в city */}
+        <Route component={Office} path="/office/:officeId" /> 
       </Switch>
     </Layout>
   );

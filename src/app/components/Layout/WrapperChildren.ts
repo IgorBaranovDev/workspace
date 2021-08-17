@@ -8,6 +8,7 @@ const WrapperChildren = styled.div`
   position: relative;
   margin-top: 40px;
   height: calc(100vh - 60px);
+  padding: 0 20px;
 `;
 
 export default WrapperChildren;
