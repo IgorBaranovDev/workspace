@@ -1,7 +1,7 @@
 import React from "react";
 
 // styles
-import { ListItems, NavListOfAddress, LinkOfAdress } from "./components";
+import { ListItem, NavListOfAddress, LinkOfAdress } from "./components";
 
 // material-ui
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -14,21 +14,20 @@ interface IListOfAddresses {
   addresesData: Array<Array<IarrCity>>;
 }
 
-const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
+const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {  
   return (
     <>
       <NavListOfAddress>
-        {addresesData?.map(([address, office_id], index) => (
-          <ListItems>
+        {addresesData?.map(([address, office_id], index) => (            
+          <ListItem key={`addres-${index}`}>
             <LocationOnIcon color="secondary" />
             <LinkOfAdress
               to={`/office/${office_id}`}
-              key={index}
               id={address as string}
             >
               {address}
             </LinkOfAdress>
-          </ListItems>
+          </ListItem>
         ))}
       </NavListOfAddress>
     </>

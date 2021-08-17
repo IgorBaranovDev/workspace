@@ -6,8 +6,7 @@ export const FETCH_OFFICES_DATA = "FETCH_OFFICES_DATA";
 export const FETCH_OFFICES_DATA_COMPLETE = "FETCH_OFFICES_DATA_COMPLETE";
 export const FETCH_FLOORS_DATA = "FETCH_FLOORS_DATA";
 export const FETCH_FLOORS_DATA_COMPLETE = "FETCH_FLOORS_DATA_COMPLETE";
-
-export const GET_SELECTED_FLOOR = "GET_SELECTED_FLOOR";
+export const SET_SELECTED_FLOOR = "SET_SELECTED_FLOOR";
 
 export const fetchOfficesData = (): Action => ({
   type: FETCH_OFFICES_DATA,
@@ -30,7 +29,7 @@ export const fetchFloorsDataComplelte = (floors: Floors): Action => ({
   payload: floors,
 });
 
-export const getSelectedFloor = (floor: number): Action => ({
-  type: GET_SELECTED_FLOOR,
+export const setSelectedFloor = (floor: number): Action => ({
+  type: SET_SELECTED_FLOOR,
   payload: floor,
 });

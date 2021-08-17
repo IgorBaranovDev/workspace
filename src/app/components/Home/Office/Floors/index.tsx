@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getSelectedFloor } from "../../../../redux/actions/selectOffice";
+import { setSelectedFloor } from "../../../../redux/actions/selectOffice";
 
 // style
 import { InputItem, Select } from "../../GroupSelects/components";
@@ -14,12 +14,11 @@ interface IFloors {
 const Floors: React.FC<IFloors> = ({ dataFloors }) => {
   const [floor, setFloor] = useState("");
   const dispatch = useDispatch();
-
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     setFloor(element.value as string);
     const selctedFloor = +element.value;
-    dispatch(getSelectedFloor(selctedFloor as number));
+    dispatch(setSelectedFloor(selctedFloor as number));
   };
 
   return (
@@ -34,11 +33,8 @@ const Floors: React.FC<IFloors> = ({ dataFloors }) => {
           value={floor}
           onChange={handleChange}
         >
-          <option hidden value="">
-            Select Floor
-          </option>
           {dataFloors?.map((item, index) => (
-            <option value={`${item}`} key={index}>
+            <option value={`${item}`} key={`Floor-${index}`}>
               floor - {item}
             </option>
           ))}

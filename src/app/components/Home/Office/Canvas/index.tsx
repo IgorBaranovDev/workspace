@@ -31,21 +31,21 @@ const useStyles = makeStyles({
   },
 });
 
-
 const Canvas: React.FC = () => {
   const classes = useStyles();
+  const [places, setPlaces] = useState<any>(null);
 
   const floors = useSelector(getFloorsData);
   const selesctedFloor = useSelector(getSelectedFloor);
-  const [places, setPlaces] = useState<any>(null);
-  console.log(floors);
-  console.log(selesctedFloor);
-
+  
+  console.log("selesctedFloor -", selesctedFloor);
   useEffect(() => {
     if (selesctedFloor) {
       setPlaces(Object.values(floors[selesctedFloor - 1])[2]);
     }
-  }, [floors, places, selesctedFloor]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selesctedFloor]);
 
   const handleClic = (event: any) => {
     event.preventDefault();
@@ -59,9 +59,8 @@ const Canvas: React.FC = () => {
       {places ? (
         <WrapperCanvas>
           <svg id="canvas" className={classes.canvas} onClick={handleClic}>
-            {places?.map((item: any, index: any) => (
-              // <svg key={index} id={`place-${index}`}>
-              <>
+            {places?.map((item: any, index: string) => (
+              <React.Fragment key={`rect-${index}`}>
                 <rect
                   id={index}
                   className={classes.placeField}
@@ -78,13 +77,10 @@ const Canvas: React.FC = () => {
                     item.placeStatus.coordinates.y +
                     item.placeStatus.coordinates.height / 2
                   }
-                  // width={item.placeStatus.coordinates.width}
-                  // height={item.placeStatus.coordinates.height}
                 >
                   {item.label}
                 </text>
-              </>
-              // </svg>
+              </React.Fragment>
             ))}
           </svg>
         </WrapperCanvas>

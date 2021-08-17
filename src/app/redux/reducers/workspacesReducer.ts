@@ -2,7 +2,7 @@
 import {
   FETCH_OFFICES_DATA_COMPLETE,
   FETCH_FLOORS_DATA_COMPLETE,
-  GET_SELECTED_FLOOR,
+  SET_SELECTED_FLOOR,
 } from "../actions/selectOffice";
 
 // types
@@ -31,7 +31,7 @@ export default function workspacesReducer(
       return { ...state, officesData: payload };
     case FETCH_FLOORS_DATA_COMPLETE:
       return { ...state, floors: { ...state.floors, ...payload as object } };
-    case GET_SELECTED_FLOOR: 
+    case SET_SELECTED_FLOOR: 
       return { ...state, selectedFloor: payload as number };
     default: 
       return state;
