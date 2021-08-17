@@ -37,6 +37,11 @@ const officesData: OfficesData = {
       address_1: "office_id-1",
     },
   },
+  Australia: {
+    Canberra: {
+      address_23: "address_23",
+    }
+  }
 };
 
 const floors: Floors = {

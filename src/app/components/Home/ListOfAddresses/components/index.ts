@@ -1,5 +1,5 @@
 import LinkOfAdress from "./LinkOfAdress";
-import ListItems from "./ListItems";
+import ListItem from "./ListItem";
 import NavListOfAddress from "./NavListOfAddress";
 
-export { LinkOfAdress, ListItems, NavListOfAddress };
+export { LinkOfAdress, ListItem, NavListOfAddress };
