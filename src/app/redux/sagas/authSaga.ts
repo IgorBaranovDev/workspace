@@ -12,6 +12,7 @@ import {
   GET_CURRENT_USER,
   LOGOUT,
   authSuccess,
+  loding,
   // getCurrentUser,
 } from "../actions";
 
@@ -57,17 +58,13 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
 }
 
 export function* checkingUser(): Generator<any> {
-  // try {
-    const userDataFromLocalStorage: any = yield call(getCurrentUser);    
-    if (userDataFromLocalStorage) {
-      yield put(authSuccess(userDataFromLocalStorage.email));
-    } else {
-      console.log("no user");
-    }
-  // } catch (error) {
-  //   console.log("currentUser:", error);
-  //   return null;
-  // }
+  yield call(loding, false);
+  const userDataFromLocalStorage: any = yield call(getCurrentUser);
+  if (userDataFromLocalStorage) {
+    yield put(authSuccess(userDataFromLocalStorage.email));
+  } else {
+    console.log("no user");
+  }
 }
 
 // watcher saga
