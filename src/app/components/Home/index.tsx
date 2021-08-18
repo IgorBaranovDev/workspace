@@ -36,7 +36,7 @@ const Home: React.FC = () => {
   const user = useSelector(getAuthUser);
   const loading = useSelector(getLoadingState);
   const dispatch = useDispatch();
-  const officesData: OfficesData = useSelector(getAddressesData);  
+  const officesData: OfficesData = useSelector(getAddressesData);
 
   useEffect(() => {
     if (user) {
@@ -45,17 +45,11 @@ const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  return (
-    <React.Fragment>
-      {loading ? (
-        <Loader />
-      ) : !user && !officesData ? (
-        <Redirect to="/auth" />
-      ) : (
-        <GroupSelects officesProps={officesData} />
-      )}
-    </React.Fragment>
-  );
+  if (!user && !loading) {
+    return <Redirect to="/auth" />;
+  }
+
+  return officesData ? <GroupSelects officesProps={officesData} /> : <Loader />;
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(Home);

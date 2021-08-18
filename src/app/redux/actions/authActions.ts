@@ -28,4 +28,4 @@ export const authSuccess = (user: string): Action => ({
 
 export const getCurrentUser = (): Action => ({ type: GET_CURRENT_USER });
 
-export const loding = (state: boolean) => ({ type: LOADING, payload: state });
+export const setUserLoadingState = (state: boolean) => ({ type: LOADING, payload: state });
