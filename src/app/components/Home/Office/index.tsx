@@ -13,17 +13,24 @@ import { HeaderOffice, TitleOffice } from "./components";
 import { getFloorsData } from "../../../redux/selectors";
 
 // actions
-import { fetchFloorsData } from "../../../redux/actions/selectOffice";
+import {
+  fetchFloorsData,
+  setSelectedFloor,
+} from "../../../redux/actions/selectOffice";
 
 const Office: React.FC = () => {
   const { officeId } = useParams<{ officeId: string }>();
   const dispatch = useDispatch();
   const floors = useSelector(getFloorsData);
   const numberOfFloor = Object.values(floors).map((i: any) => i.number);
+  if (numberOfFloor.length > 0) {
+    dispatch(setSelectedFloor(1));
+  }
 
   useEffect(() => {
     dispatch(fetchFloorsData(officeId));
-  }, [dispatch, officeId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [officeId]);
 
   return (
     <>

@@ -7,6 +7,7 @@ export const AUTH_SUCCESS = "USERS_AUTH_SUCCESS";
 export const AUTH_FAILURE = "USER_AUTH_FAILURE";
 export const LOGOUT = "USER_LOGOUT";
 export const GET_CURRENT_USER = "GET_CURRENT_USER";
+export const LOADING = "LOADING";
 
 export const logIn = (creds: Creds): Action => ({
   type: LOGIN_REQUEST,
@@ -26,3 +27,5 @@ export const authSuccess = (user: string): Action => ({
 });
 
 export const getCurrentUser = (): Action => ({ type: GET_CURRENT_USER });
+
+export const setUserLoadingState = (state: boolean) => ({ type: LOADING, payload: state });

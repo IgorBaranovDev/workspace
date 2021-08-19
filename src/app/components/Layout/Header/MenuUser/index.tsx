@@ -3,16 +3,12 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 // actions
-import {
-  getCurrentUser,
-  logOut,
-} from "../../../../redux/actions/index";
+import { getCurrentUser, logOut } from "../../../../redux/actions/index";
 
 // styles
 import { IconButton, Icon, TextLogin, UserName } from "./components";
 import { getAuthUser } from "../../../../redux/selectors";
 import firebase from "firebase/app";
-
 
 const MenuUser: React.FunctionComponent = () => {
   const history = useHistory();
@@ -20,11 +16,11 @@ const MenuUser: React.FunctionComponent = () => {
   const user = useSelector(getAuthUser);
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {       
-        dispatch(getCurrentUser());    
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        dispatch(getCurrentUser());
       } else {
-     // No user is signed in.
+        // No user is signed in.
       }
     });
   }, [dispatch]);
@@ -34,6 +30,7 @@ const MenuUser: React.FunctionComponent = () => {
       dispatch(logOut());
       history.push("/auth");
     } else {
+      history.push("/auth");
     }
   };
 

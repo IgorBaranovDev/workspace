@@ -15,3 +15,6 @@ export const getFloorsData = (state: { workspaces: { floors: Floors } }) =>
 export const getSelectedFloor = (state: {
   workspaces: { selectedFloor: number };
 }) => state.workspaces.selectedFloor;
+
+export const getLoadingState = (state: { auth: { loading: boolean } }) =>
+  state.auth.loading;

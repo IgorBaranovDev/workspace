@@ -7,7 +7,11 @@ import GroupSelects from "./GroupSelects";
 import Loader from "../Loader";
 
 // selectors
-import { getOfficesData, getAuthUser } from "../../redux/selectors";
+import {
+  getOfficesData,
+  getAuthUser,
+  getLoadingState,
+} from "../../redux/selectors";
 
 // servises
 import { getAddressesData } from "../../services/BD";
@@ -30,6 +34,7 @@ const mapDispatchProps = {
 
 const Home: React.FC = () => {
   const user = useSelector(getAuthUser);
+  const loading = useSelector(getLoadingState);
   const dispatch = useDispatch();
   const officesData: OfficesData = useSelector(getAddressesData);
 
@@ -40,21 +45,11 @@ const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  return (
-    <React.Fragment>
-      {!user ? (
-        <Redirect to="/auth" />
-      ) : (
-        <>
-          {officesData ? (
-            <GroupSelects officesProps={officesData} />
-          ) : (
-            <Loader />
-          )}
-        </>
-      )}
-    </React.Fragment>
-  );
+  if (!user && !loading) {
+    return <Redirect to="/auth" />;
+  }
+
+  return officesData ? <GroupSelects officesProps={officesData} /> : <Loader />;
 };
 
 export default connect(mapStateToProps, mapDispatchProps)(Home);
