@@ -1,5 +1,4 @@
-import { OfficesData } from "./type/OfficesData";
-import { Office } from "./type/Office";
+import { OfficesData, Offices } from "./type";
 
 const officesData: OfficesData = {
   USA: {
@@ -32,7 +31,7 @@ const officesData: OfficesData = {
   },
 };
 
-const office: Office = {
+const offices: Offices = {
   "office_id-1": {
     addres: {
       country: "USA",
@@ -5149,4 +5148,4 @@ const office: Office = {
   },
 };
 
-export { officesData, office };
+export { officesData, offices };
