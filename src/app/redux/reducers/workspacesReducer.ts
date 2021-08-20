@@ -1,24 +1,23 @@
 // actions
 import {
   FETCH_OFFICES_DATA_COMPLETE,
-  FETCH_FLOORS_DATA_COMPLETE,
+  FETCH_SELECTED_OFFICE_COMPLETE,  
   SET_SELECTED_FLOOR,
 } from "../actions/selectOffice";
 
 // types
 import { Action } from "../actions/types";
-import { Floors } from "../../services/BD/type/Floors";
-import { OfficesData } from "../../services/BD/type/OfficesData";
+import { Offices , OfficesData } from "../../services/BD/type";
 
 type OfficesState = {
-  officesData: OfficesData;
-  floors: Floors;
+  officesData: OfficesData;  
+  selectedOffice: Offices | null;
   selectedFloor: number | null;
 };
 
 const initialState: OfficesState = {
-  officesData: {},
-  floors: {},
+  officesData: {},  
+  selectedOffice: null,
   selectedFloor: null,
 };
 
@@ -29,11 +28,11 @@ export default function workspacesReducer(
   switch (type) {
     case FETCH_OFFICES_DATA_COMPLETE:
       return { ...state, officesData: payload };
-    case FETCH_FLOORS_DATA_COMPLETE:
-      return { ...state, floors: { ...state.floors, ...payload as object } };
-    case SET_SELECTED_FLOOR: 
+    case FETCH_SELECTED_OFFICE_COMPLETE:
+      return { ...state, selectedOffice: payload as Offices }; 
+    case SET_SELECTED_FLOOR:
       return { ...state, selectedFloor: payload as number };
-    default: 
+    default:
       return state;
   }
 }
