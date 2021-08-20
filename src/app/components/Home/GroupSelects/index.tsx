@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 
 // components
+import ListOfAddresses from "../ListOfAddresses";
+
+// style
 import {
   InputItem,
   LabelForInput,
   Select,
   WrapperForSelect,
+  TitleHome,
 } from "./components";
 
-// components
-import ListOfAddresses from "../ListOfAddresses";
-
 // types
-import { OfficesData } from "../../../services/BD/type/OfficesData";
-import { TitleHome } from "../components";
+import { OfficesData } from "../../../services/BD/type";
 
 interface IGroupSelector {
   officesProps: OfficesData;
@@ -27,7 +27,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
   const [country, setCounrty] = useState("");
   const [arrCity, setArrCity] = useState<Array<IarrCity>>([]);
   const [city, setCity] = useState("");
-  const [arrAddresses, setArrAddresses] = useState<Array<Array<IarrCity>>>([]);
+  const [arrAddresses, setArrAddresses] = useState<Array<IarrCity>>([]);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
@@ -39,7 +39,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
     } else {
       if (element.name === "selectCity") {
         setCity(element.value as string);
-        setArrAddresses(Object.entries(officesProps[country][element.value]));
+        setArrAddresses(officesProps[country][element.value]);
       }
     }
   };
