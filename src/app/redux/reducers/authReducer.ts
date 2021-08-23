@@ -18,8 +18,7 @@ const initialState = {
 export default function authReducer(
   state = initialState,
   { type, payload }: Action
-) {
-  // console.log('RUN REDUCER');
+) {  
   switch (type) {
     case AUTH_SUCCESS:
       return { ...state, user: payload, loading: false };

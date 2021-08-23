@@ -1,5 +1,5 @@
 // types
-import { OfficesData, SelectedOffice } from "../../services/BD/type";
+import { Floors, OfficesData, SelectedOffice } from "../../services/BD/type";
 
 // selectors
 export const getAuthUser = (state: { auth: { user: string } }) =>
@@ -15,6 +15,10 @@ export const getSelectedOffice = (state: {
   workspaces: { selectedOffice: SelectedOffice };
 }) => state.workspaces.selectedOffice;
 
+export const getDataFloors = (state: {
+  workspaces: { selectedOffice:  { floors: Floors }  };
+}) => state.workspaces.selectedOffice.floors;
+
 export const getSelectedFloor = (state: {
-  workspaces: { selectedFloor: number };
+  workspaces: {  selectedFloor: number  };
 }) => state.workspaces.selectedFloor;

@@ -4,8 +4,8 @@ import { Redirect, useParams } from "react-router-dom";
 
 // components
 import Loader from "../../Loader";
-// import Floors from "./Floors";
-// import Canvas from "./Canvas";
+import NavOnFloors from "./NavOnFloors";
+import Canvas from "./Canvas";
 
 // styles
 import { HeaderOffice, TitleOffice } from "./components";
@@ -20,14 +20,11 @@ import {
 // actions
 import {
   fetchSelectedOffice,
-  // setSelectedFloor,
-  // setSelectedFloor,
+  setSelectedFloor,
 } from "../../../redux/actions/selectOffice";
 
-
 // types
-import { Addres , SelectedOffice } from "../../../services/BD/type";
-
+import { Addres, Floors, SelectedOffice } from "../../../services/BD/type";
 
 const Office: React.FC = () => {
   const user = useSelector(getAuthUser);
@@ -39,16 +36,8 @@ const Office: React.FC = () => {
     country: "",
     city: "",
     location: "",
-  });  
-  // const floors = useSelector(getOfficeFloors);
-  // console.log(floors);
-  // const selectOffice = useSelector(getOfficeAddres);
-  // console.log(Object.values(floors).map((i: any) => i.number))
-  // const numberOfFloor = Object.values(floors).map((i: any) => i.number);
-
-  // if (numberOfFloor.length > 0) {
-  //   dispatch(setSelectedFloor(1));
-  // }
+  });
+  const [dataFloors, setDataFloors] = useState<Floors>([]);
 
   useEffect(() => {
     if (user) {
@@ -60,12 +49,16 @@ const Office: React.FC = () => {
   useEffect(() => {
     if (selectedOffice) {
       setSelectedOfficeAddres({
-      country: selectedOffice.addres.country,
-      city: selectedOffice.addres.city,
-      location: selectedOffice.addres.location,
+        country: selectedOffice.addres.country,
+        city: selectedOffice.addres.city,
+        location: selectedOffice.addres.location,
       });
+      setDataFloors(selectedOffice.floors);
+      if (selectedOffice.floors.length > 0) {
+        dispatch(setSelectedFloor(1));
+      }
     }
-  }, [selectedOffice]);
+  }, [dispatch, selectedOffice]);
 
   if (!user && !loading) {
     return <Redirect to="/auth" />;
@@ -81,9 +74,9 @@ const Office: React.FC = () => {
             {selectedOfficeAddres.location}
           </em>
         </TitleOffice>
-        {/* <Floors dataFloors={numberOfFloor} /> */}
+        <NavOnFloors dataFloors={dataFloors} />
       </HeaderOffice>
-      {/* <Canvas /> */}
+      <Canvas />
     </>
   ) : (
     <Loader />
