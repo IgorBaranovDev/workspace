@@ -18,13 +18,10 @@ import {
 } from "../../../redux/selectors";
 
 // actions
-import {
-  fetchSelectedOffice,
-  setSelectedFloor,
-} from "../../../redux/actions/selectOffice";
+import { fetchSelectedOffice } from "../../../redux/actions/selectOffice";
 
 // types
-import { Addres, Floors, SelectedOffice } from "../../../services/BD/type";
+import { Addres, SelectedOffice } from "../../../services/BD/type";
 
 const Office: React.FC = () => {
   const user = useSelector(getAuthUser);
@@ -37,7 +34,6 @@ const Office: React.FC = () => {
     city: "",
     location: "",
   });
-  const [dataFloors, setDataFloors] = useState<Floors>([]);
 
   useEffect(() => {
     if (user) {
@@ -53,12 +49,8 @@ const Office: React.FC = () => {
         city: selectedOffice.addres.city,
         location: selectedOffice.addres.location,
       });
-      setDataFloors(selectedOffice.floors);
-      if (selectedOffice.floors.length > 0) {
-        dispatch(setSelectedFloor(1));
-      }
     }
-  }, [dispatch, selectedOffice]);
+  }, [selectedOffice]);
 
   if (!user && !loading) {
     return <Redirect to="/auth" />;
@@ -74,7 +66,7 @@ const Office: React.FC = () => {
             {selectedOfficeAddres.location}
           </em>
         </TitleOffice>
-        <NavOnFloors dataFloors={dataFloors} />
+        <NavOnFloors />
       </HeaderOffice>
       <Canvas />
     </>

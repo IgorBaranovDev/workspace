@@ -2,14 +2,14 @@ import { takeLatest, call, put } from "redux-saga/effects";
 
 // actions
 import {
-  FETCH_OFFICES_DATA,  
+  FETCH_OFFICES_DATA,
   FETCH_SELECTED_OFFICE,
-  fetchOfficesDataComplelte,  
+  fetchOfficesDataComplelte,
   fetchSelectedOfficeComplete,
 } from "../actions/selectOffice";
 
 // service
-import { getAddressesData,  getSelectedOffice } from "../../services/BD";
+import { getAddressesData, getSelectedOffice } from "../../services/BD";
 import { Action } from "../actions/types";
 
 // worker sagas
@@ -28,25 +28,26 @@ export function* dataHandlerOffices(): Generator<any> {
   }
 }
 
-export function* dataHandlerSelectedOffice({payload} : Action): Generator<any> {
+export function* dataHandlerSelectedOffice({
+  payload,
+}: Action): Generator<any> {
   try {
-    const dataSelectedOffice: any = yield call(getSelectedOffice, payload as string);
+    const dataSelectedOffice: any = yield call(
+      getSelectedOffice,
+      payload as string
+    );
     if (dataSelectedOffice) {
       yield put(fetchSelectedOfficeComplete(dataSelectedOffice));
     } else {
       console.log("fetch data office addres fail");
     }
-    return dataSelectedOffice;
+  } catch (err) {
+    console.log("Fetch office addres error:", err);
   }
- catch (err) {
-  console.log("Fetch office addres error:", err);
-  return null;
 }
-}
-
 
 // watcher saga
 export default function* dataSaga() {
   yield takeLatest([FETCH_OFFICES_DATA], dataHandlerOffices);
-  yield takeLatest([FETCH_SELECTED_OFFICE], dataHandlerSelectedOffice);  
+  yield takeLatest([FETCH_SELECTED_OFFICE], dataHandlerSelectedOffice);
 }

@@ -19,11 +19,11 @@ const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
     <>
       <NavListOfAddress>
         {addresesData?.map((element: any, index) => (
-          <ListItem key={`addres-${index}`}>
+          <ListItem key={element.id}>
             <LocationOnIcon color="secondary" />
             <LinkOfAdress
               to={`/office/${element.id}`}
-              id={element.addres as string}
+              id={element.id as string}
             >
               {element.addres}
             </LinkOfAdress>
