@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+// action
 import { setSelectedFloor } from "../../../../redux/actions/selectOffice";
 
 // style
@@ -7,13 +9,18 @@ import { InputItem, Select } from "../../GroupSelects/components";
 import TextFloors from "./TextFloors";
 import TotalNumber from "./TotalNumber";
 
-interface IFloors {
-  dataFloors: Array<{ [key: string]: number }>;
-}
+// selector
+import { getDataFloors } from "../../../../redux/selectors";
 
-const Floors: React.FC<IFloors> = ({ dataFloors }) => {
+// types
+import { Floors } from "../../../../services/BD/type";
+
+const NavOnFloors: React.FC = () => {
+  const selesctedFloor: Floors = useSelector(getDataFloors);
+
   const [floor, setFloor] = useState("");
   const dispatch = useDispatch();
+
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
     setFloor(element.value as string);
@@ -24,7 +31,7 @@ const Floors: React.FC<IFloors> = ({ dataFloors }) => {
   return (
     <>
       <TextFloors>
-        total floors: <TotalNumber>{dataFloors.length}</TotalNumber>
+        total floors: <TotalNumber>{selesctedFloor.length}</TotalNumber>
       </TextFloors>
       <InputItem>
         <Select
@@ -33,9 +40,9 @@ const Floors: React.FC<IFloors> = ({ dataFloors }) => {
           value={floor}
           onChange={handleChange}
         >
-          {dataFloors?.map((item, index) => (
-            <option value={`${item}`} key={`Floor-${index}`}>
-              floor - {item}
+          {selesctedFloor?.map((item, index) => (
+            <option value={`${item.number}`} key={`Floor-${index}`}>
+              floor - {item.number}
             </option>
           ))}
         </Select>
@@ -44,4 +51,4 @@ const Floors: React.FC<IFloors> = ({ dataFloors }) => {
   );
 };
 
-export default Floors;
+export default NavOnFloors;

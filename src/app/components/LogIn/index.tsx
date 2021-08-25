@@ -55,8 +55,7 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const authFunc = isRegistration ? signUp : logIn;
-    console.log(logIn);
+    const authFunc = isRegistration ? signUp : logIn;    
     authFunc({ email, password });
     setEmail("");
     setPassword("");

@@ -1,5 +1,5 @@
-import { officesData, floors } from "./data";
+import { officesData, offices } from "./data";
 
 export const getAddressesData = () => officesData;
 
-export const getFloorsData = (id: string) => floors[id];
+export const getSelectedOffice = (id: string) => offices[id];

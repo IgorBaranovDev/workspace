@@ -1,7 +1,8 @@
 export type OfficesData = {
-  [key: string]: {
-    [key: string]: {
-      [key: string]: string;
-    };
+  [country: string]: {
+    [city: string]: Array<{
+      id: string;
+      addres: string;
+    }>;
   };
 };

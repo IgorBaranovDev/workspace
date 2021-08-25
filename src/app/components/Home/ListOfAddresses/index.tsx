@@ -11,21 +11,21 @@ interface IarrCity {
   [key: number]: string;
 }
 interface IListOfAddresses {
-  addresesData: Array<Array<IarrCity>>;
+  addresesData: Array<IarrCity>;
 }
 
-const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {  
+const ListOfAddresses: React.FC<IListOfAddresses> = ({ addresesData }) => {
   return (
     <>
       <NavListOfAddress>
-        {addresesData?.map(([address, office_id], index) => (            
-          <ListItem key={`addres-${index}`}>
+        {addresesData?.map((element: any, index) => (
+          <ListItem key={element.id}>
             <LocationOnIcon color="secondary" />
             <LinkOfAdress
-              to={`/office/${office_id}`}
-              id={address as string}
+              to={`/office/${element.id}`}
+              id={element.id as string}
             >
-              {address}
+              {element.addres}
             </LinkOfAdress>
           </ListItem>
         ))}

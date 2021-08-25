@@ -1,47 +1,77 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Redirect, useParams } from "react-router-dom";
 
 // components
-import Floors from "./Floors";
+import Loader from "../../Loader";
+import NavOnFloors from "./NavOnFloors";
 import Canvas from "./Canvas";
 
 // styles
 import { HeaderOffice, TitleOffice } from "./components";
 
 // scelectors
-import { getFloorsData } from "../../../redux/selectors";
+import {
+  getAuthUser,
+  getLoadingState,
+  getSelectedOffice,
+} from "../../../redux/selectors";
 
 // actions
-import {
-  fetchFloorsData,
-  setSelectedFloor,
-} from "../../../redux/actions/selectOffice";
+import { fetchSelectedOffice } from "../../../redux/actions/selectOffice";
+
+// types
+import { Addres, SelectedOffice } from "../../../services/BD/type";
 
 const Office: React.FC = () => {
-  const { officeId } = useParams<{ officeId: string }>();
+  const user = useSelector(getAuthUser);
+  const loading = useSelector(getLoadingState);
   const dispatch = useDispatch();
-  const floors = useSelector(getFloorsData);
-  const numberOfFloor = Object.values(floors).map((i: any) => i.number);
-  if (numberOfFloor.length > 0) {
-    dispatch(setSelectedFloor(1));
-  }
+  const { officeId } = useParams<{ officeId: string }>();
+  const selectedOffice: SelectedOffice = useSelector(getSelectedOffice);
+  const [selectedOfficeAddres, setSelectedOfficeAddres] = useState<Addres>({
+    country: "",
+    city: "",
+    location: "",
+  });
 
   useEffect(() => {
-    dispatch(fetchFloorsData(officeId));
+    if (user) {
+      dispatch(fetchSelectedOffice(officeId));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [officeId]);
+  }, [user]);
 
-  return (
+  useEffect(() => {
+    if (selectedOffice) {
+      setSelectedOfficeAddres({
+        country: selectedOffice.addres.country,
+        city: selectedOffice.addres.city,
+        location: selectedOffice.addres.location,
+      });
+    }
+  }, [selectedOffice]);
+
+  if (!user && !loading) {
+    return <Redirect to="/auth" />;
+  }
+
+  return selectedOffice ? (
     <>
       <HeaderOffice>
         <TitleOffice>
-          adress of office - <em style={{ color: "#299cff" }}>{officeId}</em>
+          Location:{" "}
+          <em style={{ color: "#299cff" }}>
+            {selectedOfficeAddres.country}-{selectedOfficeAddres.city}-
+            {selectedOfficeAddres.location}
+          </em>
         </TitleOffice>
-        <Floors dataFloors={numberOfFloor} />
+        <NavOnFloors />
       </HeaderOffice>
       <Canvas />
     </>
+  ) : (
+    <Loader />
   );
 };
 

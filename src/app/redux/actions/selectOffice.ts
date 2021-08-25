@@ -1,11 +1,12 @@
-import { Floors } from "../../services/BD/type/Floors";
-import { OfficesData } from "../../services/BD/type/OfficesData";
+// types
+
+import { Offices , OfficesData } from "../../services/BD/type";
 import { Action } from "./types";
 
 export const FETCH_OFFICES_DATA = "FETCH_OFFICES_DATA";
 export const FETCH_OFFICES_DATA_COMPLETE = "FETCH_OFFICES_DATA_COMPLETE";
-export const FETCH_FLOORS_DATA = "FETCH_FLOORS_DATA";
-export const FETCH_FLOORS_DATA_COMPLETE = "FETCH_FLOORS_DATA_COMPLETE";
+export const FETCH_SELECTED_OFFICE = "FETCH_SELECTED_OFFICE";
+export const FETCH_SELECTED_OFFICE_COMPLETE = "FETCH_SELECTED_OFFICE_COMPLETE";
 export const SET_SELECTED_FLOOR = "SET_SELECTED_FLOOR";
 
 export const fetchOfficesData = (): Action => ({
@@ -19,14 +20,14 @@ export const fetchOfficesDataComplelte = (
   payload: officesData,
 });
 
-export const fetchFloorsData = (id: string): Action => ({
-  type: FETCH_FLOORS_DATA,
+export const fetchSelectedOffice = (id: string): Action => ({
+  type: FETCH_SELECTED_OFFICE,
   payload: id,
 });
 
-export const fetchFloorsDataComplelte = (floors: Floors): Action => ({
-  type: FETCH_FLOORS_DATA_COMPLETE,
-  payload: floors,
+export const fetchSelectedOfficeComplete = (office: Offices): Action => ({
+  type: FETCH_SELECTED_OFFICE_COMPLETE,
+  payload: office,
 });
 
 export const setSelectedFloor = (floor: number): Action => ({
