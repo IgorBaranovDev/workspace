@@ -12,6 +12,7 @@ export const getAddressesData = async () => {
         return data;
       } else {
         console.log("no data available");
+        return null;
       }
     })
     .catch((error) => {
@@ -30,6 +31,7 @@ export const getSelectedOffice = async (id: string) => {
         return snapshot.val();
       } else {
         console.log("no data available");
+        return null;
       }
     })
     .catch((error) => {
