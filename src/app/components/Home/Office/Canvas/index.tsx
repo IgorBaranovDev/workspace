@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 // selectors
-import {
-  getDataFloors,
-  getSelectedFloor, 
-} from "../../../../redux/selectors";
+import { getDataFloors, getSelectedFloor } from "../../../../redux/selectors";
 // types
 import { Places } from "../../../../services/BD/type/Floors";
 
@@ -50,7 +47,6 @@ const useStyles = makeStyles({
     lineHeight: "14px",
     fill: "#fff",
     cursor: "pointer",
-    "&:hover": {},
   },
 });
 
@@ -106,7 +102,7 @@ const DialogContent = withStyles((theme: Theme) => ({
 const DialogActions = withStyles((theme: Theme) => ({
   root: {
     margin: 0,
-    padding: theme.spacing(1),    
+    padding: theme.spacing(1),
   },
 }))(MuiDialogActions);
 
@@ -135,7 +131,7 @@ const Canvas: React.FC = () => {
     });
 
   useEffect(() => {
-    if (dataFloors && selesctedFloor) {      
+    if (dataFloors && selesctedFloor) {
       setPlaces(dataFloors[selesctedFloor - 1].places);
     }
   }, [dataFloors, selesctedFloor]);
@@ -145,7 +141,7 @@ const Canvas: React.FC = () => {
   };
 
   const handleOpen = (event: any) => {
-    event.preventDefault();    
+    event.preventDefault();
     if (event.target.tagName === "rect" || event.target.tagName === "text") {
       setOpen(true);
       const selectPlace = places[event.target.id];
@@ -179,10 +175,10 @@ const Canvas: React.FC = () => {
                 <text
                   id={`${index}`}
                   className={classes.placeLabel}
-                  x={item.placeStatus.coordinates.x + 6}
+                  x={item.placeStatus.coordinates.x + item.placeStatus.coordinates.width / 2 - 16}
                   y={
                     item.placeStatus.coordinates.y +
-                    item.placeStatus.coordinates.height / 2
+                    item.placeStatus.coordinates.height / 2 + 4
                   }
                 >
                   {item.label}
@@ -213,11 +209,13 @@ const Canvas: React.FC = () => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} 
-          // color="secondary"
-          variant="contained"
-           color="primary"
-           >
+          <Button
+            autoFocus
+            onClick={handleClose}
+            // color="secondary"
+            variant="contained"
+            color="primary"
+          >
             Save changes
           </Button>
         </DialogActions>
