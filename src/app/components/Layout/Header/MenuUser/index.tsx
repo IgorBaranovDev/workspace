@@ -26,10 +26,8 @@ const MenuUser: React.FunctionComponent = () => {
       } else {
         dispatch(setUserLoadingState(false));
       }
-    });
-    return () => {
       unSubscribe();
-    };
+    });
   }, [dispatch]);
 
   const handlerClick = () => {
