@@ -9,7 +9,7 @@ import {
 } from "../actions/selectOffice";
 
 // service
-import { getAddressesData, getSelectedOffice } from "../../services/BD";
+import { getAddressesData, getSelectedOffice } from "../../services/BD/index";
 import { Action } from "../actions/types";
 
 // worker sagas

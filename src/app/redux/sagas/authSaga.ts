@@ -11,8 +11,7 @@ import {
   AUTH_FAILURE,
   GET_CURRENT_USER,
   LOGOUT,
-  authSuccess,  
-  // getCurrentUser,
+  authSuccess,
 } from "../actions";
 
 // auth services
@@ -56,7 +55,7 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
   }
 }
 
-export function* checkingUser(): Generator<any> {  
+export function* checkingUser(): Generator<any> {
   const userDataFromLocalStorage: any = yield call(getCurrentUser);
   if (userDataFromLocalStorage) {
     yield put(authSuccess(userDataFromLocalStorage.email));

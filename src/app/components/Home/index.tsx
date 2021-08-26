@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
-import { useSelector, connect, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 // components
 import GroupSelects from "./GroupSelects";
@@ -13,30 +13,17 @@ import {
   getLoadingState,
 } from "../../redux/selectors";
 
-// servises
-import { getAddressesData } from "../../services/BD";
-
 // types
 import { OfficesData } from "../../services/BD/type/OfficesData";
 
 // action
 import { fetchOfficesData } from "../../redux/actions/selectOffice";
 
-const mapStateToProps = (state: any) => {
-  return {
-    officesDate: getOfficesData(state),
-  };
-};
-
-const mapDispatchProps = {
-  getAddressesData,
-};
-
 const Home: React.FC = () => {
   const user = useSelector(getAuthUser);
   const loading = useSelector(getLoadingState);
   const dispatch = useDispatch();
-  const officesData: OfficesData = useSelector(getAddressesData);
+  const officesData: OfficesData = useSelector(getOfficesData);
 
   useEffect(() => {
     if (user) {
@@ -52,4 +39,4 @@ const Home: React.FC = () => {
   return officesData ? <GroupSelects officesProps={officesData} /> : <Loader />;
 };
 
-export default connect(mapStateToProps, mapDispatchProps)(Home);
+export default Home;
