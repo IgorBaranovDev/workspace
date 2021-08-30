@@ -39,11 +39,13 @@ const useStyles = makeStyles({
 });
 
 interface InfoAboutWorkplace {
+  palceIndex: number;
   label: string;
   type: string;
   occupant: string;
-  startReservation: number;
-  endReservation: number;
+  startReservation: string;
+  endReservation: string;
+  blocked: boolean;
 }
 
 const Canvas: React.FC = () => {
@@ -55,11 +57,13 @@ const Canvas: React.FC = () => {
 
   const [infoAboutWorkplace, setInfoAboutWorkplace] =
     useState<InfoAboutWorkplace>({
+      palceIndex: 0,
       label: "",
       type: "",
       occupant: "",
-      startReservation: 0,
-      endReservation: 0,
+      startReservation: '',
+      endReservation: '',
+      blocked: false,
     });
 
   useEffect(() => {
@@ -75,16 +79,17 @@ const Canvas: React.FC = () => {
   const handleOpen = (event: any) => {
     event.preventDefault();
     if (event.target.tagName === "rect" || event.target.tagName === "text") {
-      setOpen(true);
+      setOpen(true);      
       const selectPlace = places[event.target.id];
       setInfoAboutWorkplace({
+        palceIndex: event.target.id,
         label: selectPlace.label,
         type: selectPlace.type,
         occupant: selectPlace.placeStatus.occupant,
         startReservation: selectPlace.placeStatus.start,
         endReservation: selectPlace.placeStatus.end,
+        blocked: selectPlace.placeStatus.blocked,
       });
-      console.log(JSON.stringify(places[event.target.id], null, 4));
     }
   };
 
@@ -98,23 +103,23 @@ const Canvas: React.FC = () => {
                 <rect
                   id={`${index}`}
                   className={classes.placeField}
-                  x={item.placeStatus.coordinates.x}
-                  y={item.placeStatus.coordinates.y}
-                  width={item.placeStatus.coordinates.width}
-                  height={item.placeStatus.coordinates.height}
+                  x={item.coordinates.x}
+                  y={item.coordinates.y}
+                  width={item.coordinates.width}
+                  height={item.coordinates.height}
                   rx="5"
                 />
                 <text
                   id={`${index}`}
                   className={classes.placeLabel}
                   x={
-                    item.placeStatus.coordinates.x +
-                    item.placeStatus.coordinates.width / 2 -
+                    item.coordinates.x +
+                    item.coordinates.width / 2 -
                     16
                   }
                   y={
-                    item.placeStatus.coordinates.y +
-                    item.placeStatus.coordinates.height / 2 +
+                    item.coordinates.y +
+                    item.coordinates.height / 2 +
                     4
                   }
                 >
@@ -126,7 +131,7 @@ const Canvas: React.FC = () => {
         </WrapperCanvas>
       ) : null}
       <PopUpInfoPlace
-        handleEvent={handleClose}
+        handleEventPopUp={handleClose}
         dataAboutWorkplace={infoAboutWorkplace}
         visibility={open}
       />

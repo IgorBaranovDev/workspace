@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
+// selectors
+import {
+  getAuthUser,
+  getSelectedFloor,
+  getSelectedOffice,
+} from "../../../../../redux/selectors";
+
+// actions
+import { setReservation } from "../../../../../redux/actions/selectOffice";
+
+// styles
 import {
   createStyles,
+  makeStyles,
   Theme,
   withStyles,
   WithStyles,
 } from "@material-ui/core/styles";
 
-// style
 import {
   Button,
   Dialog,
@@ -17,7 +29,11 @@ import {
   IconButton,
   CloseIcon,
   Typography,
+  TextField,
 } from "./components";
+
+// types
+import { PlaceReservation } from "../../../../../services/BD/type";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -33,11 +49,30 @@ const styles = (theme: Theme) =>
     },
   });
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 250,
+    },
+    occupantUser: {
+      marginBottom: theme.spacing(2),
+    },
+  })
+);
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
   children: React.ReactNode;
   onClose: () => void;
 }
+
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { children, classes, onClose, ...other } = props;
   return (
@@ -45,7 +80,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
       disableTypography
       className={classes.root}
       {...other}
-      style={{ width: "400px" }}
+      style={{ textAlign: "center" }}
     >
       <Typography variant="h6">{children}</Typography>
       {onClose ? (
@@ -63,7 +98,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 
 const DialogContent = withStyles((theme: Theme) => ({
   root: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(3),
   },
 }))(MuiDialogContent);
 
@@ -75,54 +110,113 @@ const DialogActions = withStyles((theme: Theme) => ({
 }))(MuiDialogActions);
 
 interface IPopUpInfoPlace {
-  handleEvent: () => void;
+  handleEventPopUp: () => void;
   dataAboutWorkplace: {
+    palceIndex: number;
     label: string;
     type: string;
     occupant: string;
-    startReservation: number;
-    endReservation: number;
+    startReservation: string;
+    endReservation: string;
+    blocked: boolean;
   };
   visibility: boolean;
 }
+
 const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
-  handleEvent,
+  handleEventPopUp,
   dataAboutWorkplace,
   visibility,
 }) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector(getAuthUser);
+  const selesctedFloor = useSelector(getSelectedFloor);
+  const selectedOffice = useSelector(getSelectedOffice);
+
+  const [startBooking, setStartBooking] = useState("");
+  const [endBooking, setEndBooking] = useState("");
+  const [blockedPlace, setBlockedPlace] = useState(false);
+
+  useEffect(() => {
+    setStartBooking(dataAboutWorkplace.startReservation);
+    setEndBooking(dataAboutWorkplace.endReservation);
+    setBlockedPlace(dataAboutWorkplace.blocked);
+  }, [dataAboutWorkplace]);
+
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.id === "datetime-booking-place-end") {
+      setEndBooking(event.target.value);
+    } else if (event.target.id === "datetime-booking-place-start") {
+      setStartBooking(event.target.value);
+    }
+    setBlockedPlace(true);
+  };
+
+  const handleEventButton = () => {
+    const dataPlaceReservation: PlaceReservation = {
+      idOffice: selectedOffice.id,
+      selectFloor: `${selesctedFloor - 1}`,
+      indexPlace: `${dataAboutWorkplace.palceIndex}`,
+      start: startBooking,
+      end: endBooking,
+      blocked: blockedPlace,
+      occupant: user,
+    };
+    dispatch(setReservation(dataPlaceReservation));
+  };
+
   return (
-    <Dialog
-      onClose={handleEvent}
-      aria-labelledby="customized-dialog-title"
-      open={visibility}
-    >
-      <DialogTitle id="customized-dialog-title" onClose={handleEvent}>
-        {dataAboutWorkplace.label}
-      </DialogTitle>
-      <DialogContent dividers>
-        <Typography gutterBottom>Type: {dataAboutWorkplace.type}</Typography>
-        <Typography gutterBottom>
-          Occupant: {dataAboutWorkplace.occupant}
-        </Typography>
-        <Typography gutterBottom>
-          start: {dataAboutWorkplace.startReservation}
-        </Typography>
-        <Typography gutterBottom>
-          end: {dataAboutWorkplace.endReservation}
-        </Typography>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          autoFocus
-          onClick={handleEvent}
-          // color="secondary"
-          variant="contained"
-          color="primary"
-        >
-          Save changes
-        </Button>
-      </DialogActions>
-    </Dialog>
+    <>
+      <Dialog
+        onClose={handleEventPopUp}
+        aria-labelledby="customized-dialog-title"
+        open={visibility}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleEventPopUp}>
+          {dataAboutWorkplace.type} - {dataAboutWorkplace.label}
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography className={classes.occupantUser}>
+            Occupant: {dataAboutWorkplace.occupant}{" "}
+          </Typography>
+          <form className={classes.container} noValidate>
+            <TextField
+              id="datetime-booking-place-start"
+              label="Start booking"
+              type="date"
+              defaultValue={startBooking}
+              onChange={handlerChange}
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              id="datetime-booking-place-end"
+              label="End booking"
+              type="date"
+              defaultValue={endBooking}
+              onChange={handlerChange}
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+          </form>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            autoFocus
+            onClick={handleEventButton}
+            variant="contained"
+            color="primary"
+          >
+            Save changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 
