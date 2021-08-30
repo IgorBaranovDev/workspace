@@ -1,6 +1,6 @@
 // types
 
-import { Offices , OfficesData } from "../../services/BD/type";
+import { Offices, OfficesData, PlaceReservation } from "../../services/BD/type";
 import { Action } from "./types";
 
 export const FETCH_OFFICES_DATA = "FETCH_OFFICES_DATA";
@@ -8,6 +8,7 @@ export const FETCH_OFFICES_DATA_COMPLETE = "FETCH_OFFICES_DATA_COMPLETE";
 export const FETCH_SELECTED_OFFICE = "FETCH_SELECTED_OFFICE";
 export const FETCH_SELECTED_OFFICE_COMPLETE = "FETCH_SELECTED_OFFICE_COMPLETE";
 export const SET_SELECTED_FLOOR = "SET_SELECTED_FLOOR";
+export const SET_RESERVATION = "SET_RESERVATION";
 
 export const fetchOfficesData = (): Action => ({
   type: FETCH_OFFICES_DATA,
@@ -33,4 +34,9 @@ export const fetchSelectedOfficeComplete = (office: Offices): Action => ({
 export const setSelectedFloor = (floor: number): Action => ({
   type: SET_SELECTED_FLOOR,
   payload: floor,
+});
+
+export const setReservation = (placeReservation: PlaceReservation): Action => ({
+  type: SET_RESERVATION,
+  payload: placeReservation,
 });
