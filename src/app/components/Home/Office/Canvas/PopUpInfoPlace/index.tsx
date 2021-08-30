@@ -34,6 +34,7 @@ import {
 
 // types
 import { PlaceReservation } from "../../../../../services/BD/type";
+// import { dateNowFormat } from "../../../../../services/helpers/dateNowFormat";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -61,6 +62,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
       width: 250,
+      "& div.input:hover": {
+        cursor: "pointer",
+      },
     },
     occupantUser: {
       marginBottom: theme.spacing(2),
@@ -137,12 +141,20 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   const [startBooking, setStartBooking] = useState("");
   const [endBooking, setEndBooking] = useState("");
   const [blockedPlace, setBlockedPlace] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    setStartBooking(dataAboutWorkplace.startReservation);
-    setEndBooking(dataAboutWorkplace.endReservation);
-    setBlockedPlace(dataAboutWorkplace.blocked);
-  }, [dataAboutWorkplace]);
+    const { occupant, startReservation, endReservation, blocked } =
+      dataAboutWorkplace;
+    if (occupant && user !== occupant) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+    setStartBooking(startReservation);
+    setEndBooking(endReservation);
+    setBlockedPlace(blocked);
+  }, [dataAboutWorkplace, user]);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "datetime-booking-place-end") {
@@ -182,6 +194,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
           </Typography>
           <form className={classes.container} noValidate>
             <TextField
+              disabled={isDisabled}
               id="datetime-booking-place-start"
               label="Start booking"
               type="date"
@@ -193,6 +206,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
               }}
             />
             <TextField
+              disabled={isDisabled}
               id="datetime-booking-place-end"
               label="End booking"
               type="date"
@@ -207,7 +221,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
         </DialogContent>
         <DialogActions>
           <Button
-            autoFocus
+            disabled={isDisabled}
             onClick={handleEventButton}
             variant="contained"
             color="primary"
