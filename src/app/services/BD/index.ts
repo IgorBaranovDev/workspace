@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/database";
+import { PlaceReservation } from "./type";
 
 export const getAddressesData = async () => {
   return await firebase
@@ -24,7 +25,7 @@ export const getAddressesData = async () => {
 export const getSelectedOffice = async (id: string) => {
   return await firebase
     .database()
-    .ref("/offices/" + id)
+    .ref("offices/" + id)
     .get()
     .then((snapshot) => {
       if (snapshot.exists()) {
@@ -38,4 +39,38 @@ export const getSelectedOffice = async (id: string) => {
       console.log(error);
       return null;
     });
+};
+
+export const setReservation = async (placeReservation: PlaceReservation) => {
+  const result = new Promise<string>((resolve, reject) => {
+    firebase
+      .database()
+      .ref(
+        "offices/" +
+          placeReservation.idOffice +
+          "/floors/" +
+          placeReservation.selectFloor +
+          "/places/" +
+          placeReservation.indexPlace +
+          "/placeStatus/"
+      )
+      .set(
+        {
+          blocked: placeReservation.blocked,
+          start: placeReservation.start,
+          end: placeReservation.end,
+          occupant: placeReservation.occupant,
+        },
+        (error) => {
+          if (error) {
+            reject();
+            console.log("not save data", error.message);
+          } else {
+            resolve(placeReservation.idOffice);
+            console.log("data save in BD");
+          }
+        }
+      );
+  });
+  return result;
 };
