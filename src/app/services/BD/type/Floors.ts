@@ -4,14 +4,14 @@ export type Places = Array<{
   placeStatus: {
     blocked: boolean;
     occupant: string;
-    start: number;
-    end: number;
-    coordinates: {
-      x?: number;
-      y?: number;
-      width?: number;
-      height?: number;
-    };
+    start: string;
+    end: string;
+  };
+  coordinates: {
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
   };
 }>;
 
