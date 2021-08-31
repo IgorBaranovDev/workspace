@@ -51,14 +51,14 @@ export const setReservation = async (placeReservation: PlaceReservation) => {
           "/floors/" +
           placeReservation.selectFloor +
           "/places/" +
-          placeReservation.indexPlace +
+          placeReservation.palceIndex +
           "/placeStatus/"
       )
       .set(
         {
           blocked: placeReservation.blocked,
-          start: placeReservation.start,
-          end: placeReservation.end,
+          start: placeReservation.startReservation,
+          end: placeReservation.endReservation,
           occupant: placeReservation.occupant,
         },
         (error) => {

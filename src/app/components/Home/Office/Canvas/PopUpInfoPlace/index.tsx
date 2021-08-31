@@ -32,9 +32,6 @@ import {
   TextField,
 } from "./components";
 
-// types
-import { PlaceReservation } from "../../../../../services/BD/type";
-
 const styles = (theme: Theme) =>
   createStyles({
     root: {
@@ -60,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: 250, 
+      width: 250,
     },
     occupantUser: {
       marginBottom: theme.spacing(2),
@@ -83,7 +80,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
       style={{ textAlign: "center" }}
     >
       <Typography variant="h6">{children}</Typography>
-      {onClose ? (
+      {onClose && (
         <IconButton
           aria-label="close"
           className={classes.closeButton}
@@ -91,7 +88,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
         >
           <CloseIcon />
         </IconButton>
-      ) : null}
+      )}
     </MuiDialogTitle>
   );
 });
@@ -112,7 +109,7 @@ const DialogActions = withStyles((theme: Theme) => ({
 interface IPopUpInfoPlace {
   handleEventPopUp: () => void;
   dataAboutWorkplace: {
-    palceIndex: number;
+    palceIndex: string;
     label: string;
     type: string;
     occupant: string;
@@ -122,6 +119,19 @@ interface IPopUpInfoPlace {
   };
   visibility: boolean;
 }
+
+type DataSelectedWorkplace = {
+  idOffice: string;
+  selectFloor: string;
+  palceIndex: string;
+  label: string;
+  type: string;
+  occupant: string;
+  startReservation: string;
+  endReservation: string;
+  blocked: boolean;
+  isDisabled: boolean;
+};
 
 const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   handleEventPopUp,
@@ -134,44 +144,52 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   const selesctedFloor = useSelector(getSelectedFloor);
   const selectedOffice = useSelector(getSelectedOffice);
 
-  const [startBooking, setStartBooking] = useState("");
-  const [endBooking, setEndBooking] = useState("");
-  const [blockedPlace, setBlockedPlace] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [dataSelectedWorkplace, setDataSelectedWorkplace] =
+    useState<DataSelectedWorkplace>({
+      ...dataAboutWorkplace,
+      idOffice: selectedOffice.id,
+      selectFloor: `${selesctedFloor - 1}`,
+      occupant: user,
+      isDisabled: false,
+    });
 
   useEffect(() => {
-    const { occupant, startReservation, endReservation, blocked } =
-      dataAboutWorkplace;
+    const { occupant, startReservation, endReservation } = dataAboutWorkplace;
     if (occupant && user !== occupant) {
-      setIsDisabled(true);
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        isDisabled: true,
+      }));
     } else {
-      setIsDisabled(false);
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        isDisabled: false,
+      }));
     }
-    setStartBooking(startReservation);
-    setEndBooking(endReservation);
-    setBlockedPlace(blocked);
+    setDataSelectedWorkplace((prevState) => ({
+      ...prevState,
+      startBooking: startReservation,
+      endBooking: endReservation,
+    }));
   }, [dataAboutWorkplace, user]);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "datetime-booking-place-end") {
-      setEndBooking(event.target.value);
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        endBooking: event.target.value,
+      }));
     } else if (event.target.id === "datetime-booking-place-start") {
-      setStartBooking(event.target.value);
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        startBooking: event.target.value,
+      }));
     }
-    setBlockedPlace(true);
   };
 
   const handleEventButton = () => {
-    const dataPlaceReservation: PlaceReservation = {
-      idOffice: selectedOffice.id,
-      selectFloor: `${selesctedFloor - 1}`,
-      indexPlace: `${dataAboutWorkplace.palceIndex}`,
-      start: startBooking,
-      end: endBooking,
-      blocked: blockedPlace,
-      occupant: user,
-    };
-    dispatch(setReservation(dataPlaceReservation));
+    console.log(dataSelectedWorkplace);
+    dispatch(setReservation(dataSelectedWorkplace));
   };
 
   return (
@@ -190,11 +208,11 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
           </Typography>
           <form className={classes.container} noValidate>
             <TextField
-              disabled={isDisabled}
+              disabled={dataSelectedWorkplace.isDisabled}
               id="datetime-booking-place-start"
               label="Start booking"
               type="date"
-              defaultValue={startBooking}
+              defaultValue={dataSelectedWorkplace.startReservation}
               onChange={handlerChange}
               className={classes.textField}
               InputLabelProps={{
@@ -202,11 +220,11 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
               }}
             />
             <TextField
-              disabled={isDisabled}
+              disabled={dataSelectedWorkplace.isDisabled}
               id="datetime-booking-place-end"
               label="End booking"
               type="date"
-              defaultValue={endBooking}
+              defaultValue={dataSelectedWorkplace.endReservation}
               onChange={handlerChange}
               className={classes.textField}
               InputLabelProps={{
@@ -217,7 +235,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
         </DialogContent>
         <DialogActions>
           <Button
-            disabled={isDisabled}
+            disabled={dataSelectedWorkplace.isDisabled}
             onClick={handleEventButton}
             variant="contained"
             color="primary"

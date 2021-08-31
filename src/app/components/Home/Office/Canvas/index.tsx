@@ -14,6 +14,15 @@ import { getDataFloors, getSelectedFloor } from "../../../../redux/selectors";
 // types
 import { Places } from "../../../../services/BD/type/Floors";
 
+type InfoAboutWorkplace = {
+  palceIndex: string;
+  label: string;
+  type: string;
+  occupant: string;
+  startReservation: string;
+  endReservation: string;
+  blocked: boolean;
+};
 const useStyles = makeStyles({
   canvas: {
     border: "1px solid black",
@@ -38,16 +47,6 @@ const useStyles = makeStyles({
   },
 });
 
-interface InfoAboutWorkplace {
-  palceIndex: number;
-  label: string;
-  type: string;
-  occupant: string;
-  startReservation: string;
-  endReservation: string;
-  blocked: boolean;
-}
-
 const Canvas: React.FC = () => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -57,12 +56,12 @@ const Canvas: React.FC = () => {
 
   const [infoAboutWorkplace, setInfoAboutWorkplace] =
     useState<InfoAboutWorkplace>({
-      palceIndex: 0,
+      palceIndex: "",
       label: "",
       type: "",
       occupant: "",
-      startReservation: '',
-      endReservation: '',
+      startReservation: "",
+      endReservation: "",
       blocked: false,
     });
 
@@ -79,7 +78,7 @@ const Canvas: React.FC = () => {
   const handleOpen = (event: any) => {
     event.preventDefault();
     if (event.target.tagName === "rect" || event.target.tagName === "text") {
-      setOpen(true);      
+      setOpen(true);
       const selectPlace = places[event.target.id];
       setInfoAboutWorkplace({
         palceIndex: event.target.id,
@@ -112,16 +111,8 @@ const Canvas: React.FC = () => {
                 <text
                   id={`${index}`}
                   className={classes.placeLabel}
-                  x={
-                    item.coordinates.x +
-                    item.coordinates.width / 2 -
-                    16
-                  }
-                  y={
-                    item.coordinates.y +
-                    item.coordinates.height / 2 +
-                    4
-                  }
+                  x={item.coordinates.x + item.coordinates.width / 2 - 16}
+                  y={item.coordinates.y + item.coordinates.height / 2 + 4}
                 >
                   {item.label}
                 </text>

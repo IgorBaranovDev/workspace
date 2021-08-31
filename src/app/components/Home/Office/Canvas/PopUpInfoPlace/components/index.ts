@@ -1,21 +1,9 @@
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-
-export {
-  Button,
-  Dialog,
-  MuiDialogTitle,
-  MuiDialogContent,
-  MuiDialogActions,
-  IconButton,
-  CloseIcon,
-  Typography,
-  TextField,
-};
+export { default as Button } from "@material-ui/core/Button";
+export { default as Dialog } from "@material-ui/core/Dialog";
+export { default as MuiDialogTitle } from "@material-ui/core/DialogTitle";
+export { default as MuiDialogContent } from "@material-ui/core/DialogContent";
+export { default as MuiDialogActions } from "@material-ui/core/DialogActions";
+export { default as IconButton } from "@material-ui/core/IconButton";
+export { default as CloseIcon } from "@material-ui/icons/Close";
+export { default as Typography } from "@material-ui/core/Typography";
+export { default as TextField } from "@material-ui/core/TextField";
