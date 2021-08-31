@@ -3,6 +3,7 @@ import {
   FETCH_OFFICES_DATA_COMPLETE,
   FETCH_SELECTED_OFFICE_COMPLETE,
   SET_SELECTED_FLOOR,
+  // SET_RESERVATION
 } from "../actions/selectOffice";
 
 // types
@@ -32,6 +33,8 @@ export default function workspacesReducer(
       return { ...state, selectedOffice: payload as Offices, selectedFloor: 1 };
     case SET_SELECTED_FLOOR:
       return { ...state, selectedFloor: payload as number };
+    // case SET_RESERVATION: 
+    //   return {... state, selectedOffice: }
     default:
       return state;
   }
