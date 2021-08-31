@@ -21,7 +21,7 @@ const MenuUser: React.FunctionComponent = () => {
 
   useEffect(() => {
     const unSubscribe = firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
+      if (user) {        
         dispatch(getCurrentUser());
       } else {
         dispatch(setUserLoadingState(false));

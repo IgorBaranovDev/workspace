@@ -34,7 +34,6 @@ import {
 
 // types
 import { PlaceReservation } from "../../../../../services/BD/type";
-// import { dateNowFormat } from "../../../../../services/helpers/dateNowFormat";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -61,10 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: 250,
-      "& div.input:hover": {
-        cursor: "pointer",
-      },
+      width: 250, 
     },
     occupantUser: {
       marginBottom: theme.spacing(2),

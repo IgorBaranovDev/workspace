@@ -15,6 +15,8 @@ import {
   getSelectedOffice,
   setReservation,
 } from "../../services/BD";
+
+// types
 import { Action } from "../actions/types";
 import { PlaceReservation } from "../../services/BD/type";
 
@@ -66,8 +68,7 @@ export function* dataHandlerReservationPlace({
         getSelectedOffice,
         idSelectOffice as string
       );
-      if (dataSelectedOffice) {
-        console.log("request officedata");
+      if (dataSelectedOffice) {        
         yield put(fetchSelectedOfficeComplete(dataSelectedOffice));
       } else {
         console.log("fetch data office addres fail");

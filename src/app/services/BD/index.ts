@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/database";
 import { PlaceReservation } from "./type";
 
-export const getAddressesData = async () => {
+export const getAddressesData = async () => {  
   return await firebase
     .database()
     .ref("officesData/")
