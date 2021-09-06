@@ -16,7 +16,7 @@ import {
 
 // auth services
 import * as authService from "../../services/auth";
-import { getCurrentUser } from "../../services/auth";
+import { checkCurrentUser } from "../../services/auth";
 
 type AuthService = typeof authService;
 
@@ -56,10 +56,10 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
 }
 
 export function* checkingUser(): Generator<any> {
-  const userDataFromLocalStorage: any = yield call(getCurrentUser);
-  if (userDataFromLocalStorage) {
+  try {
+    const userDataFromLocalStorage: any = yield call(checkCurrentUser);
     yield put(authSuccess(userDataFromLocalStorage.email));
-  } else {
+  } catch {
     console.log("no user");
   }
 }

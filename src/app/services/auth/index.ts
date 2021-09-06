@@ -41,6 +41,13 @@ export const logOut = () => {
   configFirebase.auth().signOut();
 };
 
-export const getCurrentUser = () => {
-  return configFirebase.auth().currentUser;
-};
+export const checkCurrentUser = () => new Promise((resolve, reject) => {
+  const unSubscribe = firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {        
+      resolve(user);
+    } else {
+      reject();
+    }
+    unSubscribe();
+  })
+});
