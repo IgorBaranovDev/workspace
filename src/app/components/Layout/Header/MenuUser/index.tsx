@@ -6,13 +6,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCurrentUser,
   logOut,
-  setUserLoadingState,
 } from "../../../../redux/actions/index";
 
 // styles
 import { IconButton, Icon, TextLogin, UserName } from "./components";
 import { getAuthUser } from "../../../../redux/selectors";
-import firebase from "firebase/app";
 
 const MenuUser: React.FunctionComponent = () => {
   const history = useHistory();
@@ -20,15 +18,8 @@ const MenuUser: React.FunctionComponent = () => {
   const user = useSelector(getAuthUser);
 
   useEffect(() => {
-    const unSubscribe = firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {        
-        dispatch(getCurrentUser());
-      } else {
-        dispatch(setUserLoadingState(false));
-      }
-      unSubscribe();
-    });
-  }, [dispatch]);
+    dispatch(getCurrentUser());
+  }, []);// eslint-disable-line
 
   const handlerClick = () => {
     if (user) {
