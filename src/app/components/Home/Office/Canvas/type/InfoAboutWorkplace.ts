@@ -1,11 +1,9 @@
-export type PlaceReservation = {
-  idOffice: string;
-  selectFloor: string;
+export type InfoAboutWorkplace = {
   palceIndex: string;
   label: string;
   type: string;
   occupant: string;
   startReservation: string;
   endReservation: string;
-  blocked: boolean; 
+  blocked: boolean;
 };

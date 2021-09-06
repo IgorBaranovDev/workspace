@@ -13,16 +13,8 @@ import { getDataFloors, getSelectedFloor } from "../../../../redux/selectors";
 
 // types
 import { Places } from "../../../../services/BD/type/Floors";
+import { InfoAboutWorkplace } from "./type/InfoAboutWorkplace";
 
-type InfoAboutWorkplace = {
-  palceIndex: string;
-  label: string;
-  type: string;
-  occupant: string;
-  startReservation: string;
-  endReservation: string;
-  blocked: boolean;
-};
 const useStyles = makeStyles({
   canvas: {
     border: "1px solid black",
@@ -49,21 +41,12 @@ const useStyles = makeStyles({
 
 const Canvas: React.FC = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [places, setPlaces] = useState<Places>([]);
   const dataFloors = useSelector(getDataFloors);
   const selesctedFloor = useSelector(getSelectedFloor);
 
   const [infoAboutWorkplace, setInfoAboutWorkplace] =
-    useState<InfoAboutWorkplace>({
-      palceIndex: "",
-      label: "",
-      type: "",
-      occupant: "",
-      startReservation: "",
-      endReservation: "",
-      blocked: false,
-    });
+    useState<InfoAboutWorkplace | null>(null);
 
   useEffect(() => {
     if (dataFloors && selesctedFloor) {
@@ -72,13 +55,12 @@ const Canvas: React.FC = () => {
   }, [dataFloors, selesctedFloor]);
 
   const handleClose = () => {
-    setOpen(false);
+    setInfoAboutWorkplace(null);
   };
 
   const handleOpen = (event: any) => {
     event.preventDefault();
     if (event.target.tagName === "rect" || event.target.tagName === "text") {
-      setOpen(true);
       const selectPlace = places[event.target.id];
       setInfoAboutWorkplace({
         palceIndex: event.target.id,
@@ -124,7 +106,6 @@ const Canvas: React.FC = () => {
       <PopUpInfoPlace
         handleEventPopUp={handleClose}
         dataAboutWorkplace={infoAboutWorkplace}
-        visibility={open}
       />
     </>
   );
