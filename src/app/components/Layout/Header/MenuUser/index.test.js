@@ -12,5 +12,5 @@ jest.mock("react-redux", () => ({
 test("render MenuUser component with user", () => {
     const screen = render(<MenuUser />);
     expect(screen.getByText("log out")).toBeInTheDocument();
-    expect(screen.queryByText("log in")).toBeNull();
+    expect(screen.queryByText("log in")).not.toBeInTheDocument()
 });

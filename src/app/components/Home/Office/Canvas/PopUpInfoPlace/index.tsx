@@ -123,7 +123,6 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   handleEventPopUp,
   dataAboutWorkplace,
 }) => {
-  console.log("PopUpInfoPlace", dataAboutWorkplace);
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(getAuthUser);
@@ -132,25 +131,25 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
 
   const [dataSelectedWorkplace, setDataSelectedWorkplace] =
     useState<DataSelectedWorkplace>({
-      idOffice: '',
-      selectFloor: '',
+      idOffice: "",
+      selectFloor: "",
       blocked: false,
-      endReservation: '',
-      label: '',
-      occupant: '',
-      palceIndex: '',
-      startReservation: '',
-      type: '',
+      endReservation: "",
+      label: "",
+      occupant: "",
+      palceIndex: "",
+      startReservation: "",
+      type: "",
     });
 
   const { occupant } = dataAboutWorkplace ?? {};
-  const isDisabled = !!useMemo(
-    () => occupant && user !== occupant,
+  const isDisabled = useMemo(
+    () => Boolean(occupant && user !== occupant),
     [user, occupant]
   );
 
   useEffect(() => {
-    if (dataAboutWorkplace) {      
+    if (dataAboutWorkplace) {
       setDataSelectedWorkplace({
         idOffice: selectedOffice.id,
         selectFloor: `${selesctedFloor - 1}`,
@@ -165,20 +164,20 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
     }
   }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor, user]);
 
-  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {    
-      if (event.target.id === "datetime-booking-place-end") {
-        setDataSelectedWorkplace((prevState) => ({
-          ...prevState,
-          occupant: user,
-          endReservation: event.target.value,
-        }));
-      } else if (event.target.id === "datetime-booking-place-start") {
-        setDataSelectedWorkplace((prevState) => ({
-          ...prevState,
-          occupant: user,
-          startReservation: event.target.value,
-        }));
-      }    
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.id === "datetime-booking-place-end") {
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        occupant: user,
+        endReservation: event.target.value,
+      }));
+    } else if (event.target.id === "datetime-booking-place-start") {
+      setDataSelectedWorkplace((prevState) => ({
+        ...prevState,
+        occupant: user,
+        startReservation: event.target.value,
+      }));
+    }
   };
 
   const handleEventButton = () => {
@@ -195,7 +194,6 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
       >
         {dataAboutWorkplace && (
           <>
-            {" "}
             <DialogTitle
               id="customized-dialog-title"
               onClose={handleEventPopUp}
