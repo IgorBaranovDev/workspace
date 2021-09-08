@@ -18,4 +18,5 @@ export type Places = Array<{
 export type Floors = Array<{
   number: number;
   places: Places;
+  floorImageSrc: string;
 }>;

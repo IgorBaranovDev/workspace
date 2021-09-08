@@ -1,11 +1,10 @@
 import styled from "styled-components";
-import PlanOffice from "../../../../../assets/img/Canvas/PlanOffice.png";
 
-const WrapperCanvas = styled.div`
+const WrapperCanvas = styled.div<{$image: string}>`
   position: relative;
   width: 1024px;
   height: 640px;
-  background-image: url("${PlanOffice}");
+  background-image: url("${({$image})=> $image}");
   background-position: center;
   background-repeat: no-repeat;
 `;

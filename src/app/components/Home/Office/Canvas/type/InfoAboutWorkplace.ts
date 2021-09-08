@@ -6,4 +6,5 @@ export type InfoAboutWorkplace = {
   startReservation: string;
   endReservation: string;
   blocked: boolean;
+  // floorImageSrc: string;
 };
