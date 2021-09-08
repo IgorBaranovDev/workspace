@@ -40,8 +40,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Canvas: React.FC = () => {
-  console.log('RENDER CANVAS');
+const Canvas: React.FC = () => {  
   const classes = useStyles();
   const dataFloors = useSelector(getDataFloors);
   const selesctedFloor = useSelector(getSelectedFloor);

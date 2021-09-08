@@ -5,6 +5,5 @@ export type InfoAboutWorkplace = {
   occupant: string;
   startReservation: string;
   endReservation: string;
-  blocked: boolean;
-  // floorImageSrc: string;
+  blocked: boolean;  
 };
