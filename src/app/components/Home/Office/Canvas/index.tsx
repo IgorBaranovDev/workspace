@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
+
 import { useSelector } from "react-redux";
 
 // component
 import PopUpInfoPlace from "./PopUpInfoPlace";
+import Loader from "../../../Loader";
 
 // style
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,7 +14,6 @@ import WrapperCanvas from "./components/WrapperCanvas";
 import { getDataFloors, getSelectedFloor } from "../../../../redux/selectors";
 
 // types
-import { Places } from "../../../../services/BD/type/Floors";
 import { InfoAboutWorkplace } from "./type/InfoAboutWorkplace";
 
 const useStyles = makeStyles({
@@ -39,20 +40,27 @@ const useStyles = makeStyles({
   },
 });
 
-const Canvas: React.FC = () => {
+const Canvas: React.FC = () => {  
   const classes = useStyles();
-  const [places, setPlaces] = useState<Places>([]);
   const dataFloors = useSelector(getDataFloors);
   const selesctedFloor = useSelector(getSelectedFloor);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  const { places, floorImageSrc } = useMemo(
+    () => dataFloors[selesctedFloor - 1],
+    [dataFloors, selesctedFloor]
+  );
   const [infoAboutWorkplace, setInfoAboutWorkplace] =
     useState<InfoAboutWorkplace | null>(null);
 
   useEffect(() => {
-    if (dataFloors && selesctedFloor) {
-      setPlaces(dataFloors[selesctedFloor - 1].places);
-    }
-  }, [dataFloors, selesctedFloor]);
+    setIsImageLoaded(false);
+    const image = new Image();
+    image.addEventListener("load", () => {
+      setIsImageLoaded(true);
+    });
+    image.src = floorImageSrc;
+  }, [floorImageSrc]);
 
   const handleClose = () => {
     setInfoAboutWorkplace(null);
@@ -69,16 +77,17 @@ const Canvas: React.FC = () => {
         occupant: selectPlace.placeStatus.occupant,
         startReservation: selectPlace.placeStatus.start,
         endReservation: selectPlace.placeStatus.end,
-        blocked: selectPlace.placeStatus.blocked,
+        blocked: selectPlace.placeStatus.blocked        
       });
     }
   };
 
   return (
     <>
-      {places ? (
-        <WrapperCanvas>
+      {places && isImageLoaded ? (
+        <WrapperCanvas $image={floorImageSrc} >
           <svg id="canvas" className={classes.canvas} onClick={handleOpen}>
+            {/* position absolute */}
             {places?.map((item: any, index: number) => (
               <g key={`rect-${index}`} id={`place-${index + 1}`}>
                 <rect
@@ -102,7 +111,7 @@ const Canvas: React.FC = () => {
             ))}
           </svg>
         </WrapperCanvas>
-      ) : null}
+      ) : (<Loader />)}
       <PopUpInfoPlace
         handleEventPopUp={handleClose}
         dataAboutWorkplace={infoAboutWorkplace}
