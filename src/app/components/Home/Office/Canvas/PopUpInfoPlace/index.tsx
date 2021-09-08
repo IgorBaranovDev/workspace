@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 // selectors
@@ -31,6 +31,9 @@ import {
   Typography,
   TextField,
 } from "./components";
+
+// types
+import { InfoAboutWorkplace } from "../type/InfoAboutWorkplace";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -108,35 +111,17 @@ const DialogActions = withStyles((theme: Theme) => ({
 
 interface IPopUpInfoPlace {
   handleEventPopUp: () => void;
-  dataAboutWorkplace: {
-    palceIndex: string;
-    label: string;
-    type: string;
-    occupant: string;
-    startReservation: string;
-    endReservation: string;
-    blocked: boolean;
-  };
-  visibility: boolean;
+  dataAboutWorkplace: null | InfoAboutWorkplace;
 }
 
-type DataSelectedWorkplace = {
+type DataSelectedWorkplace = InfoAboutWorkplace & {
   idOffice: string;
   selectFloor: string;
-  palceIndex: string;
-  label: string;
-  type: string;
-  occupant: string;
-  startReservation: string;
-  endReservation: string;
-  blocked: boolean;
-  isDisabled: boolean;
 };
 
 const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   handleEventPopUp,
   dataAboutWorkplace,
-  visibility,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -146,43 +131,51 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
 
   const [dataSelectedWorkplace, setDataSelectedWorkplace] =
     useState<DataSelectedWorkplace>({
-      ...dataAboutWorkplace,
-      idOffice: selectedOffice.id,
-      selectFloor: `${selesctedFloor - 1}`,
-      occupant: user,
-      isDisabled: false,
+      idOffice: "",
+      selectFloor: "",
+      blocked: false,
+      endReservation: "",
+      label: "",
+      occupant: "",
+      palceIndex: "",
+      startReservation: "",
+      type: "",
     });
 
+  const { occupant } = dataAboutWorkplace ?? {};
+  const isDisabled = useMemo(
+    () => Boolean(occupant && user !== occupant),
+    [user, occupant]
+  );
+
   useEffect(() => {
-    const { occupant, startReservation, endReservation } = dataAboutWorkplace;
-    if (occupant && user !== occupant) {
-      setDataSelectedWorkplace((prevState) => ({
-        ...prevState,
-        isDisabled: true,
-      }));
-    } else {
-      setDataSelectedWorkplace((prevState) => ({
-        ...prevState,
-        isDisabled: false,
-      }));
+    if (dataAboutWorkplace) {
+      setDataSelectedWorkplace({
+        idOffice: selectedOffice.id,
+        selectFloor: `${selesctedFloor - 1}`,
+        blocked: dataAboutWorkplace.blocked,
+        endReservation: dataAboutWorkplace.endReservation,
+        label: dataAboutWorkplace.label,
+        occupant: dataAboutWorkplace.occupant,
+        palceIndex: dataAboutWorkplace.palceIndex,
+        startReservation: dataAboutWorkplace.startReservation,
+        type: dataAboutWorkplace.type,
+      });
     }
-    setDataSelectedWorkplace((prevState) => ({
-      ...prevState,
-      startBooking: startReservation,
-      endBooking: endReservation,
-    }));
-  }, [dataAboutWorkplace, user]);
+  }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor, user]);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "datetime-booking-place-end") {
       setDataSelectedWorkplace((prevState) => ({
         ...prevState,
-        endBooking: event.target.value,
+        occupant: user,
+        endReservation: event.target.value,
       }));
     } else if (event.target.id === "datetime-booking-place-start") {
       setDataSelectedWorkplace((prevState) => ({
         ...prevState,
-        startBooking: event.target.value,
+        occupant: user,
+        startReservation: event.target.value,
       }));
     }
   };
@@ -197,52 +190,59 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
       <Dialog
         onClose={handleEventPopUp}
         aria-labelledby="customized-dialog-title"
-        open={visibility}
+        open={dataAboutWorkplace !== null}
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleEventPopUp}>
-          {dataAboutWorkplace.type} - {dataAboutWorkplace.label}
-        </DialogTitle>
-        <DialogContent dividers>
-          <Typography className={classes.occupantUser}>
-            Occupant: {dataAboutWorkplace.occupant}{" "}
-          </Typography>
-          <form className={classes.container} noValidate>
-            <TextField
-              disabled={dataSelectedWorkplace.isDisabled}
-              id="datetime-booking-place-start"
-              label="Start booking"
-              type="date"
-              defaultValue={dataSelectedWorkplace.startReservation}
-              onChange={handlerChange}
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-            <TextField
-              disabled={dataSelectedWorkplace.isDisabled}
-              id="datetime-booking-place-end"
-              label="End booking"
-              type="date"
-              defaultValue={dataSelectedWorkplace.endReservation}
-              onChange={handlerChange}
-              className={classes.textField}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button
-            disabled={dataSelectedWorkplace.isDisabled}
-            onClick={handleEventButton}
-            variant="contained"
-            color="primary"
-          >
-            Save changes
-          </Button>
-        </DialogActions>
+        {dataAboutWorkplace && (
+          <>
+            <DialogTitle
+              id="customized-dialog-title"
+              onClose={handleEventPopUp}
+            >
+              {dataAboutWorkplace.type} - {dataAboutWorkplace.label}
+            </DialogTitle>
+            <DialogContent dividers>
+              <Typography className={classes.occupantUser}>
+                Occupant: {dataAboutWorkplace.occupant}{" "}
+              </Typography>
+              <form className={classes.container} noValidate>
+                <TextField
+                  disabled={isDisabled}
+                  id="datetime-booking-place-start"
+                  label="Start booking"
+                  type="date"
+                  defaultValue={dataAboutWorkplace.startReservation}
+                  onChange={handlerChange}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+                <TextField
+                  disabled={isDisabled}
+                  id="datetime-booking-place-end"
+                  label="End booking"
+                  type="date"
+                  defaultValue={dataAboutWorkplace.endReservation}
+                  onChange={handlerChange}
+                  className={classes.textField}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <Button
+                disabled={isDisabled}
+                onClick={handleEventButton}
+                variant="contained"
+                color="primary"
+              >
+                Save changes
+              </Button>
+            </DialogActions>
+          </>
+        )}
       </Dialog>
     </>
   );

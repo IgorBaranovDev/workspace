@@ -6,8 +6,8 @@ import { setSelectedFloor } from "../../../../redux/actions/selectOffice";
 
 // style
 import { InputItem, Select } from "../../GroupSelects/components";
-import TextFloors from "./TextFloors";
-import TotalNumber from "./TotalNumber";
+import TextFloors from "./components/TextFloors";
+import TotalNumber from "./components/TotalNumber";
 
 // selector
 import { getDataFloors } from "../../../../redux/selectors";
