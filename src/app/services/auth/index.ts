@@ -20,9 +20,9 @@ export const signIn = async ({ email, password }: Creds) => {
     return await configFirebase
       .auth()
       .signInWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.log(error);
-    return null;
+  } catch (error: any) {
+    const errorMessage = error.message;
+    return errorMessage;
   }
 };
 
@@ -41,13 +41,14 @@ export const logOut = () => {
   configFirebase.auth().signOut();
 };
 
-export const checkCurrentUser = () => new Promise((resolve, reject) => {
-  const unSubscribe = firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {        
-      resolve(user);
-    } else {
-      reject();
-    }
-    unSubscribe();
-  })
-});
+export const checkCurrentUser = () =>
+  new Promise((resolve, reject) => {
+    const unSubscribe = firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        resolve(user);
+      } else {
+        reject();
+      }
+      unSubscribe();
+    });
+  });
