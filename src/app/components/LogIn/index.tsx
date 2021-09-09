@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 // style
@@ -20,7 +20,11 @@ import { logIn, signUp, logOut } from "../../redux/actions";
 import { ILogin } from "./types";
 
 // selector
-import { getAuthUser } from "../../redux/selectors";
+import {
+  getAuthUser,
+  getErrorAuth,
+  getLoadingState,
+} from "../../redux/selectors";
 
 const mapStateToProps = (state: any) => {
   return {
@@ -38,7 +42,8 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const errorAuth = useSelector(getErrorAuth);
+  const loading = useSelector(getLoadingState);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "username") {
@@ -54,14 +59,10 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    const authFunc = isRegistration ? signUp : logIn;    
+    const authFunc = isRegistration ? signUp : logIn;
     authFunc({ email, password });
     setEmail("");
     setPassword("");
-    if (user) {
-      setLoading(false);
-    }
   };
 
   return (
@@ -88,6 +89,7 @@ export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
               variant="outlined"
               required
             />
+            {errorAuth ? <span>{errorAuth}</span> : null}
             <AuthInput
               type="password"
               name="password"
