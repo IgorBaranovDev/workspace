@@ -14,6 +14,7 @@ import { Action } from "../actions/types";
 const initialState = {
   user: null,
   loading: true,
+  errorAuth: null,
 };
 
 export default function authReducer(
@@ -22,7 +23,7 @@ export default function authReducer(
 ) {
   switch (type) {
     case AUTH_SUCCESS:
-      return { ...state, user: payload, loading: false };
+      return { ...state, user: payload, loading: false, errorAuth: null };
     case LOGOUT:
       return { ...state, user: null };
     case LOGIN_REQUEST:
@@ -30,7 +31,7 @@ export default function authReducer(
     case SINGUP_REQUEST:
       return { ...state, loading: true };
     case AUTH_FAILURE:
-      return { ...state, loading: false };
+      return { ...state, loading: false, errorAuth: payload };
     case LOADING:
       return { ...state, loading: payload };
     default:

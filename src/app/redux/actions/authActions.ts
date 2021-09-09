@@ -28,4 +28,12 @@ export const authSuccess = (user: string): Action => ({
 
 export const getCurrentUser = (): Action => ({ type: GET_CURRENT_USER });
 
-export const setUserLoadingState = (state: boolean) => ({ type: LOADING, payload: state });
+export const setUserLoadingState = (state: boolean) => ({
+  type: LOADING,
+  payload: state,
+});
+
+export const authFailure = (message: string): Action => ({
+  type: AUTH_FAILURE,
+  payload: message,
+});
