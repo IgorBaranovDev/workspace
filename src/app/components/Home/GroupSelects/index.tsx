@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 
 // components
 import ListOfAddresses from "../ListOfAddresses";
+
+// selectors
+import { getAuthUser } from "../../../redux/selectors";
 
 // style
 import {
@@ -28,6 +32,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
   const [arrCity, setArrCity] = useState<Array<IarrCity>>([]);
   const [city, setCity] = useState("");
   const [arrAddresses, setArrAddresses] = useState<Array<IarrCity>>([]);
+  const user = useSelector(getAuthUser);
 
   const handleChange = (event: React.FormEvent<HTMLSelectElement>) => {
     const element = event.target as HTMLSelectElement;
@@ -55,6 +60,7 @@ const GroupSelects: React.FC<IGroupSelector> = ({ officesProps }) => {
             name="selectCountry"
             value={country}
             onChange={handleChange}
+            disabled={!user}
           >
             <option hidden value="">
               Select country

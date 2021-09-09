@@ -32,7 +32,7 @@ const Home: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  if (!user && !loading) {
+  if (!user && loading) {
     return <Redirect to="/auth" />;
   }
 
