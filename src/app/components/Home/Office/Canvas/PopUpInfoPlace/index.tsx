@@ -181,7 +181,6 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   };
 
   const handleEventButton = () => {
-    console.log(dataSelectedWorkplace);
     dispatch(setReservation(dataSelectedWorkplace));
   };
 

@@ -33,7 +33,7 @@ export const setUserLoadingState = (state: boolean) => ({
   payload: state,
 });
 
-export const authFailure = (message: string): Action => ({
+export const authFailure = (message: string = 'Somthing wrong ...'): Action => ({
   type: AUTH_FAILURE,
   payload: message,
 });
