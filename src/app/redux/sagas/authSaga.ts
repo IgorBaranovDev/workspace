@@ -8,9 +8,9 @@ import { Creds } from "../../services/types";
 import {
   LOGIN_REQUEST,
   SINGUP_REQUEST,
-  AUTH_FAILURE,
   GET_CURRENT_USER,
   LOGOUT,
+  authFailure,
   authSuccess,
 } from "../actions";
 
@@ -45,12 +45,11 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
     yield call(authService[authType]);
   } else {
     const userData: any = yield call(authUser, payload as Creds, authType);
-    if (userData) {
+
+    if (typeof userData !== "string") {
       yield put(authSuccess(userData.user.email));
     } else {
-      yield put({
-        type: AUTH_FAILURE,
-      });
+      yield put(authFailure(userData));
     }
   }
 }
@@ -61,6 +60,7 @@ export function* checkingUser(): Generator<any> {
     yield put(authSuccess(userDataFromLocalStorage.email));
   } catch {
     console.log("no user");
+    yield put(authFailure(""));
   }
 }
 
