@@ -8,10 +8,11 @@ import { Creds } from "../../services/types";
 import {
   LOGIN_REQUEST,
   SINGUP_REQUEST,
-  AUTH_FAILURE,
   GET_CURRENT_USER,
   LOGOUT,
+  authFailure,
   authSuccess,
+  setUserLoadingState,
 } from "../actions";
 
 // auth services
@@ -34,7 +35,7 @@ export const authUser = async (creds: Creds, authType: AuthMethod) => {
     const userData = await authService[authType]?.(creds);
     return userData;
   } catch (err) {
-    console.log("auth error:", err);
+    // console.log("auth error:", err);
     return null;
   }
 };
@@ -45,22 +46,20 @@ export function* authHandler({ type, payload }: Action): Generator<any> {
     yield call(authService[authType]);
   } else {
     const userData: any = yield call(authUser, payload as Creds, authType);
-    if (userData) {
+    if (userData?.user?.email) {
       yield put(authSuccess(userData.user.email));
     } else {
-      yield put({
-        type: AUTH_FAILURE,
-      });
+      yield put(authFailure(userData));
     }
   }
 }
 
 export function* checkingUser(): Generator<any> {
-  try {
+  try {   
     const userDataFromLocalStorage: any = yield call(checkCurrentUser);
     yield put(authSuccess(userDataFromLocalStorage.email));
   } catch {
-    console.log("no user");
+    yield put(setUserLoadingState(false))
   }
 }
 

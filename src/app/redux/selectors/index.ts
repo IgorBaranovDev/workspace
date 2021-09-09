@@ -23,3 +23,6 @@ export const getDataFloors = (state: {
 export const getSelectedFloor = (state: {
   workspaces: { selectedFloor: number };
 }) => state.workspaces.selectedFloor;
+
+export const getErrorAuth = (state: { auth: { errorAuth: boolean } }) =>
+  state.auth.errorAuth;
