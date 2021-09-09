@@ -31,9 +31,9 @@ export const signUp = async ({ email, password }: Creds) => {
     return await configFirebase
       .auth()
       .createUserWithEmailAndPassword(email, password);
-  } catch (error) {
-    console.log(error);
-    return null;
+  } catch (error: any) {
+    const errorMessage = error.message;
+    return errorMessage;
   }
 };
 
