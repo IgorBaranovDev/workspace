@@ -7,6 +7,7 @@ import {
   SET_RESERVATION,
   fetchOfficesDataComplelte,
   fetchSelectedOfficeComplete,
+  setSelectedFloor,
 } from "../actions/selectOffice";
 
 // service
@@ -62,14 +63,16 @@ export function* dataHandlerReservationPlace({
       setReservation,
       payload as PlaceReservation
     );
-    // after set new resrvation plase we get id selected office for update all data of office
+    const { selectFloor } = payload as PlaceReservation;    
+    // after set new resrvation plase we get id selected office for update all data of office and set selectedFloor
     if (idSelectOffice) {
       const dataSelectedOffice: any = yield call(
         getSelectedOffice,
         idSelectOffice as string
       );
       if (dataSelectedOffice) {        
-        yield put(fetchSelectedOfficeComplete(dataSelectedOffice));
+        yield put(fetchSelectedOfficeComplete(dataSelectedOffice ));
+        yield put(setSelectedFloor(+selectFloor + 1));
       } else {
         console.log("fetch data office addres fail");
       }

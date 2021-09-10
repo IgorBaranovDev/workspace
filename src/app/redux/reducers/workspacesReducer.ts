@@ -19,7 +19,7 @@ type OfficesState = {
 const initialState: OfficesState = {
   officesData: {},
   selectedOffice: null,
-  selectedFloor: null,
+  selectedFloor: 1,
 };
 
 export default function workspacesReducer(
@@ -30,10 +30,10 @@ export default function workspacesReducer(
     case FETCH_OFFICES_DATA_COMPLETE:
       return { ...state, officesData: payload };
     case FETCH_SELECTED_OFFICE_COMPLETE:
-      return { ...state, selectedOffice: payload as Offices, selectedFloor: 1 };
+      return { ...state, selectedOffice: payload as Offices };
     case SET_SELECTED_FLOOR:
       return { ...state, selectedFloor: payload as number };
-    // case SET_RESERVATION: 
+    // case SET_RESERVATION:
     //   return {... state, selectedOffice: }
     default:
       return state;

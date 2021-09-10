@@ -11,7 +11,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import WrapperCanvas from "./components/WrapperCanvas";
 
 // selectors
-import { getDataFloors, getSelectedFloor } from "../../../../redux/selectors";
+import {
+  getAuthUser,
+  getDataFloors,
+  getSelectedFloor,
+} from "../../../../redux/selectors";
 
 // types
 import { InfoAboutWorkplace } from "./type/InfoAboutWorkplace";
@@ -25,26 +29,30 @@ const useStyles = makeStyles({
   },
 
   placeField: {
-    opacity: "0",
     cursor: "pointer",
+    fill: "#c4c4c4",
     "&:hover": {
-      fill: "#299cff",
-      opacity: "1",
+      fill: "#299eff",
     },
   },
   placeLabel: {
     fontSize: "14px",
     lineHeight: "14px",
-    fill: "#fff",
+    fontWeight: "bold",
+    fill: "#000000",
     cursor: "pointer",
   },
 });
 
-const Canvas: React.FC = () => {  
+const setStrokeColor = (item: string, user: string) =>
+  item === "" && item !== user ? "green" : item === user ? "orange" : "red";
+
+const Canvas: React.FC = () => {
   const classes = useStyles();
   const dataFloors = useSelector(getDataFloors);
   const selesctedFloor = useSelector(getSelectedFloor);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const user = useSelector(getAuthUser);
 
   const { places, floorImageSrc } = useMemo(
     () => dataFloors[selesctedFloor - 1],
@@ -77,7 +85,7 @@ const Canvas: React.FC = () => {
         occupant: selectPlace.placeStatus.occupant,
         startReservation: selectPlace.placeStatus.start,
         endReservation: selectPlace.placeStatus.end,
-        blocked: selectPlace.placeStatus.blocked        
+        blocked: selectPlace.placeStatus.blocked,
       });
     }
   };
@@ -85,7 +93,7 @@ const Canvas: React.FC = () => {
   return (
     <>
       {places && isImageLoaded ? (
-        <WrapperCanvas $image={floorImageSrc} >
+        <WrapperCanvas $image={floorImageSrc}>
           <svg id="canvas" className={classes.canvas} onClick={handleOpen}>
             {/* position absolute */}
             {places?.map((item: any, index: number) => (
@@ -98,6 +106,8 @@ const Canvas: React.FC = () => {
                   width={item.coordinates.width}
                   height={item.coordinates.height}
                   rx="5"
+                  stroke={setStrokeColor(item.placeStatus.occupant, user)}
+                  strokeWidth="4px"
                 />
                 <text
                   id={`${index}`}
@@ -111,7 +121,9 @@ const Canvas: React.FC = () => {
             ))}
           </svg>
         </WrapperCanvas>
-      ) : (<Loader />)}
+      ) : (
+        <Loader />
+      )}
       <PopUpInfoPlace
         handleEventPopUp={handleClose}
         dataAboutWorkplace={infoAboutWorkplace}
