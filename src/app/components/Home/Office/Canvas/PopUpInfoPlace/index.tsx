@@ -149,7 +149,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   );
 
   useEffect(() => {
-    if (dataAboutWorkplace) {
+    if (dataAboutWorkplace) {     
       setDataSelectedWorkplace({
         idOffice: selectedOffice.id,
         selectFloor: `${selesctedFloor - 1}`,
@@ -201,7 +201,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
             </DialogTitle>
             <DialogContent dividers>
               <Typography className={classes.occupantUser}>
-                Occupant: {dataAboutWorkplace.occupant}{" "}
+                Occupant: {dataAboutWorkplace.occupant}
               </Typography>
               <form className={classes.container} noValidate>
                 <TextField
