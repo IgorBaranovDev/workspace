@@ -5,5 +5,4 @@ export const FormatDate = (date: Date): string => {
     const monthFormat = (x: any) => (x < 10 ? "0" + x : x);
     const dateNowFormat = `${year}-${monthFormat(month)}-${day}`;
     return dateNowFormat;
-  };
-  
+  };  
