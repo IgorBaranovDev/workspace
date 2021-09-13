@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import compareAsc from "date-fns/compareAsc";
 
 // selectors
 import {
@@ -35,9 +34,6 @@ import {
 
 // types
 import { InfoAboutWorkplace } from "../type/InfoAboutWorkplace";
-
-// helper function
-import { FormatDate } from "../../../../../services/helpFn/FormatDate";
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -133,7 +129,6 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   const selesctedFloor = useSelector(getSelectedFloor);
   const selectedOffice = useSelector(getSelectedOffice);
 
-  const [isDisabled, setIsDisabled] = useState(true);
   const [dataSelectedWorkplace, setDataSelectedWorkplace] =
     useState<DataSelectedWorkplace>({
       idOffice: "",
@@ -147,60 +142,34 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
       type: "",
     });
 
+  const { occupant } = dataAboutWorkplace ?? {};
+  const isDisabled = useMemo(
+    () => Boolean(occupant && user !== occupant),
+    [user, occupant]
+  );
+
   useEffect(() => {
     if (dataAboutWorkplace) {
-      // date now
-      const dateNow = new Date();
-
-      const resultCompareDate =
-        compareAsc(
-          new Date(dateNow),
-          new Date(dataAboutWorkplace.endReservation)
-        ) === 1;
-
-      resultCompareDate
-        ? setDataSelectedWorkplace({
-            idOffice: selectedOffice.id,
-            selectFloor: `${selesctedFloor - 1}`,
-            blocked: dataAboutWorkplace.blocked,
-            endReservation: FormatDate(dateNow),
-            label: dataAboutWorkplace.label,
-            occupant: "",
-            palceIndex: dataAboutWorkplace.palceIndex,
-            startReservation: FormatDate(dateNow),
-            type: dataAboutWorkplace.type,
-          })
-        : setDataSelectedWorkplace({
-            idOffice: selectedOffice.id,
-            selectFloor: `${selesctedFloor - 1}`,
-            blocked: dataAboutWorkplace.blocked,
-            endReservation: dataAboutWorkplace.endReservation,
-            label: dataAboutWorkplace.label,
-            occupant: dataAboutWorkplace.occupant,
-            palceIndex: dataAboutWorkplace.palceIndex,
-            startReservation: dataAboutWorkplace.startReservation,
-            type: dataAboutWorkplace.type,
-          });
-
-      const { occupant } = dataAboutWorkplace;
-      setIsDisabled(resultCompareDate || occupant === user ? false : true);
+      setDataSelectedWorkplace({
+        idOffice: selectedOffice.id,
+        selectFloor: `${selesctedFloor - 1}`,
+        blocked: dataAboutWorkplace.blocked,
+        endReservation: dataAboutWorkplace.endReservation,
+        label: dataAboutWorkplace.label,
+        occupant: dataAboutWorkplace.occupant,
+        palceIndex: dataAboutWorkplace.palceIndex,
+        startReservation: dataAboutWorkplace.startReservation,
+        type: dataAboutWorkplace.type,
+      });
     }
   }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor, user]);
 
-  const handlerChange = (event: any) => {
+  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.id === "datetime-booking-place-end") {
-      const compareInputDate =
-        compareAsc(
-          new Date(dataSelectedWorkplace.startReservation),
-          new Date(event.target.value)
-        ) <= 0
-          ? event.target.value
-          : dataSelectedWorkplace.startReservation;
-
       setDataSelectedWorkplace((prevState) => ({
         ...prevState,
         occupant: user,
-        endReservation: compareInputDate,
+        endReservation: event.target.value,
       }));
     } else if (event.target.id === "datetime-booking-place-start") {
       setDataSelectedWorkplace((prevState) => ({
@@ -232,7 +201,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
             </DialogTitle>
             <DialogContent dividers>
               <Typography className={classes.occupantUser}>
-                Occupant: {dataSelectedWorkplace.occupant}
+                Occupant: {dataAboutWorkplace.occupant}{" "}
               </Typography>
               <form className={classes.container} noValidate>
                 <TextField
@@ -240,7 +209,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   id="datetime-booking-place-start"
                   label="Start booking"
                   type="date"
-                  defaultValue={dataSelectedWorkplace.startReservation}
+                  defaultValue={dataAboutWorkplace.startReservation}
                   onChange={handlerChange}
                   className={classes.textField}
                   InputLabelProps={{
@@ -252,7 +221,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   id="datetime-booking-place-end"
                   label="End booking"
                   type="date"
-                  defaultValue={dataSelectedWorkplace.endReservation}
+                  defaultValue={dataAboutWorkplace.endReservation}
                   onChange={handlerChange}
                   className={classes.textField}
                   InputLabelProps={{

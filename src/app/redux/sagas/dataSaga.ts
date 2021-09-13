@@ -47,6 +47,11 @@ export function* dataHandlerSelectedOffice({
     );
     if (dataSelectedOffice) {
       yield put(fetchSelectedOfficeComplete(dataSelectedOffice));
+
+
+
+
+      
     } else {
       console.log("fetch data office addres fail");
     }
