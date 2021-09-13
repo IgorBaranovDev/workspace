@@ -94,8 +94,7 @@ const Canvas: React.FC = () => {
     <>
       {places && isImageLoaded ? (
         <WrapperCanvas $image={floorImageSrc}>
-          <svg id="canvas" className={classes.canvas} onClick={handleOpen}>
-            {/* position absolute */}
+          <svg id="canvas" className={classes.canvas} onClick={handleOpen}>            
             {places?.map((item: any, index: number) => (
               <g key={`rect-${index}`} id={`place-${index + 1}`}>
                 <rect
