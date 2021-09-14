@@ -192,7 +192,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   const handleEventButtonCancel = () => {
     const dataSelectedWorkplaceAfterClearing = clearBooking(dataSelectedWorkplace)
     setDataSelectedWorkplace(dataSelectedWorkplaceAfterClearing);
-    dispatch(setReservation(clearBooking(dataSelectedWorkplace)));
+    dispatch(setReservation(dataSelectedWorkplaceAfterClearing));
   };
 
   return (
