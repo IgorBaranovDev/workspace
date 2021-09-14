@@ -44,8 +44,17 @@ const useStyles = makeStyles({
   },
 });
 
-const setStrokeColor = (item: string, user: string) =>
-  item === "" && item !== user ? "green" : item === user ? "orange" : "red";
+const setStrokeColor = (item: string, user: string) => {
+  switch (item) {
+    case user:
+      return "orange";
+    case "":
+      return "green";
+    default:
+      return "red";
+  }
+};
+// item === "" && item !== user ? "green" : item === user ? "orange" : "red";
 
 const Canvas: React.FC = () => {
   const classes = useStyles();
@@ -94,7 +103,7 @@ const Canvas: React.FC = () => {
     <>
       {places && isImageLoaded ? (
         <WrapperCanvas $image={floorImageSrc}>
-          <svg id="canvas" className={classes.canvas} onClick={handleOpen}>            
+          <svg id="canvas" className={classes.canvas} onClick={handleOpen}>
             {places?.map((item: any, index: number) => (
               <g key={`rect-${index}`} id={`place-${index + 1}`}>
                 <rect
