@@ -5,7 +5,7 @@ import "firebase/database";
 import { PlaceReservation } from "./type";
 
 // utils fn
-import { OfficeDataUpdated } from "../utils/OfficeDataUpdated";
+import { prepareOfficeData } from "../utils/prepareOfficeData";
 
 export const getAddressesData = async () => {
   return await firebase
@@ -35,7 +35,7 @@ export const getSelectedOffice = async (id: string) => {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const selectedOfficeData = snapshot.val();
-        return OfficeDataUpdated(selectedOfficeData);
+        return prepareOfficeData(selectedOfficeData);
       } else {
         console.log("no data available");
         return null;
