@@ -54,7 +54,6 @@ const setStrokeColor = (item: string, user: string) => {
       return "red";
   }
 };
-// item === "" && item !== user ? "green" : item === user ? "orange" : "red";
 
 const Canvas: React.FC = () => {
   const classes = useStyles();
