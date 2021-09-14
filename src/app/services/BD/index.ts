@@ -47,7 +47,7 @@ export const getSelectedOffice = async (id: string) => {
     });
 };
 
-export const setReservation = async (placeReservation: PlaceReservation) => {
+export const setReservation = async (placeReservation: PlaceReservation) => {  
   const result = new Promise<string>((resolve, reject) => {
     firebase
       .database()

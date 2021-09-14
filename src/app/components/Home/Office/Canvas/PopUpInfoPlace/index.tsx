@@ -35,6 +35,9 @@ import {
 // types
 import { InfoAboutWorkplace } from "../type/InfoAboutWorkplace";
 
+// utils fn
+import { clearBooking } from "../../../../../services/utils/clearBooking";
+
 const styles = (theme: Theme) =>
   createStyles({
     root: {
@@ -106,6 +109,7 @@ const DialogActions = withStyles((theme: Theme) => ({
   root: {
     margin: 0,
     padding: theme.spacing(1),
+    justifyContent: "space-around",
   },
 }))(MuiDialogActions);
 
@@ -176,12 +180,19 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
         ...prevState,
         occupant: user,
         startReservation: event.target.value,
+        endReservation: event.target.value,
       }));
     }
   };
 
-  const handleEventButton = () => {
+  const handleEventButtonSave = () => {
     dispatch(setReservation(dataSelectedWorkplace));
+  };
+
+  const handleEventButtonCancel = () => {
+    const dataSelectedWorkplaceAfterClearing = clearBooking(dataSelectedWorkplace)
+    setDataSelectedWorkplace(dataSelectedWorkplaceAfterClearing);
+    dispatch(setReservation(clearBooking(dataSelectedWorkplace)));
   };
 
   return (
@@ -201,7 +212,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
             </DialogTitle>
             <DialogContent dividers>
               <Typography className={classes.occupantUser}>
-                Occupant: {dataAboutWorkplace.occupant}{" "}
+                Occupant: {dataSelectedWorkplace.occupant}
               </Typography>
               <form className={classes.container} noValidate>
                 <TextField
@@ -209,7 +220,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   id="datetime-booking-place-start"
                   label="Start booking"
                   type="date"
-                  defaultValue={dataAboutWorkplace.startReservation}
+                  value={dataSelectedWorkplace.startReservation}
                   onChange={handlerChange}
                   className={classes.textField}
                   InputLabelProps={{
@@ -221,7 +232,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   id="datetime-booking-place-end"
                   label="End booking"
                   type="date"
-                  defaultValue={dataAboutWorkplace.endReservation}
+                  value={dataSelectedWorkplace.endReservation}
                   onChange={handlerChange}
                   className={classes.textField}
                   InputLabelProps={{
@@ -231,13 +242,22 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
               </form>
             </DialogContent>
             <DialogActions>
+              {/* {user} */}
               <Button
                 disabled={isDisabled}
-                onClick={handleEventButton}
+                onClick={handleEventButtonCancel}
+                variant="contained"
+                color="secondary"
+              >
+                cancel booking
+              </Button>
+              <Button
+                disabled={isDisabled}
+                onClick={handleEventButtonSave}
                 variant="contained"
                 color="primary"
               >
-                Save changes
+                Save booking
               </Button>
             </DialogActions>
           </>
