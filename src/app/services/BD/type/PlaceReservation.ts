@@ -7,5 +7,5 @@ export type PlaceReservation = {
   occupant: string;
   startReservation: string;
   endReservation: string;
-  blocked: boolean; 
+  blocked: boolean;
 };

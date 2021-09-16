@@ -1,6 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
+// date-fn
+import DateFnsUtils from "@date-io/date-fns";
+import format from "date-fns/format";
+
+// material-ui
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { KeyboardDatePicker } from "@material-ui/pickers";
+
 // selectors
 import {
   getAuthUser,
@@ -29,11 +37,11 @@ import {
   IconButton,
   CloseIcon,
   Typography,
-  TextField,
 } from "./components";
 
 // types
 import { InfoAboutWorkplace } from "../type/InfoAboutWorkplace";
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date";
 
 // utils fn
 import { clearBooking } from "../../../../../services/utils/clearBooking";
@@ -132,7 +140,9 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   const user = useSelector(getAuthUser);
   const selesctedFloor = useSelector(getSelectedFloor);
   const selectedOffice = useSelector(getSelectedOffice);
-
+  const [endDatePicker, setEndDatePicker] = useState<MaterialUiPickersDate>();
+  const [startDatePicker, setStartDatePicker] =
+    useState<MaterialUiPickersDate>();
   const [dataSelectedWorkplace, setDataSelectedWorkplace] =
     useState<DataSelectedWorkplace>({
       idOffice: "",
@@ -154,6 +164,16 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
 
   useEffect(() => {
     if (dataAboutWorkplace) {
+      setStartDatePicker(
+        dataAboutWorkplace.startReservation === ""
+          ? new Date()
+          : new Date(dataAboutWorkplace.startReservation!)
+      );
+      setEndDatePicker(
+        dataAboutWorkplace.endReservation === ""
+          ? new Date()
+          : new Date(dataAboutWorkplace.endReservation!)
+      );
       setDataSelectedWorkplace({
         idOffice: selectedOffice.id,
         selectFloor: `${selesctedFloor - 1}`,
@@ -166,23 +186,26 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
         type: dataAboutWorkplace.type,
       });
     }
-  }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor, user]);
+  }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor]);
 
-  const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.id === "datetime-booking-place-end") {
-      setDataSelectedWorkplace((prevState) => ({
-        ...prevState,
-        occupant: user,
-        endReservation: event.target.value,
-      }));
-    } else if (event.target.id === "datetime-booking-place-start") {
-      setDataSelectedWorkplace((prevState) => ({
-        ...prevState,
-        occupant: user,
-        startReservation: event.target.value,
-        endReservation: event.target.value,
-      }));
-    }
+  const handlerChangeStartPeservationPicker = (date: MaterialUiPickersDate) => {
+    setStartDatePicker(date);
+    setEndDatePicker(date);
+    setDataSelectedWorkplace((prevState) => ({
+      ...prevState,
+      occupant: user,
+      startReservation: format(date as Date, "yyyy/MM/dd"),
+      endReservation: format(date as Date, "yyyy/MM/dd"),
+    }));
+  };
+
+  const handlerChangeEndPeservationPicker = (date: MaterialUiPickersDate) => {
+    setEndDatePicker(date);
+    setDataSelectedWorkplace((prevState) => ({
+      ...prevState,
+      occupant: user,
+      endReservation: format(date as Date, "yyyy/MM/dd"),
+    }));
   };
 
   const handleEventButtonSave = () => {
@@ -190,13 +213,17 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
   };
 
   const handleEventButtonCancel = () => {
-    const dataSelectedWorkplaceAfterClearing = clearBooking(dataSelectedWorkplace)
+    setStartDatePicker(new Date());
+    setEndDatePicker(new Date());
+    const dataSelectedWorkplaceAfterClearing = clearBooking(
+      dataSelectedWorkplace
+    );
     setDataSelectedWorkplace(dataSelectedWorkplaceAfterClearing);
     dispatch(setReservation(dataSelectedWorkplaceAfterClearing));
   };
 
   return (
-    <>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Dialog
         onClose={handleEventPopUp}
         aria-labelledby="customized-dialog-title"
@@ -212,45 +239,48 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
             </DialogTitle>
             <DialogContent dividers>
               <Typography className={classes.occupantUser}>
-                Occupant: {dataSelectedWorkplace.occupant}
+                {dataSelectedWorkplace.occupant
+                  ? dataSelectedWorkplace.occupant
+                  : null}
               </Typography>
               <form className={classes.container} noValidate>
-                <TextField
+                <KeyboardDatePicker
                   disabled={isDisabled}
                   id="datetime-booking-place-start"
                   label="Start booking"
-                  type="date"
-                  value={dataSelectedWorkplace.startReservation}
-                  onChange={handlerChange}
                   className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  inputVariant="outlined"
+                  value={startDatePicker}
+                  onChange={handlerChangeStartPeservationPicker}
+                  minDate={startDatePicker}
+                  format="yyyy/MM/dd"
                 />
-                <TextField
+
+                <KeyboardDatePicker
                   disabled={isDisabled}
                   id="datetime-booking-place-end"
                   label="End booking"
-                  type="date"
-                  value={dataSelectedWorkplace.endReservation}
-                  onChange={handlerChange}
                   className={classes.textField}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
+                  inputVariant="outlined"
+                  value={endDatePicker}
+                  onChange={handlerChangeEndPeservationPicker}
+                  minDate={endDatePicker}
+                  format="yyyy/MM/dd"
                 />
               </form>
             </DialogContent>
             <DialogActions>
-              {/* {user} */}
-              <Button
-                disabled={isDisabled}
-                onClick={handleEventButtonCancel}
-                variant="contained"
-                color="secondary"
-              >
-                cancel booking
-              </Button>
+              {user === dataSelectedWorkplace.occupant ? (
+                <Button
+                  disabled={isDisabled}
+                  onClick={handleEventButtonCancel}
+                  variant="contained"
+                  color="secondary"
+                >
+                  cancel booking
+                </Button>
+              ) : null}
+
               <Button
                 disabled={isDisabled}
                 onClick={handleEventButtonSave}
@@ -263,7 +293,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
           </>
         )}
       </Dialog>
-    </>
+    </MuiPickersUtilsProvider>
   );
 };
 
