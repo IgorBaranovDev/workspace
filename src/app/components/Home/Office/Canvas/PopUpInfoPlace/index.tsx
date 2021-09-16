@@ -188,7 +188,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
     }
   }, [dataAboutWorkplace, selectedOffice.id, selesctedFloor]);
 
-  const handlerChangeStartPeservationPicker = (date: MaterialUiPickersDate) => {
+  const handlerChangeStartReservationPicker = (date: MaterialUiPickersDate) => {
     setStartDatePicker(date);
     setEndDatePicker(date);
     setDataSelectedWorkplace((prevState) => ({
@@ -199,7 +199,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
     }));
   };
 
-  const handlerChangeEndPeservationPicker = (date: MaterialUiPickersDate) => {
+  const handlerChangeEndReservationPicker = (date: MaterialUiPickersDate) => {
     setEndDatePicker(date);
     setDataSelectedWorkplace((prevState) => ({
       ...prevState,
@@ -251,7 +251,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   className={classes.textField}
                   inputVariant="outlined"
                   value={startDatePicker}
-                  onChange={handlerChangeStartPeservationPicker}
+                  onChange={handlerChangeStartReservationPicker}
                   minDate={startDatePicker}
                   format="yyyy/MM/dd"
                 />
@@ -263,7 +263,7 @@ const PopUpInfoPlace: React.FC<IPopUpInfoPlace> = ({
                   className={classes.textField}
                   inputVariant="outlined"
                   value={endDatePicker}
-                  onChange={handlerChangeEndPeservationPicker}
+                  onChange={handlerChangeEndReservationPicker}
                   minDate={endDatePicker}
                   format="yyyy/MM/dd"
                 />
