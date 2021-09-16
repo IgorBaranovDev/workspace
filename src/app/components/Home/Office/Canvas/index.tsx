@@ -18,6 +18,7 @@ import {
 
 // types
 import { InfoAboutWorkplace } from "./type/InfoAboutWorkplace";
+import { Place } from "../../../../services/BD/type/Floors";
 
 const useStyles = makeStyles({
   canvas: {
@@ -81,12 +82,13 @@ const Canvas: React.FC = () => {
     setInfoAboutWorkplace(null);
   };
 
-  const handleOpen = (event: any) => {
+  const handleOpen = (event: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     event.preventDefault();
-    if (event.target.tagName === "rect" || event.target.tagName === "text") {
-      const selectPlace = places[event.target.id];
+    const currentElement = event.target as any;
+    if (currentElement.tagName === "rect" || currentElement.tagName === "text") {
+      const selectPlace = places[currentElement.id];
       setInfoAboutWorkplace({
-        palceIndex: event.target.id,
+        palceIndex: currentElement.id,
         label: selectPlace.label,
         type: selectPlace.type,
         occupant: selectPlace.placeStatus.occupant,
@@ -102,7 +104,7 @@ const Canvas: React.FC = () => {
       {places && isImageLoaded ? (
         <WrapperCanvas $image={floorImageSrc}>
           <svg id="canvas" className={classes.canvas} onClick={handleOpen}>
-            {places?.map((item: any, index: number) => (
+            {places?.map((item: Place, index: number) => (
               <g key={`rect-${index}`} id={`place-${index + 1}`}>
                 <rect
                   id={`${index}`}
@@ -118,8 +120,8 @@ const Canvas: React.FC = () => {
                 <text
                   id={`${index}`}
                   className={classes.placeLabel}
-                  x={item.coordinates.x + item.coordinates.width / 2 - 16}
-                  y={item.coordinates.y + item.coordinates.height / 2 + 4}
+                  x={item.coordinates.x! + item.coordinates.width! / 2 - 16}
+                  y={item.coordinates.y! + item.coordinates.height! / 2 + 4}
                 >
                   {item.label}
                 </text>

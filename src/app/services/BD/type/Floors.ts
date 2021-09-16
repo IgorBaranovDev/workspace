@@ -20,3 +20,21 @@ export type Floors = Array<{
   places: Places;
   floorImageSrc: string;
 }>;
+
+
+export type Place = {
+  label: string;
+  type: string;
+  placeStatus: {
+    blocked: boolean;
+    occupant: string;
+    start: string;
+    end: string;
+  };
+  coordinates: {
+    x?: number;
+    y?: number;
+    width?: number;
+    height?: number;
+  };
+}
