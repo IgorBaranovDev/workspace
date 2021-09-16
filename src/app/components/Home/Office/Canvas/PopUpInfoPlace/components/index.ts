@@ -6,4 +6,3 @@ export { default as MuiDialogActions } from "@material-ui/core/DialogActions";
 export { default as IconButton } from "@material-ui/core/IconButton";
 export { default as CloseIcon } from "@material-ui/icons/Close";
 export { default as Typography } from "@material-ui/core/Typography";
-export { default as TextField } from "@material-ui/core/TextField";

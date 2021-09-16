@@ -60,7 +60,7 @@ const Office: React.FC = () => {
     <>
       <HeaderOffice>
         <TitleOffice>
-          Location:{" "}
+          Location:
           <em style={{ color: "#299cff" }}>
             {selectedOfficeAddres.country}-{selectedOfficeAddres.city}-
             {selectedOfficeAddres.location}
