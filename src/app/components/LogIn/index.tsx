@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 // style
@@ -29,6 +29,8 @@ import {
 const mapStateToProps = (state: any) => {
   return {
     user: getAuthUser(state),
+    errorAuth: getErrorAuth(state),
+    loading: getLoadingState(state),
   };
 };
 
@@ -38,12 +40,10 @@ const mapDispatchToProps = {
   logOut,
 };
 
-export const Login: React.FC<ILogin> = ({ user, logIn, signUp }) => {
+export const Login: React.FC<ILogin> = ({ user, errorAuth, loading, logIn, signUp }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistration, setIsRegistration] = useState(false);
-  const errorAuth = useSelector(getErrorAuth);
-  const loading = useSelector(getLoadingState);
 
   const handlerChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.name === "username") {

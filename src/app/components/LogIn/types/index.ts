@@ -4,4 +4,6 @@ export interface ILogin {
     user: string;
     logIn: (creds: Creds) => {};
     signUp: (creds: Creds) => {};
+    errorAuth: {};
+    loading: boolean;
   };
