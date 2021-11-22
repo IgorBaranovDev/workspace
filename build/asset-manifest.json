@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/IgorBaranovDev/app-workspace/static/js/main.f211c119.chunk.js",
+    "main.js.map": "/IgorBaranovDev/app-workspace/static/js/main.f211c119.chunk.js.map",
+    "runtime-main.js": "/IgorBaranovDev/app-workspace/static/js/runtime-main.10c80b00.js",
+    "runtime-main.js.map": "/IgorBaranovDev/app-workspace/static/js/runtime-main.10c80b00.js.map",
+    "static/js/2.56ef066a.chunk.js": "/IgorBaranovDev/app-workspace/static/js/2.56ef066a.chunk.js",
+    "static/js/2.56ef066a.chunk.js.map": "/IgorBaranovDev/app-workspace/static/js/2.56ef066a.chunk.js.map",
+    "static/js/3.335dcfee.chunk.js": "/IgorBaranovDev/app-workspace/static/js/3.335dcfee.chunk.js",
+    "static/js/3.335dcfee.chunk.js.map": "/IgorBaranovDev/app-workspace/static/js/3.335dcfee.chunk.js.map",
+    "index.html": "/IgorBaranovDev/app-workspace/index.html",
+    "static/js/2.56ef066a.chunk.js.LICENSE.txt": "/IgorBaranovDev/app-workspace/static/js/2.56ef066a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.10c80b00.js",
+    "static/js/2.56ef066a.chunk.js",
+    "static/js/main.f211c119.chunk.js"
+  ]
+}
