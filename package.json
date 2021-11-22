@@ -2,7 +2,7 @@
   "name": "workspace",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://github.com/IgorBaranovDev/app-workspace",
+  "homepage": "https://github.com/IgorBaranovDev/workspace",
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.12.1",
